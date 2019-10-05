@@ -1,0 +1,14 @@
+.welcome-card img {
+  max-height: 35vh;
+  overflow: hidden;
+}
+.flex-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+.image{
+  width: 50%; 
+  height: auto;
+}
