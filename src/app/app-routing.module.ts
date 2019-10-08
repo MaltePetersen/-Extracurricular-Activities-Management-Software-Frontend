@@ -42,7 +42,28 @@ const routes: Routes = [
         role: 'ERZIEHUNGSBERECHTIGTE'
       }
   },
-  { path: 'registrierung', loadChildren: './pages/registrierung/registrierung.module#RegistrierungPageModule' }
+  { path: 'registrierung', loadChildren: './pages/registrierung/registrierung.module#RegistrierungPageModule' },
+ // { path: 'menu', loadChildren: './pages/menu/menu.module#MenuPageModule' },
+ {
+  path: "veranstaltung-buchen",
+  loadChildren:
+    './pages/veranstaltung-buchen/veranstaltung-buchen.module#VeranstaltungBuchenPageModule',
+  canActivate: [AuthGuard],
+  data: {
+    role: 'ERZIEHUNGSBERECHTIGTE'
+  }
+},
+{
+  path: 'veranstaltung-einsehen',
+  loadChildren:
+    './pages/veranstaltung-einsehen/veranstaltung-einsehen.module#VeranstaltungEinsehenPageModule'
+},
+{
+  path: 'kind-hinzufuegen',
+  loadChildren:
+    './pages/kind-hinzufuegen/kind-hinzufuegen.module#KindHinzufuegenPageModule'
+}
+
 ];
 
 @NgModule({
