@@ -1,0 +1,40 @@
+<ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+          <ion-button (click)="logout()">
+            <ion-icon name="log-out"></ion-icon>
+      </ion-button>
+      </ion-buttons>
+      <ion-title>Eltern-dashboard</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="switchStyle()">
+          <ion-icon [name]="light ? 'moon' : 'sunny'"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+
+
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+
+    <ngx-datatable
+    [rows]="veranstaltungen"
+    [ngClass]="tableStyle"
+    [rowHeight]="'auto'"
+    [headerHeight]="50"
+    [columnMode]="'force'"
+    >
+      <ngx-datatable-column name="Name"></ngx-datatable-column>
+      <ngx-datatable-column name="Gender"></ngx-datatable-column>
+      <ngx-datatable-column name="Company"></ngx-datatable-column>
+
+      <ngx-datatable-column name="Aktion" [sortable]="false">
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+          <ion-button size="small" fill="outline" (click)="open(row)">Details</ion-button>
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+
+  </ion-content>
+  
