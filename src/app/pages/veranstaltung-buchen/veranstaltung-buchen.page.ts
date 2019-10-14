@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-veranstaltung-buchen',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VeranstaltungBuchenPage implements OnInit {
 
-  constructor() { }
+  constructor(private auth: AuthenticationService) { }
 
   ngOnInit() {
   }
-
+  logout() {
+    this.auth.logout();
+  }
 }

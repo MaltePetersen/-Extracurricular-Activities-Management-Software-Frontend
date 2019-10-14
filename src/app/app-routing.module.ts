@@ -45,7 +45,7 @@ const routes: Routes = [
   { path: 'registrierung', loadChildren: './pages/registrierung/registrierung.module#RegistrierungPageModule' },
  // { path: 'menu', loadChildren: './pages/menu/menu.module#MenuPageModule' },
  {
-  path: "veranstaltung-buchen",
+  path: 'veranstaltung-buchen',
   loadChildren:
     './pages/veranstaltung-buchen/veranstaltung-buchen.module#VeranstaltungBuchenPageModule',
   canActivate: [AuthGuard],
@@ -56,12 +56,20 @@ const routes: Routes = [
 {
   path: 'veranstaltung-einsehen',
   loadChildren:
-    './pages/veranstaltung-einsehen/veranstaltung-einsehen.module#VeranstaltungEinsehenPageModule'
+    './pages/veranstaltung-einsehen/veranstaltung-einsehen.module#VeranstaltungEinsehenPageModule',
+    canActivate: [AuthGuard],
+    data: {
+      role: 'ERZIEHUNGSBERECHTIGTE'
+    }
 },
 {
   path: 'kind-hinzufuegen',
   loadChildren:
-    './pages/kind-hinzufuegen/kind-hinzufuegen.module#KindHinzufuegenPageModule'
+    './pages/kind-hinzufuegen/kind-hinzufuegen.module#KindHinzufuegenPageModule',
+    canActivate: [AuthGuard],
+  data: {
+    role: 'ERZIEHUNGSBERECHTIGTE'
+  }
 }
 
 ];

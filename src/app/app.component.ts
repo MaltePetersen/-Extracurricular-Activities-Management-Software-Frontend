@@ -10,6 +10,23 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
+  public appPages = [
+    {
+      title: 'Kind hinzufügen',
+      url: '/kind-hinzufuegen',
+      icon: 'person-add'
+    },
+    {
+      title: 'Veranstaltung buchen',
+      url: '/veranstaltung-buchen',
+      icon: 'school'
+    },
+    {
+      title: 'Veranstaltung einsehen',
+      url: '/veranstaltung-einsehen',
+      icon: 'stats'
+    }
+  ];
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
