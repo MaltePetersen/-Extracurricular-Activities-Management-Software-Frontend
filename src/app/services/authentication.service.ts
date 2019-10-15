@@ -14,7 +14,7 @@ const TOKEN_KEY = 'auth-token';
 export class AuthenticationService {
   user: Observable<any>;
   //The BehaviorSubject holds the value that needs to be shared with other components. These components subscribe to data which is simple returning the BehaviorSubject value without the functionality to change the value
-  private authenticationState = new BehaviorSubject(null);
+  authenticationState = new BehaviorSubject(null);
 
  constructor(private storage: Storage, private router: Router) {
    this.loadUser();
@@ -28,16 +28,15 @@ export class AuthenticationService {
   loadUser() {
     this.storage.get(TOKEN_KEY).then(data => {
       if (data){
-        this.authenticationState.next(data);
+        this.authenticationState.next({data});
       } else {
-        this.authenticationState.next({email: null, role: null });
+        this.authenticationState.next({email: null, role: null, isLoggedIn: false});
       }
     });
   }
 
     login(credentials): Observable<any> {
       // first retrieve the data from the credentials after that send it to the backend which replies with a token of some sort. This needs to be implemented here. 
-
       let email = credentials.email;
       let pw = credentials.pw;
       let user = null;
@@ -45,11 +44,11 @@ export class AuthenticationService {
       // Check with your token which role applies to you.
   
       if (email === 'leitung' && pw === 'leitung') {
-        user = {email, role: 'LEITUNG'};
+        user = {email, role: 'LEITUNG', isLoggedIn: true};
       } else if (email === 'betreuer' && pw === 'betreuer') {
-        user = {email, role: 'BETREUER'};
+        user = {email, role: 'BETREUER', isLoggedIn: true};
       } else if (email === 'eltern' && pw === 'eltern') {
-        user = {email, role: 'ERZIEHUNGSBERECHTIGTE'};
+        user = {email, role: 'ERZIEHUNGSBERECHTIGTE', isLoggedIn: true};
       }
       this.authenticationState.next(user);
 
@@ -63,7 +62,7 @@ export class AuthenticationService {
     //logout the user and delete the saved token from the device. then move back to login page.
     async logout() {
       await this.storage.set(TOKEN_KEY, null);
-      this.authenticationState.next(null);
+      this.authenticationState.next({email: null, role: null, isLoggedIn: false});
       this.router.navigateByUrl('/login');
     }
   }

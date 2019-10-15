@@ -17,6 +17,8 @@ export class ErziehungsberechtigteDashboardPage implements OnInit {
   constructor(private auth: AuthenticationService) {}
 
   ngOnInit() {
+    console.log('ELTERN AuthenticationService');
+    console.log(this.auth);
   }
 
   switchStyle(){
