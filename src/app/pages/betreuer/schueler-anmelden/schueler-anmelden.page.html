@@ -1,0 +1,49 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>
+        <div class="flex-container">
+          <img class="image"  src="assets/logo.jpg">
+        </div>
+      </ion-title>
+      <ion-buttons slot="end">
+        <ion-button>
+          <ion-icon name="information-circle-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content>
+  <div class="flex-container">
+    <ion-label class="anwesenheitsliste-label">
+      Anwesenheitsliste
+    </ion-label>
+    <ion-input placeholder="Suchen" class="schueler-suchen"></ion-input>
+    <ion-item lines="none" class="klasse-item">
+      <ion-label class="klasse-label">
+        Klasse:
+      </ion-label>
+      <ion-select class="klasse-suchen" okText="Okay" cancelText="Abbrechen">
+          <ion-select-option value="brown">Brown</ion-select-option>
+          <ion-select-option value="blonde">Blonde</ion-select-option>
+          <ion-select-option value="black">Black</ion-select-option>
+          <ion-select-option value="red">Red</ion-select-option>
+        </ion-select>
+    </ion-item>
+//TODO
+    <ion-item lines="none" class="datum-item">
+      <div class="datum-container">
+        <ion-select class="datum-suchen" placeholder="Datum" okText="Okay" cancelText="Abbrechen">
+          <ion-select-option value="brown">Brown</ion-select-option>
+          <ion-select-option value="blonde">Blonde</ion-select-option>
+          <ion-select-option value="black">Black</ion-select-option>
+          <ion-select-option value="red">Red</ion-select-option>
+        </ion-select> </div>
+      
+    </ion-item>
+  </div>
+
+</ion-content>

@@ -1,0 +1,52 @@
+.flex-container{
+    margin-left: 2em;
+    margin-right: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+.image{
+    width: 50%;
+    height: auto;
+}
+.anwesenheitsliste{
+    margin-top: 2em;
+    align-self: flex-start;
+}
+.schueler-suchen{
+    margin-top: 1em;
+    align-self: flex-start;
+    height: 2em;
+    width: 100%;
+    border: 1px solid black;
+    text-align: center;
+}
+.klasse-item{
+    align-self: flex-start;
+    width: 100%;
+}
+.klasse-label{
+    width: auto;
+}
+.klasse-suchen{
+    border: 1px solid black;
+    width: 100%;
+}
+.datum-item{
+    align-self: flex-start;
+    align-items: center;
+    width: 100%;
+}
+.datum-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+.datum-suchen{
+    width: 100%;
+    border: 1px solid black;
+}
+
