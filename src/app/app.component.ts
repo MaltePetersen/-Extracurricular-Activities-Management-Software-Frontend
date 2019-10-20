@@ -17,9 +17,9 @@ export class AppComponent implements OnInit {
 
   public Eltern = [
     {
-      title: 'Kind hinzufügen',
-      url: '/kind-hinzufuegen',
-      icon: 'person-add'
+      title: 'Home',
+      url: '/erziehungsberechtigte-dashboard',
+      icon: 'home'
     },
     {
       title: 'Veranstaltung buchen',
@@ -30,24 +30,39 @@ export class AppComponent implements OnInit {
       title: 'Veranstaltung einsehen',
       url: '/veranstaltung-einsehen',
       icon: 'stats'
-    }
+    },
+    {
+      title: 'Kinder',
+      url: '/kind-hinzufuegen',
+      icon: 'people'
+    },
+    {
+      title: 'Account',
+      url: '/account',
+      icon: 'person'
+    },
   ];
   public Betreuer = [
     {
-      title: 'Betreuer',
+      title: 'Anwesenheitsliste',
       url: '/kind-hinzufuegen',
-      icon: 'person-add'
+      icon: 'list-box'
     },
     {
-      title: 'Betreuer buchen',
+      title: 'Meine Schichten',
       url: '/veranstaltung-buchen',
-      icon: 'school'
+      icon: 'hammer'
     },
     {
-      title: 'Betreuer einsehen',
+      title: 'Alle Schichten',
       url: '/veranstaltung-einsehen',
-      icon: 'stats'
-    }
+      icon: 'timer'
+    },
+    {
+    title: 'Abrechnung',
+    url: '/veranstaltung-buchen',
+    icon: 'document'
+  }
   ];
   constructor(
     private platform: Platform,

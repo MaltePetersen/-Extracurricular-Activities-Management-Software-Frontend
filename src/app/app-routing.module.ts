@@ -70,7 +70,16 @@ const routes: Routes = [
   data: {
     role: 'ERZIEHUNGSBERECHTIGTE'
   }
-}
+},
+  { path: 'account',
+  loadChildren:
+  './pages/account/account.module#AccountPageModule',
+  canActivate: [AuthGuard],
+  data: {
+    role: 'ERZIEHUNGSBERECHTIGTE'
+  },
+ }
+
 
 ];
 
