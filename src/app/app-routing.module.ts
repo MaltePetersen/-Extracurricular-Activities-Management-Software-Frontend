@@ -20,7 +20,7 @@ const routes: Routes = [
       './pages/erziehungsberechtigte/erziehungsberechtigte-dashboard/erziehungsberechtigte-dashboard.module#ErziehungsberechtigteDashboardPageModule',
       canActivate: [AuthGuard],
       data: {
-        role: 'ERZIEHUNGSBERECHTIGTE'
+        role: 'ROLE_PARENT'
       }
   },
  {
@@ -29,7 +29,7 @@ const routes: Routes = [
     './pages/erziehungsberechtigte/veranstaltung-buchen/veranstaltung-buchen.module#VeranstaltungBuchenPageModule',
   canActivate: [AuthGuard],
   data: {
-    role: 'ERZIEHUNGSBERECHTIGTE'
+    role: 'ROLE_PARENT'
   }
 },
 {
@@ -38,7 +38,7 @@ const routes: Routes = [
     './pages/erziehungsberechtigte/veranstaltung-einsehen/veranstaltung-einsehen.module#VeranstaltungEinsehenPageModule',
     canActivate: [AuthGuard],
     data: {
-      role: 'ERZIEHUNGSBERECHTIGTE'
+      role: 'ROLE_PARENT'
     }
 },
 {
@@ -47,7 +47,7 @@ const routes: Routes = [
     './pages/erziehungsberechtigte/kind-hinzufuegen/kind-hinzufuegen.module#KindHinzufuegenPageModule',
     canActivate: [AuthGuard],
   data: {
-    role: 'ERZIEHUNGSBERECHTIGTE'
+    role: 'ROLE_PARENT'
   }
 },
   { path: 'account',
@@ -55,7 +55,7 @@ const routes: Routes = [
   './pages/erziehungsberechtigte/account/account.module#AccountPageModule',
   canActivate: [AuthGuard],
   data: {
-    role: 'ERZIEHUNGSBERECHTIGTE'
+    role: 'ROLE_PARENT'
   }
  },
 {
@@ -63,7 +63,7 @@ const routes: Routes = [
   loadChildren: () => import('./pages/betreuer/schulauswahl/schulauswahl.module').then(m => m.SchulauswahlPageModule),
   canActivate: [AuthGuard],
   data: {
-    role: 'BETREUER'
+    role: 'ROLE_EMPLOYEE'
   }
 },
 {
@@ -71,7 +71,7 @@ const routes: Routes = [
   loadChildren: () => import('./pages/betreuer/schueler-anmelden/schueler-anmelden.module').then(m => m.SchuelerAnmeldenPageModule),
   canActivate: [AuthGuard],
   data: {
-    role: 'BETREUER'
+    role: 'ROLE_EMPLOYEE'
   }
 },
 {
@@ -79,7 +79,7 @@ const routes: Routes = [
   loadChildren: () => import('./pages/betreuer/meine-schichten/meine-schichten.module').then(m=> m.MeineSchichtenPageModule),
   canActivate: [AuthGuard],
   data: {
-    role: 'BETREUER'
+    role: 'ROLE_EMPLOYEE'
   }
 },
 {
@@ -87,7 +87,7 @@ const routes: Routes = [
   loadChildren: () => import('./pages/betreuer/alle-schichten/alle-schichten.module').then(m=>m.AlleSchichtenPageModule),
   canActivate: [AuthGuard],
   data: {
-    role: 'BETREUER'
+    role: 'ROLE_EMPLOYEE'
   }
 },
 {
@@ -95,7 +95,7 @@ const routes: Routes = [
   loadChildren: () => import('./pages/betreuer/abrechnung/abrechnung.module').then(m=>m.AbrechnungPageModule),
   canActivate: [AuthGuard],
   data: {
-    role: 'BETREUER'
+    role: 'ROLE_EMPLOYEE'
   }
 }
 ];

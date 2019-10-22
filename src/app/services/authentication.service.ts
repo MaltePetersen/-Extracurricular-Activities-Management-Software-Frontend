@@ -39,16 +39,16 @@ export class AuthenticationService {
       // first retrieve the data from the credentials after that send it to the backend which replies with a token of some sort. This needs to be implemented here. 
       let email = credentials.email;
       let pw = credentials.pw;
+      let role = credentials.role;
+
       let user = null;
 
       // Check with your token which role applies to you.
   
-      if (email === 'leitung' && pw === 'leitung') {
-        user = {email, role: 'LEITUNG', isLoggedIn: true};
-      } else if (email === 'betreuer' && pw === 'betreuer') {
-        user = {email, role: 'BETREUER', isLoggedIn: true};
-      } else if (email === 'eltern' && pw === 'eltern') {
-        user = {email, role: 'ERZIEHUNGSBERECHTIGTE', isLoggedIn: true};
+      if (role === 'ROLE_PARENT') {
+        user = {email, role, isLoggedIn: true};
+      } else if (role === 'ROLE_EMPLOYEE') {
+        user = {email, role, isLoggedIn: true};
       }
       this.authenticationState.next(user);
 

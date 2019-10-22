@@ -90,9 +90,9 @@ ngOnInit(): void {
       } else if (a !== null) {
         if (a.isLoggedIn === true) {
           this.isLoggedIn = true;
-          if (a.role === 'ERZIEHUNGSBERECHTIGTE') {
+          if (a.role === 'ROLE_PARENT') {
             this.ERZIEHUNGSBERECHTIGTE = true;
-          } else if (a.role === 'BETREUER') {
+          } else if (a.role === 'ROLE_EMPLOYEE') {
             this.BETREUER = true;
           }
         } else if (a.isLoggedIn === false) {

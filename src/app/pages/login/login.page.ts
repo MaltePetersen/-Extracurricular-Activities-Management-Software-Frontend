@@ -13,7 +13,8 @@ export class LoginPage implements OnInit {
   //
   user = {
     email: '',
-    pw: ''
+    pw: '',
+    role: ''
   };
 
   // The login will call the AuthenticationService and retrieves the observable with the role from there.
@@ -31,24 +32,19 @@ export class LoginPage implements OnInit {
     };
 
     this.http.get<GrantedAuthority[]>('https://fjoerde.herokuapp.com/login', httpOptions).subscribe((a) => {
-      if (a[0].authority === 'ROLE_PARENT') {
-        localStorage.setItem('isLoggedin', 'true');
-        console.log(a[0].authority + '  = (Rolle vom Server) ');
-        this.router.navigateByUrl('/erziehungsberechtigte-dashboard');
-      }
+      this.user.role = a[0].authority;
+      this.auth.login(this.user).subscribe(user => {
+        console.log('after login: ', user);
+        // the navigation will happen by the returned value from the observable.
+        const role = user.role;
+        if (role === 'ROLE_EMPLOYEE') {
+          this.router.navigateByUrl('/schulauswahl');
+        } else if (role === 'ROLE_PARENT') {
+          this.router.navigateByUrl('/erziehungsberechtigte-dashboard');
+        }
+      });
     });
-    
-    // you need to subscribe to the returned observable. From there you can handle the data.
-    this.auth.login(this.user).subscribe(user => {
-      console.log('after login: ', user);
-      // the navigation will happen by the returned value from the observable.
-      const role = user.role;
-      if (role === 'BETREUER') {
-        this.router.navigateByUrl('/schulauswahl');
-      } else if (role === 'ERZIEHUNGSBERECHTIGTE') {
-        this.router.navigateByUrl('/erziehungsberechtigte-dashboard');
-      }
-    });
+
 
   }
 
