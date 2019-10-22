@@ -9,13 +9,13 @@ import { Router } from '@angular/router';
 })
 export class LoginPage implements OnInit {
 
-  // 
+  //
   user = {
     email: '',
     pw: ''
   };
 
-  //The login will call the AuthenticationService and retrieves the observable with the role from there.
+  // The login will call the AuthenticationService and retrieves the observable with the role from there.
   constructor(private auth: AuthenticationService, private router: Router) { }
 
   ngOnInit() {
@@ -26,11 +26,9 @@ export class LoginPage implements OnInit {
     this.auth.login(this.user).subscribe(user => {
       console.log('after login: ', user);
       // the navigation will happen by the returned value from the observable.
-      let role = user['role'];
-      if (role === 'LEITUNG') {
-        this.router.navigateByUrl('/fjoerde-leitung-dashboard');
-      } else if (role === 'BETREUER') {
-        this.router.navigateByUrl('/betreuer-dashboard');
+      const role = user.role;
+      if (role === 'BETREUER') {
+        this.router.navigateByUrl('/schulauswahl');
       } else if (role === 'ERZIEHUNGSBERECHTIGTE') {
         this.router.navigateByUrl('/erziehungsberechtigte-dashboard');
       }

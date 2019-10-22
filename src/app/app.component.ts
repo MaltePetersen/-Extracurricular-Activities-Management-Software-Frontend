@@ -44,11 +44,6 @@ export class AppComponent implements OnInit {
   ];
   public Betreuer = [
     {
-      title: 'List',
-      url: '/list',
-      icon: 'list'
-    },
-    {
       title: 'Schulauswahl',
       url: '/schulauswahl',
       icon: 'briefcase'
