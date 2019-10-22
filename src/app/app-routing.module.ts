@@ -14,28 +14,6 @@ const routes: Routes = [
     loadChildren: './pages/registrierung/registrierung.module#RegistrierungPageModule'
   },
   {
-    path: 'list',
-    loadChildren: () => import('./list/list.module').then(m => m.ListPageModule)
-  },
-  {
-    path: 'schulauswahl',
-    loadChildren: () => import('./pages/betreuer/schulauswahl/schulauswahl.module').then(m => m.SchulauswahlPageModule)
-  },
-  { 
-    path: 'schueler-anmelden', 
-    loadChildren: () => import('./pages/betreuer/schueler-anmelden/schueler-anmelden.module').then(m => m.SchuelerAnmeldenPageModule) 
-  },
-  { 
-    path: 'meine-schichten',
-    loadChildren: () => import('./pages/betreuer/meine-schichten/meine-schichten.module').then(m=> m.MeineSchichtenPageModule)
-  },
-  { 
-    path: 'alle-schichten',
-    loadChildren: () => import('./pages/betreuer/alle-schichten/alle-schichten.module').then(m=>m.AlleSchichtenPageModule)
-  },
-  { 
-    path: 'abrechnung',
-    loadChildren: () => import('./pages/betreuer/abrechnung/abrechnung.module').then(m=>m.AbrechnungPageModule)
     path: 'fjoerde-leitung-dashboard',
     loadChildren:
       './pages/fjoerdeLeitung/fjoerde-leitung-dashboard/fjoerde-leitung-dashboard.module#FjoerdeLeitungDashboardPageModule',
@@ -43,15 +21,6 @@ const routes: Routes = [
       canActivate: [AuthGuard],
       data: {
         role: 'LEITUNG'
-      }
-  },
-  {
-    path: 'betreuer-dashboard',
-    loadChildren:
-      './pages/betreuer/betreuer-dashboard/betreuer-dashboard.module#BetreuerDashboardPageModule',
-      canActivate: [AuthGuard],
-      data: {
-        role: 'BETREUER'
       }
   },
   {
@@ -99,10 +68,48 @@ const routes: Routes = [
   canActivate: [AuthGuard],
   data: {
     role: 'ERZIEHUNGSBERECHTIGTE'
-  },
- }
-
-
+  }
+ },
+{
+  path: 'schulauswahl',
+  loadChildren: () => import('./pages/betreuer/schulauswahl/schulauswahl.module').then(m => m.SchulauswahlPageModule),
+  canActivate: [AuthGuard],
+  data: {
+    role: 'BETREUER'
+  }
+},
+{
+  path: 'schueler-anmelden', 
+  loadChildren: () => import('./pages/betreuer/schueler-anmelden/schueler-anmelden.module').then(m => m.SchuelerAnmeldenPageModule),
+  canActivate: [AuthGuard],
+  data: {
+    role: 'BETREUER'
+  }
+},
+{
+  path: 'meine-schichten',
+  loadChildren: () => import('./pages/betreuer/meine-schichten/meine-schichten.module').then(m=> m.MeineSchichtenPageModule),
+  canActivate: [AuthGuard],
+  data: {
+    role: 'BETREUER'
+  }
+},
+{
+  path: 'alle-schichten',
+  loadChildren: () => import('./pages/betreuer/alle-schichten/alle-schichten.module').then(m=>m.AlleSchichtenPageModule),
+  canActivate: [AuthGuard],
+  data: {
+    role: 'BETREUER'
+  }
+},
+{
+  path: 'abrechnung',
+  loadChildren: () => import('./pages/betreuer/abrechnung/abrechnung.module').then(m=>m.AbrechnungPageModule),
+  canActivate: [AuthGuard],
+  data: {
+    role: 'BETREUER'
+  }
+}
 ];
 
 @NgModule({

@@ -22,6 +22,28 @@ export class AppComponent implements OnInit {
       icon: 'home'
     },
     {
+      title: 'Veranstaltung buchen',
+      url: '/veranstaltung-buchen',
+      icon: 'school'
+    },
+    {
+      title: 'Veranstaltung einsehen',
+      url: '/veranstaltung-einsehen',
+      icon: 'stats'
+    },
+    {
+      title: 'Kinder',
+      url: '/kind-hinzufuegen',
+      icon: 'people'
+    },
+{
+      title: 'Account',
+      url: '/account',
+      icon: 'person'
+    },
+  ];
+  public Betreuer = [
+    {
       title: 'List',
       url: '/list',
       icon: 'list'
@@ -51,49 +73,8 @@ export class AppComponent implements OnInit {
       url: '/abrechnung',
       icon: 'card'
     }
-      title: 'Veranstaltung buchen',
-      url: '/veranstaltung-buchen',
-      icon: 'school'
-    },
-    {
-      title: 'Veranstaltung einsehen',
-      url: '/veranstaltung-einsehen',
-      icon: 'stats'
-    },
-    {
-      title: 'Kinder',
-      url: '/kind-hinzufuegen',
-      icon: 'people'
-    },
-    {
-      title: 'Account',
-      url: '/account',
-      icon: 'person'
-    },
   ];
-  public Betreuer = [
-    {
-      title: 'Anwesenheitsliste',
-      url: '/kind-hinzufuegen',
-      icon: 'list-box'
-    },
-    {
-      title: 'Meine Schichten',
-      url: '/veranstaltung-buchen',
-      icon: 'hammer'
-    },
-    {
-      title: 'Alle Schichten',
-      url: '/veranstaltung-einsehen',
-      icon: 'timer'
-    },
-    {
-    title: 'Abrechnung',
-    url: '/veranstaltung-buchen',
-    icon: 'document'
-  }
-  ];
-  constructor(
+constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
@@ -102,12 +83,12 @@ export class AppComponent implements OnInit {
     this.initializeApp();
   }
 
-  ngOnInit(): void {
-    console.log("ngOnInit: ")
+ngOnInit(): void {
+    console.log('ngOnInit: ');
     this.auth.authenticationState.subscribe(a => {
-      console.log("Inside ngOnInit: ")
+      console.log('Inside ngOnInit: ');
       console.log(a);
-      if(a === null) {
+      if (a === null) {
         this.isLoggedIn = false;
         this.ERZIEHUNGSBERECHTIGTE = false;
         this.BETREUER = false;
@@ -124,11 +105,11 @@ export class AppComponent implements OnInit {
           this.ERZIEHUNGSBERECHTIGTE = false;
           this.BETREUER = false;
         }
-      } 
-    })
+      }
+    });
   }
 
-  initializeApp() {
+initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
