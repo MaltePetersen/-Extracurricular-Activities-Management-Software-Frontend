@@ -6,8 +6,8 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './betreuer-dashboard.page.html',
   styleUrls: ['./betreuer-dashboard.page.scss'],
 })
-export class BetreuerDashboardPage/* implements OnInit */{
-/*
+export class BetreuerDashboardPage implements OnInit {
+
   constructor(private auth: AuthenticationService) {}
 
   ngOnInit() {
@@ -15,6 +15,6 @@ export class BetreuerDashboardPage/* implements OnInit */{
 
   logout() {
     this.auth.logout();
-  } */
+  }
 
 }
