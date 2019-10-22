@@ -4,8 +4,8 @@
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
       <ion-title>
-        <div class="flex-container">
-          <img class="image"  src="assets/logo.jpg">
+        <div class="header-logo-container">
+          <img class="header-logo"  src="assets/logo.jpg">
         </div>
       </ion-title>
       <ion-buttons slot="end">
@@ -22,28 +22,44 @@
       Anwesenheitsliste
     </ion-label>
     <ion-input placeholder="Suchen" class="schueler-suchen"></ion-input>
-    <ion-item lines="none" class="klasse-item">
-      <ion-label class="klasse-label">
+    <ion-row nowrap class="klasse-row">
+      <ion-label class="ion-padding-vertical">
         Klasse:
       </ion-label>
       <ion-select class="klasse-suchen" okText="Okay" cancelText="Abbrechen">
-          <ion-select-option value="brown">Brown</ion-select-option>
-          <ion-select-option value="blonde">Blonde</ion-select-option>
-          <ion-select-option value="black">Black</ion-select-option>
-          <ion-select-option value="red">Red</ion-select-option>
-        </ion-select>
-    </ion-item>
-//TODO
-    <ion-item lines="none" class="datum-item">
-      <div class="datum-container">
-        <ion-select class="datum-suchen" placeholder="Datum" okText="Okay" cancelText="Abbrechen">
-          <ion-select-option value="brown">Brown</ion-select-option>
-          <ion-select-option value="blonde">Blonde</ion-select-option>
-          <ion-select-option value="black">Black</ion-select-option>
-          <ion-select-option value="red">Red</ion-select-option>
-        </ion-select> </div>
-      
+          <ion-select-option *ngFor="let class of classes" value={{class}}>{{class}}</ion-select-option>
+      </ion-select>
+    </ion-row>
+  </div>
+  <div class="schueler-container">
+    <ion-item *ngFor="let schueler of schueler" lines="none" class="schueler-item">
+      <div class="schueler-content-container">
+        <ion-label>
+          {{schueler.name}}
+        </ion-label>
+        <ion-row class="zeile1">
+          <ion-label class="klasse-label">
+            Klasse: {{schueler.klasse}}
+          </ion-label>
+          <ion-label class="betreuungsende-label">
+            Betreuungsende: {{schueler.betreuungsende}}
+          </ion-label>
+        </ion-row>
+        <ion-row>
+          <ion-label>
+            {{schueler.info}}
+          </ion-label>  
+        </ion-row>
+      </div>
     </ion-item>
   </div>
-
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-label slot="start">
+      Datum:
+    </ion-label>
+    <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD MMM YYYY" [(ngModel)]="datum"></ion-datetime>
+  </ion-toolbar>
+</ion-footer>

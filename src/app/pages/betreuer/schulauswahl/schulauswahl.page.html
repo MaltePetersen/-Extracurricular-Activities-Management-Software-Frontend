@@ -4,8 +4,8 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      <div class="flex-container">
-        <img class="image"  src="assets/logo.jpg">
+      <div class="header-logo-container">
+        <img class="header-logo"  src="assets/logo.jpg">
       </div>
     </ion-title>
     <ion-buttons slot="end">
@@ -21,5 +21,10 @@
     <ion-label class="auswahl-label">
       Wähle bitte deine Schule
     </ion-label>
+    <ion-list class="schul-list" class="schul-list">
+        <ion-button *ngFor="let school of schools" class="schul-button" expand="full" (click)="schoolClick()">
+            {{school}}
+          </ion-button>
+    </ion-list>
   </div>
 </ion-content>

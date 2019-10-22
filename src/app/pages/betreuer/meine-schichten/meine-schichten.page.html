@@ -1,9 +1,58 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>meine-schichten</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <div class="header-logo-container">
+        <img class="header-logo"  src="assets/logo.jpg">
+      </div>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="information-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <div class="flex-container">
+    <ion-label class="schichten-label">
+      Meine Schichten
+    </ion-label>
+  </div>
+  <div class="schichten-container">
+    <ion-item *ngFor="let schicht of schichten" lines="none" class="schichten-item">
+      <div class="schichten-content-container">
+      <ion-label class="tag-label">
+        {{schicht.day}}
+      </ion-label>
+      <ion-row class="data-row">
+        <ion-label class="data-label">
+          Schule: {{schicht.schule}}
+        </ion-label>
+      </ion-row>
+      <ion-row class="data-row">
+        <ion-label class="data-label">
+          Datum: {{schicht.datum}}
+        </ion-label>
+      </ion-row>
+      <ion-row class="data-row">
+        <ion-label class="data-label">
+          Uhrzeit: {{schicht.uhrzeit}}
+        </ion-label>
+      </ion-row>
+    </div>
+    </ion-item>
+  </div>
 </ion-content>
+
+<ion-footer>
+    <ion-toolbar>
+      <ion-label slot="start">
+        Datum:
+      </ion-label>
+      <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD MMM YYYY" [(ngModel)]="datum"></ion-datetime>
+    </ion-toolbar>
+  </ion-footer>

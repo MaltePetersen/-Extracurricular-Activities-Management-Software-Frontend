@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AbrechnungPage implements OnInit {
 
+  datum:any;
+  
   constructor() { }
 
   ngOnInit() {

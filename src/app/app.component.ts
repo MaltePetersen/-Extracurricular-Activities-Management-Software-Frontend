@@ -20,6 +20,31 @@ export class AppComponent {
       title: 'List',
       url: '/list',
       icon: 'list'
+    },
+    {
+      title: 'Schulauswahl',
+      url: '/schulauswahl',
+      icon: 'briefcase'
+    },
+    {
+      title: 'Anwesenheitsliste',
+      url: '/schueler-anmelden',
+      icon: 'person'
+    },
+    {
+      title: 'Meine Schichten',
+      url: '/meine-schichten',
+      icon: 'clipboard'
+    },
+    {
+      title: 'Alle Schichten',
+      url: '/alle-schichten',
+      icon: 'clipboard'
+    },
+    {
+      title: 'Abrechnung',
+      url: '/abrechnung',
+      icon: 'card'
     }
   ];
 
