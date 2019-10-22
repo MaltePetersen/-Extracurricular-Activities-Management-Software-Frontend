@@ -23,24 +23,14 @@
     </ion-label>
   </div>
   <div class="abrechnung-container">
-    <ion-item *ngFor="let abrechnung of abrechnungen" lines="none" class="abrechnungen-item">
+    <ion-item *ngFor="let schicht of schichten" lines="none" class="abrechnung-item">
       <div class="abrechnung-content-container">
         <ion-label class="datum-zeit-label">
-          {{abrechnung.datum}}, {{abrechnung.uhrzeit}}
+          {{schicht.datum}}, {{schicht.uhrzeit}}
         </ion-label>
         <ion-row class="data-row">
           <ion-label class="data-label">
             Schule: {{schicht.schule}}
-          </ion-label>
-        </ion-row>
-        <ion-row class="data-row">
-          <ion-label class="data-label">
-            Datum: {{schicht.datum}}
-          </ion-label>
-        </ion-row>
-        <ion-row class="data-row">
-          <ion-label class="data-label">
-            Uhrzeit: {{schicht.uhrzeit}}
           </ion-label>
         </ion-row>
       </div>

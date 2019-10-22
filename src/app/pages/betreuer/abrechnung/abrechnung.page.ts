@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SchichtModel } from 'src/app/models/schicht-model';
 
 @Component({
   selector: 'app-abrechnung',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AbrechnungPage implements OnInit {
 
-  datum:any;
+  schichten:any;
+
+  private datum:any;
   
-  constructor() { }
+  constructor() {
+    this.schichten = [
+      new SchichtModel("Klaus Groth Schule", "17.10.2019", "10:00")
+    ]
+  }
 
   ngOnInit() {
   }

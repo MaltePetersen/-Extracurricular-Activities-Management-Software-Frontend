@@ -17,5 +17,23 @@
 </ion-header>
 
 <ion-content>
-
+  <div class="flex-container">
+    <ion-label class="schichten-label">
+      Alle Schichten
+    </ion-label>
+  </div>
+  <div class="schichten-container">
+    <ion-row>
+      
+    </ion-row>
+  </div>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-label slot="start">
+        Datum:
+    </ion-label>
+    <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD MMM YYYY" [(ngModel)]="datum"></ion-datetime>
+  </ion-toolbar>
+</ion-footer>

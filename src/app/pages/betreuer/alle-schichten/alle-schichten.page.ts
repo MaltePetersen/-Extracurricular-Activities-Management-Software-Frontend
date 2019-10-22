@@ -7,7 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AlleSchichtenPage implements OnInit {
 
-  constructor() { }
+  monday:any;
+
+  constructor() {
+  }
 
   ngOnInit() {
   }
