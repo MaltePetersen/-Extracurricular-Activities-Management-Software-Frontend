@@ -1,8 +1,11 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of} from 'rxjs';
 import {Storage} from '@ionic/storage';
 import { Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { EnvService } from './env.service';
+import { User } from '../models/user';
 
 const TOKEN_KEY = 'auth-token';
 
@@ -16,7 +19,7 @@ export class AuthenticationService {
   //The BehaviorSubject holds the value that needs to be shared with other components. These components subscribe to data which is simple returning the BehaviorSubject value without the functionality to change the value
   authenticationState = new BehaviorSubject(null);
 
- constructor(private storage: Storage, private router: Router) {
+ constructor(private storage: Storage, private router: Router, private http: HttpClient, private env: EnvService,) {
    this.loadUser();
    //The Observer and Objects interfaces provide a generalized mechanism for push-based notification, also known as the observer design pattern. The Observable object represents the object that sends notifications (the provider); the Observer object represents the class that receives them (the observer). 
    // The asObservable gets its data from the BehaviorSubject
@@ -57,6 +60,12 @@ export class AuthenticationService {
 
       // make the user object into an observable and return it.
       return of(user);
+    }
+
+    register(fName: String, lName: String, email: String, password: String) {
+      return this.http.post(this.env.API_URL + 'REGISTRIERUNG',
+        {fName: fName, lName: lName, email: email, password: password}
+      )
     }
 
     //logout the user and delete the saved token from the device. then move back to login page.

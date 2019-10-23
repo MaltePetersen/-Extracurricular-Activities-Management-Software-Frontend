@@ -16,78 +16,39 @@
   </ion-header>
    
 <ion-content class="appBackground; ion-padding">
-  <ion-card>
+
+   <ion-card>
     <ion-card-header>
-      Erziehungsberechtigte 
+      Registrierung des Erziehungsberechtigten 
     </ion-card-header>
     <ion-card-content>
-      <ion-list>
-          <ion-item>
-              <ion-label stacked>Username</ion-label>
-              <ion-input type="text" [(ngModel)]="userData.username"></ion-input>
-            </ion-item>
 
-            <ion-item>
-                <ion-label stacked>Password</ion-label>
-                <ion-input type="password" [(ngModel)]="userData.password"></ion-input>
-              </ion-item>
-
+    <form #form="ngForm" (ngSubmit)="register(form)" method="post">
         <ion-item>
-          <ion-label stacked>Name</ion-label>
-          <ion-input type="text" [(ngModel)]="userData.name"></ion-input>
+            <ion-label position="floating">Vorname</ion-label>
+            <ion-input ngModel name="fName"></ion-input>
+        </ion-item>
+      
+        <ion-item>
+          <ion-label position="floating">Nachname</ion-label>
+          <ion-input ngModel name="lName"></ion-input>
+        </ion-item>
+      
+        <ion-item>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input type="email" ngModel name="email"></ion-input>
+        </ion-item>
+      
+        <ion-item>
+          <ion-label position="floating">Passwort</ion-label>
+          <ion-input type="password" ngModel name="password"></ion-input>
         </ion-item>
 
-        <ion-item>
-            <ion-label stacked>Vorname</ion-label>
-            <ion-input type="text" [(ngModel)]="userData.firstname"></ion-input>
-          </ion-item>
+        <ion-button type="submit" expand="block" (click)="login()" color="danger">Registrieren</ion-button>
+      </form>
+      <p class="ion-text-center">Already have a account?</p>
+      <ion-button expand="block" (click)="login()">Login</ion-button>
 
-        <ion-item>
-          <ion-label stacked>Email</ion-label>
-          <ion-input type="text" [(ngModel)]="userData.email"></ion-input>
-        </ion-item>
-
-        <ion-item>
-            <ion-label stacked>Telefonnummer</ion-label>
-            <ion-input type="text" [(ngModel)]="userData.phone"></ion-input>
-          </ion-item>
-
-        </ion-list>
-        </ion-card-content>
-      </ion-card>
-
-          <ion-card>
-              <ion-card-header>
-                Kind
-              </ion-card-header>
-
-              <ion-card-content>
-                  <ion-list>
-                      <ion-item>
-                          <ion-label stacked>Vorname des Kindes</ion-label>
-                          <ion-input type="text" [(ngModel)]="userData.childfirstname"></ion-input>
-                        </ion-item>
-                        <ion-item>
-                            <ion-label stacked>Nachname des Kindes</ion-label>
-                            <ion-input type="text" [(ngModel)]="userData.childname"></ion-input>
-                          </ion-item>
-                          <ion-item>
-                              <ion-label stacked>Geburtstag</ion-label>
-                              <ion-input type="text" [(ngModel)]="userData.birthday"></ion-input>
-                            </ion-item>
-                            <ion-item>
-                                <ion-label stacked>Schule</ion-label>
-                                <ion-input type="text" [(ngModel)]="userData.school"></ion-input>
-                              </ion-item>
-                              <ion-item>
-                                  <ion-label stacked>Klasse</ion-label>
-                                  <ion-input type="text" [(ngModel)]="userData.class"></ion-input>
-                                </ion-item>
-
-      </ion-list> 
-    </ion-card-content>
-  </ion-card>
-  <ion-button expand="block" (click)="login()">Registrieren</ion-button>
-  <ion-button fill="outline" expand="block" (click)="login()">Login</ion-button>
-  
+     </ion-card-content>
+  </ion-card> 
 </ion-content>
