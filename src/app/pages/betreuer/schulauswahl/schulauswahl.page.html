@@ -23,7 +23,7 @@
     </ion-label>
     <ion-list class="schul-list" class="schul-list">
         <ion-button *ngFor="let school of schools" class="schul-button" expand="full" (click)="schoolClick()">
-            {{school}}
+            {{school.name}}
           </ion-button>
     </ion-list>
   </div>

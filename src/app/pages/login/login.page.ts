@@ -32,8 +32,12 @@ export class LoginPage implements OnInit {
       })
     };
 
-    this.http.get<GrantedAuthority[]>(this.env.API_URL, httpOptions).subscribe((a) => {
-      this.user.role = a[0].authority;
+    this.http.get<string[]>(this.env.API_URL, httpOptions).subscribe((a) => {
+      if(a.includes('ROLE_EMPLOYEE')){
+        this.user.role = 'ROLE_EMPLOYEE';
+      } else if(a.includes('ROLE_PARENT')){
+        this.user.role = 'ROLE_PARENT';
+      }
       this.auth.login(this.user).subscribe(user => {
         console.log('after login: ', user);
         // the navigation will happen by the returned value from the observable.

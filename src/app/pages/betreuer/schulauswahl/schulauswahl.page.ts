@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { EnvService } from '../../../services/env.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-schulauswahl',
@@ -8,14 +11,10 @@ import { Router } from '@angular/router';
 })
 export class SchulauswahlPage implements OnInit {
 
-  schools : any;
+  schools: any;
 
-  constructor(public router : Router) {
-    this.schools = [
-    'Holstenschule',
-    'Klaus Groth Schule',
-    'Wilhelm Tank Schule'
-  ];
+  constructor(public router : Router ,public http: HttpClient, private env: EnvService) {
+    this.getSchools();
   }
 
   ngOnInit() {
@@ -23,6 +22,19 @@ export class SchulauswahlPage implements OnInit {
 
   schoolClick() {
     this.router.navigate(['schueler-anmelden']);
+  }
+
+  getSchools() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Basic ' + btoa(`Management_Test:password`)
+      })
+    };
+
+    this.http.get<school[]>(`${environment.apiUrl}/api/schools`, httpOptions).subscribe((a) => {
+      this.schools = a;
+    });
   }
 
 }
