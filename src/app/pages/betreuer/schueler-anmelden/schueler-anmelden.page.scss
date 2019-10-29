@@ -30,6 +30,8 @@
 .schueler-container{
     width: auto;
     margin-top: 2em;
+    margin-left: 2em;
+    margin-right: 2em;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -37,21 +39,25 @@
 }
 .schueler-item-angemeldet{
     margin-top: 1em;
+    width: 100%;
     --border-width: 2px 2px 2px 2px;
     --border-color: blue;
 }
 .schueler-item-noch-nicht-anwesend{
     margin-top: 1em;
+    width: 100%;
     --border-width: 2px 2px 2px 2px;
     --border-color: grey;
 }
 .schueler-item-nach-Hause-gegangen{
     margin-top: 1em;
+    width: 100%;
     --border-width: 2px 2px 2px 2px;
     --border-color: black;
 }
 .schueler-item-ueberfaellig{
     margin-top: 1em;
+    width: 100%;
     --border-width: 2px 2px 2px 2px;
     --border-color: red;
 }

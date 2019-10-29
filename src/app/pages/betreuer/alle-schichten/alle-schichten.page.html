@@ -15,7 +15,7 @@
         <ion-label>{{item.name}}</ion-label>
       </ion-item>
       <div *ngIf="item.schichten && item.open" class="schicht-container">
-        <ion-item *ngFor="let schicht of item.schichten" lines="none" class="schichten-item">
+        <ion-item *ngFor="let schicht of item.schichten" lines="none" class="schichten-item" (click)="presentAlert(schicht)">
           <div class="schichten-content-container">
             <ion-label>
               {{schicht.schule}}

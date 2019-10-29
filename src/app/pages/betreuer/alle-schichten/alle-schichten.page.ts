@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, AlertController } from '@ionic/angular';
 import { alleSchichtenmodel } from 'src/app/models/alle-Schichten-model';
 import { SchichtModel } from 'src/app/models/schicht-model';
 
@@ -12,7 +12,7 @@ export class AlleSchichtenPage implements OnInit {
 
   days: any;
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, private alertController: AlertController) {
     let schichten = [
       new SchichtModel("Testschule", "01.01.2019", "19:00", "Montag")
     ];
@@ -35,6 +35,16 @@ export class AlleSchichtenPage implements OnInit {
 
   toggleItem(i, j){
     this.days[i].children[j].open = !this.days[i].children.open[j];
+  }
+
+  async presentAlert(model:SchichtModel){
+    const alert = await this.alertController.create({
+      header: model.schule,
+      message: model.day + ", den " + model.datum,
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 
 }
