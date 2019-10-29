@@ -1,6 +1,3 @@
-ion-item{
-    --border-width: 2px 2px 2px 2px;
-}
 .flex-container{
     margin-left: 2em;
     margin-right: 2em;
@@ -38,8 +35,25 @@ ion-item{
     align-items: center;
     justify-content: flex-end;
 }
-.schueler-item{
+.schueler-item-angemeldet{
     margin-top: 1em;
+    --border-width: 2px 2px 2px 2px;
+    --border-color: blue;
+}
+.schueler-item-noch-nicht-anwesend{
+    margin-top: 1em;
+    --border-width: 2px 2px 2px 2px;
+    --border-color: grey;
+}
+.schueler-item-nach-Hause-gegangen{
+    margin-top: 1em;
+    --border-width: 2px 2px 2px 2px;
+    --border-color: black;
+}
+.schueler-item-ueberfaellig{
+    margin-top: 1em;
+    --border-width: 2px 2px 2px 2px;
+    --border-color: red;
 }
 .schueler-content-container{
     width: 100%;

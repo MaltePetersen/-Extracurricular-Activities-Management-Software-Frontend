@@ -16,7 +16,7 @@
     </ion-row>
   </div>
   <div class="schueler-container">
-    <ion-item *ngFor="let schueler of schueler" lines="none" class="schueler-item">
+    <ion-item *ngFor="let schueler of schueler" lines="none" [ngClass]="{'schueler-item-angemeldet':schueler.anwesenheit == 0, 'schueler-item-noch-nicht-anwesend':schueler.anwesenheit == 1, 'schueler-item-nach-Hause-gegangen':schueler.anwesenheit == 2, 'schueler-item-ueberfaellig':schueler.anwesenheit == 3.}">
       <div class="schueler-content-container">
         <ion-label>
           {{schueler.name}}

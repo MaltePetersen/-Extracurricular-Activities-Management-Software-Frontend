@@ -1,18 +1,12 @@
 export class SchuelerModel{
 
-    constructor(public name:String, public schule:String, public klasse:String, public betreuungsende:any, public info:String, public anwesenheit:String){
+    /*Anwesenheit
+    0 = Angemeldet
+    1 = noch nicht anwesend
+    2 = gegangen
+    3 = ueberfaellig
+    */
+    constructor(public name:string, public schule:string, public klasse:string, public betreuungsende:any, public info:string, public anwesenheit:number){
         
-    }
-
-    getColor(){
-        if(this.anwesenheit == "angemeldet"){
-            return "blue";
-        }
-        if(this.anwesenheit == "nichtAnwesend"){
-            return "grey";
-        }
-        if(this.anwesenheit == "gegangen"){
-            return "black";
-        }
     }
 }
