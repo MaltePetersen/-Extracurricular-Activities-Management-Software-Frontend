@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { SchuelerAnmeldenPage } from './schueler-anmelden.page';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    SharedModule,
     RouterModule.forChild(routes),
     NgxDatatableModule
   ],
