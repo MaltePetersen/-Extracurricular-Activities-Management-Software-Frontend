@@ -70,6 +70,7 @@ export class AuthenticationService {
 
     //logout the user and delete the saved token from the device. then move back to login page.
     async logout() {
+      console.log("User wird abgemeldet...")
       await this.storage.set(TOKEN_KEY, null);
       this.authenticationState.next({email: null, role: null, isLoggedIn: false});
       this.router.navigateByUrl('/login');

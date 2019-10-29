@@ -15,7 +15,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, IonicStorageModule.forRoot(), NgxDatatableModule, HttpClientModule],
+  imports: [BrowserModule,    
+    IonicModule.forRoot(), AppRoutingModule, IonicStorageModule.forRoot(), NgxDatatableModule, HttpClientModule],
   providers: [
     StatusBar,
     SplashScreen,

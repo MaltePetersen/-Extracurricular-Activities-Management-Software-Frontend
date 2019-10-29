@@ -36,10 +36,15 @@ export class AppComponent implements OnInit {
       url: '/kind-hinzufuegen',
       icon: 'people'
     },
-{
+    {
       title: 'Account',
       url: '/account',
       icon: 'person'
+    },
+    {
+      title: 'Abmelden',
+      icon: 'log-out',
+      logout: this.auth.logout()
     },
   ];
   public Betreuer = [
@@ -67,7 +72,12 @@ export class AppComponent implements OnInit {
       title: 'Abrechnung',
       url: '/abrechnung',
       icon: 'card'
-    }
+    },
+    {
+      title: 'Abmelden',
+      url: '/login',
+      icon: 'log-out'
+    },
   ];
 constructor(
     private platform: Platform,
