@@ -5,13 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { KindHinzufuegenPage } from './kind-hinzufuegen.page';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { LogoutPage } from './logout.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: KindHinzufuegenPage
+    component: LogoutPage
   }
 ];
 
@@ -19,10 +18,9 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
-    SharedModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [KindHinzufuegenPage]
+  declarations: [LogoutPage]
 })
-export class KindHinzufuegenPageModule {}
+export class LogoutPageModule {}

@@ -97,7 +97,8 @@ const routes: Routes = [
   data: {
     role: 'ROLE_EMPLOYEE'
   }
-}
+},  { path: 'logout', loadChildren: './pages/logout/logout.module#LogoutPageModule' }
+
 ];
 
 @NgModule({
