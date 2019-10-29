@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
     },
     {
       title: 'Kinder',
-      url: '/kind-hinzufuegen',
+      url: '/kind-uebersicht',
       icon: 'people'
     },
     {

@@ -35,7 +35,7 @@ export class RegistrierungPage implements OnInit {
   }
 
   login() {
-    console.log('Registrierung pressed');
+
     this.router.navigateByUrl('/login');
   }
 

@@ -68,6 +68,12 @@ export class AuthenticationService {
       )
     }
 
+    childRegister(fname: String,  lname: String,  bday: String,  school: String,  schoolClass: String,  username: String,  password: String,  passwordRepeat: String) {
+      return this.http.post(this.env.API_URL + 'REGISTRIERUNG',
+        {fname: fname,  lname: lname,  bday: bday,  school: school,  schoolClass: schoolClass,  username: username,  password: password,  passwordRepeat: passwordRepeat}
+      )
+    }
+
     //logout the user and delete the saved token from the device. then move back to login page.
     async logout() {
       console.log("User wird abgemeldet...")

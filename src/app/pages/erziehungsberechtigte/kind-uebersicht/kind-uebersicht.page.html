@@ -1,0 +1,42 @@
+<app-header></app-header>
+
+<ion-content>
+    <div class="flex-container">
+      <ion-label class="schichten-label">
+        Meine Kinder
+      </ion-label>
+    </div>
+    <div class="schichten-container">
+      <ion-item *ngFor="let k of kinder" lines="none" class="schichten-item">
+        <div class="schichten-content-container">
+
+        <ion-row class="data-row">
+        <ion-label class="tag-label">
+          {{k.fname}}
+        </ion-label>
+        <p style="width: 7px"></p>
+        <ion-label class="tag-label">
+            {{k.lname}}
+          </ion-label>
+        </ion-row>
+          <ion-row class="data-row">
+              <ion-label class="data-label">
+                Klasse: {{k.schoolClass}}
+              </ion-label>
+            
+          <ion-label style="position: absolute; right: 0;">
+            Schule: {{k.school}}
+          </ion-label>
+        </ion-row>
+      </div>
+      </ion-item>
+    </div>
+  </ion-content>
+  
+  <ion-footer>
+      <ion-toolbar>
+        <ion-label>
+            <ion-button class="home-button" expand="block" (click)="navToKindHinzu()">Kind hinzufügen</ion-button>
+        </ion-label>
+      </ion-toolbar>
+    </ion-footer>
