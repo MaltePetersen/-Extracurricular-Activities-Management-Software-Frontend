@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
     {
       title: 'Abmelden',
       icon: 'log-out',
-      logout: this.auth.logout()
+      url: '/logout',
     },
   ];
   public Betreuer = [
@@ -74,10 +74,10 @@ export class AppComponent implements OnInit {
       icon: 'card'
     },
     {
-      title: 'Abmelden',
-      url: '/login',
-      icon: 'log-out'
-    },
+    title: 'Abmelden',
+    icon: 'log-out',
+    url: '/logout'
+  },
   ];
 constructor(
     private platform: Platform,
