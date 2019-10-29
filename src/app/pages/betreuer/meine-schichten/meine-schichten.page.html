@@ -9,25 +9,25 @@
   <div class="schichten-container">
     <ion-item *ngFor="let schicht of schichten" lines="none" class="schichten-item">
       <div class="schichten-content-container">
-      <ion-label class="tag-label">
-        {{schicht.day}}
-      </ion-label>
-      <ion-row class="data-row">
-        <ion-label class="data-label">
-          Schule: {{schicht.schule}}
+        <ion-label class="tag-label">
+          {{schicht.day}}
         </ion-label>
-      </ion-row>
-      <ion-row class="data-row">
-        <ion-label class="data-label">
-          Datum: {{schicht.datum}}
-        </ion-label>
-      </ion-row>
-      <ion-row class="data-row">
-        <ion-label class="data-label">
-          Uhrzeit: {{schicht.uhrzeit}}
-        </ion-label>
-      </ion-row>
-    </div>
+        <ion-row class="data-row">
+          <ion-label class="data-label">
+            Schule: {{schicht.schule}}
+          </ion-label>
+        </ion-row>
+        <ion-row class="data-row">
+          <ion-label class="data-label">
+            Datum: {{schicht.datum}}
+          </ion-label>
+        </ion-row>
+        <ion-row class="data-row">
+          <ion-label class="data-label">
+            Uhrzeit: {{schicht.uhrzeit}}
+          </ion-label>
+        </ion-row>
+      </div>
     </ion-item>
   </div>
 </ion-content>
