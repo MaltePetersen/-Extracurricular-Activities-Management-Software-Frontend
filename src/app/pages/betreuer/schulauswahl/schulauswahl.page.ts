@@ -25,14 +25,8 @@ export class SchulauswahlPage implements OnInit {
   }
 
   getSchools() {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'Basic ' + btoa(`Management_Test:password`)
-      })
-    };
-
-    this.http.get<school[]>(`${environment.apiUrl}/api/schools`, httpOptions).subscribe((a) => {
+  
+    this.http.get<school[]>(`${environment.apiUrl}/api/schools`).subscribe((a) => {
       this.schools = a;
     });
   }

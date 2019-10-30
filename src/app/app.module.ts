@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -12,6 +12,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { IonicStorageModule } from '@ionic/storage';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { SharedModule } from './shared/shared.module';
+import { BasicAuthInterceptor } from './intercepters/BasicAuthInterceptor';
+import { ErrorInterceptor } from './intercepters/ErrorInterceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,8 +23,8 @@ import { SharedModule } from './shared/shared.module';
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
-  ],
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }     ,  { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
