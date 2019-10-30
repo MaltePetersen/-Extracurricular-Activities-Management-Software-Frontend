@@ -3,6 +3,7 @@ import { DatePicker } from '@ionic-native/date-picker';
 import { NgModel } from '@angular/forms';
 import { SchuelerModel } from 'src/app/models/schueler-model';
 import { AlertController } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-schueler-anmelden',
@@ -12,26 +13,67 @@ import { AlertController } from '@ionic/angular';
 export class SchuelerAnmeldenPage implements OnInit {
 
 
-  classes : any;
-  schueler : any;
-
-  private datum:any;
+  classes:string[];
+  pupils:SchuelerModel[];
+  filteredPupils:SchuelerModel[];
+  date:Date;
+  schoolId:string;
+  selectedClass:string;
+  search:string;
   
-  constructor(private alertController: AlertController) { 
-    this.classes = [
-      '1a',
-      '2b',
-      '3c'
-    ]
-    this.schueler = [
+  constructor(private alertController: AlertController, private thisRoute:ActivatedRoute) { 
+    this.pupils = [
       new SchuelerModel("Birgit", "Klaus Groth Schule", "5b", "15:00", "Muss nach Hause getragen werden", 0),
       new SchuelerModel("Klaus", "Klaus Groth Schule", "6b", "16:00", "Faehrt mit dem Bus", 1),
       new SchuelerModel("Timo", "Klaus Groth Schule", "7b", "17:00", "Faehrt mit der Bahn", 2),
-      new SchuelerModel("Max", "Klaus Groth Schule", "8b", "18:00", "Wird abgeholt", 3)
-    ]
+      new SchuelerModel("Max", "Klaus Groth Schule", "8b", "18:00", "Wird abgeholt", 3),
+      new SchuelerModel("Max", "Klaus Groth Schule", "9b", "18:00", "Wird abgeholt", 3),
+      new SchuelerModel("Max", "Klaus Groth Schule", "10b", "18:00", "Wird abgeholt", 3),
+      new SchuelerModel("Max", "Klaus Groth Schule", "11b", "18:00", "Wird abgeholt", 3),
+      new SchuelerModel("Max", "Klaus Groth Schule", "12b", "18:00", "Wird abgeholt", 3),
+      new SchuelerModel("Max", "Klaus Groth Schule", "13b", "18:00", "Wird abgeholt", 3)
+    ];
+    this.filteredPupils = this.pupils;
+    this.getClasses();
   }
 
   ngOnInit() {
+    this.schoolId = this.thisRoute.snapshot.paramMap.get('id');
+  }
+
+  searchChanged(){
+    console.log(this.search);
+      this.filterPupils();
+  }
+
+  selectedClassChanged(){
+    console.log(this.selectedClass);
+      this.filterPupils();
+  }
+
+  dateChanged(){
+    console.log(this.date);
+  }
+
+  filterPupils(){
+    this.filteredPupils = this.pupils;
+    if(this.search != null && this.search != ""){
+      this.filteredPupils = this.filteredPupils.filter(pupil => pupil.name.toUpperCase().includes(this.search.toUpperCase()));
+    }
+    if(this.selectedClass != null && this.selectedClass != "Alle"){
+      this.filteredPupils = this.filteredPupils.filter(pupil => pupil.klasse == this.selectedClass);
+    }
+  }
+
+  getClasses(){
+    this.classes = ["Alle"];
+    this.pupils.forEach((element) => {
+      if(!this.classes.includes(element.klasse)){
+        this.classes.push(element.klasse);
+      }
+    });
+    this.classes.sort();
+    this.selectedClass = "Alle";
   }
 
   async presentAlert(model:SchuelerModel){
@@ -40,7 +82,6 @@ export class SchuelerAnmeldenPage implements OnInit {
       message: "Schule: " + model.schule + "<br/>" + "Klasse: " + model.klasse + "<br/>" + "Betreuungsende: " + model.betreuungsende + "<br/>" + "Info: " + model.info,
       buttons: ['OK']
     });
-
     await alert.present();
   }
 }

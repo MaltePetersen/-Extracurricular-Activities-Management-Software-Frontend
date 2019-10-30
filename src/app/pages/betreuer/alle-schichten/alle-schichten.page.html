@@ -8,8 +8,8 @@
   </div>
   
   <div class="schichten-container">
-    <ion-list *ngFor="let item of days; let i = index;" class="accordion-list" lines="none" detail="false" no-padding>
-      <ion-item tappable (click)="toggleSelection(i)" [ngClass]="{'selection-active': item.open, 'selection': !item.open}">
+    <ion-list *ngFor="let item of days; let i = index;" class="accordion-list" lines="none" detail="false" class="ion-no-padding">
+      <ion-item class="ion-text-center" tappable (click)="toggleSelection(i)" [ngClass]="{'selection-active': item.open, 'selection': !item.open}">
         <ion-icon slot="end" name="arrow-down" *ngIf="!item.open"></ion-icon>
         <ion-icon slot="end" name="arrow-up" *ngIf="item.open"></ion-icon>
         <ion-label>{{item.name}}</ion-label>

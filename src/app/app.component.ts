@@ -54,11 +54,6 @@ export class AppComponent implements OnInit {
       icon: 'briefcase'
     },
     {
-      title: 'Anwesenheitsliste',
-      url: '/schueler-anmelden',
-      icon: 'person'
-    },
-    {
       title: 'Meine Schichten',
       url: '/meine-schichten',
       icon: 'clipboard'

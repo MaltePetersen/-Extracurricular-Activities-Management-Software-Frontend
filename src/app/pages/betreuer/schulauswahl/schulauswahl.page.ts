@@ -20,12 +20,11 @@ export class SchulauswahlPage implements OnInit {
   ngOnInit() {
   }
 
-  schoolClick() {
-    this.router.navigate(['schueler-anmelden']);
+  schoolClick(schoolId:number) {
+    this.router.navigate(['schueler-anmelden', {id:schoolId}]);
   }
 
   getSchools() {
-  
     this.http.get<school[]>(`${environment.apiUrl}/api/schools`).subscribe((a) => {
       this.schools = a;
     });
