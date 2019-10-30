@@ -1,11 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of} from 'rxjs';
-import {Storage} from '@ionic/storage';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { EnvService } from './env.service';
 import { User } from '../models/user';
+import { environment } from 'src/environments/environment';
 
 const TOKEN_KEY = 'auth-token';
 
@@ -15,70 +16,71 @@ const TOKEN_KEY = 'auth-token';
 // Goal is a role based login. A normal User should only be able to see whats for his eyes. An admin for example needs to see more. In this app we will use 3 different roles.
 
 export class AuthenticationService {
-  user: Observable<any>;
-  //The BehaviorSubject holds the value that needs to be shared with other components. These components subscribe to data which is simple returning the BehaviorSubject value without the functionality to change the value
-  authenticationState = new BehaviorSubject(null);
+  private currentUserSubject: BehaviorSubject<User>;
+  public currentUser: Observable<User>;
 
- constructor(private storage: Storage, private router: Router, private http: HttpClient, private env: EnvService,) {
-   this.loadUser();
-   //The Observer and Objects interfaces provide a generalized mechanism for push-based notification, also known as the observer design pattern. The Observable object represents the object that sends notifications (the provider); the Observer object represents the class that receives them (the observer). 
-   // The asObservable gets its data from the BehaviorSubject
-   //the pipe and filter will make sure that only expressions are returned that are not null. The auth guard will wait for a response
-   this.user = this.authenticationState.asObservable().pipe(filter(response => response));
-  }
-
-  //retrive the user token from the storage to make sure in the beginning that the still authenticated user can navigate trough the pages and is not blocked by the guard.
-  loadUser() {
-    this.storage.get(TOKEN_KEY).then(data => {
-      if (data){
-        this.authenticationState.next({data});
-      } else {
-        this.authenticationState.next({email: null, role: null, isLoggedIn: false});
-      }
-    });
-  }
-
-    login(credentials): Observable<any> {
-      // first retrieve the data from the credentials after that send it to the backend which replies with a token of some sort. This needs to be implemented here. 
-      let email = credentials.email;
-      let pw = credentials.pw;
-      let role = credentials.role;
-
-      let user = null;
-
-      // Check with your token which role applies to you.
-  
-      if (role === 'ROLE_PARENT') {
-        user = {email, role, isLoggedIn: true};
-      } else if (role === 'ROLE_EMPLOYEE') {
-        user = {email, role, isLoggedIn: true};
-      }
-      this.authenticationState.next(user);
-
-      //Save the returned Token or Json inside the storage of the device (localy).
-      this.storage.set(TOKEN_KEY, user);
-
-      // make the user object into an observable and return it.
-      return of(user);
-    }
-
-    register(fName: String, lName: String, email: String, password: String) {
-      return this.http.post(this.env.API_URL + 'REGISTRIERUNG',
-        {fName: fName, lName: lName, email: email, password: password}
-      )
-    }
-
-    childRegister(fname: String,  lname: String,  bday: String,  school: String,  schoolClass: String,  username: String,  password: String,  passwordRepeat: String) {
-      return this.http.post(this.env.API_URL + 'REGISTRIERUNG',
-        {fname: fname,  lname: lname,  bday: bday,  school: school,  schoolClass: schoolClass,  username: username,  password: password,  passwordRepeat: passwordRepeat}
-      )
-    }
-
-    //logout the user and delete the saved token from the device. then move back to login page.
-    async logout() {
-      console.log("User wird abgemeldet...")
-      await this.storage.set(TOKEN_KEY, null);
-      this.authenticationState.next({email: null, role: null, isLoggedIn: false});
-      this.router.navigateByUrl('/login');
+  constructor(private storage: Storage, private router: Router, private http: HttpClient, private env: EnvService, ) {
+    if (localStorage.getItem('isLoggedin')) {
+      this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('isLoggedin')));
+      this.currentUser = this.currentUserSubject.asObservable();
+    } else {
+      this.currentUserSubject = new BehaviorSubject<User>(null);
+      this.currentUser = this.currentUserSubject.asObservable();
     }
   }
+
+
+  public get currentUserValue(): User {
+    return this.currentUserSubject.value;
+  }
+  public get getCurrentUser(): Observable<User> {
+    return this.currentUser;
+  }
+
+
+
+  login(username: string, password: string) {
+    let user = new User(username, password, window.btoa(username + ':' + password));
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Basic ' + user.authData
+      })
+    };
+    return this.http.get<string[]>(`${environment.apiUrl}/login`, httpOptions)
+      .pipe(map(authorities => {
+        if (authorities.includes('ROLE_EMPLOYEE')) {
+          user.setRole('ROLE_EMPLOYEE');
+          this.currentUserSubject.next(user);
+          localStorage.setItem('isLoggedin', JSON.stringify(user));
+          return 'ROLE_EMPLOYEE';
+        }
+        if (authorities.includes('ROLE_PARENT')) {
+          user.setRole('ROLE_PARENT');
+          this.currentUserSubject.next(user);
+          localStorage.setItem('isLoggedin', JSON.stringify(user));
+          return 'ROLE_PARENT';
+        }
+        return '';
+      }));
+  }
+
+  logout() {
+    // remove user from local storage to log user out
+    localStorage.removeItem('isLoggedin');
+    this.currentUserSubject.next(null);
+    this.router.navigateByUrl('/login');
+  }
+
+  register(fName: String, lName: String, email: String, password: String) {
+    return this.http.post(this.env.API_URL + 'REGISTRIERUNG',
+      { fName: fName, lName: lName, email: email, password: password }
+    )
+  }
+
+  childRegister(fname: String, lname: String, bday: String, school: String, schoolClass: String, username: String, password: String, passwordRepeat: String) {
+    return this.http.post(this.env.API_URL + 'REGISTRIERUNG',
+      { fname: fname, lname: lname, bday: bday, school: school, schoolClass: schoolClass, username: username, password: password, passwordRepeat: passwordRepeat }
+    )
+  }
+}

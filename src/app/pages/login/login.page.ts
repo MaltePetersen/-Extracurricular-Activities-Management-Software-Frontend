@@ -25,33 +25,16 @@ export class LoginPage implements OnInit {
   }
 
   login() {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'Basic ' + btoa(`${this.user.email}:${this.user.pw}`)
-      })
-    };
-
-    this.http.get<string[]>(this.env.API_URL, httpOptions).subscribe((a) => {
-      if(a.includes('ROLE_EMPLOYEE')){
-        this.user.role = 'ROLE_EMPLOYEE';
-      } else if(a.includes('ROLE_PARENT')){
-        this.user.role = 'ROLE_PARENT';
+    this.auth.login(this.user.email, this.user.pw).subscribe((role) => {
+      if (role === 'ROLE_EMPLOYEE'){
+        this.router.navigateByUrl('/schulauswahl');
       }
-      this.auth.login(this.user).subscribe(user => {
-        console.log('after login: ', user);
-        // the navigation will happen by the returned value from the observable.
-        const role = user.role;
-        if (role === 'ROLE_EMPLOYEE') {
-          this.router.navigateByUrl('/schulauswahl');
-        } else if (role === 'ROLE_PARENT') {
-          this.router.navigateByUrl('/erziehungsberechtigte-dashboard');
-        }
-      });
-    });
-
-
+      if (role === 'ROLE_PARENT'){
+      this.router.navigateByUrl('/erziehungsberechtigte-dashboard');
+    }});
   }
+
+
 
   register() {
     console.log('Registrierung pressed');

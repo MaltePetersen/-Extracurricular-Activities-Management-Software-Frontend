@@ -11,12 +11,13 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { IonicStorageModule } from '@ionic/storage';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule,    
-    IonicModule.forRoot(), AppRoutingModule, IonicStorageModule.forRoot(), NgxDatatableModule, HttpClientModule],
+    IonicModule.forRoot(), AppRoutingModule, IonicStorageModule.forRoot(), NgxDatatableModule, HttpClientModule, SharedModule],
   providers: [
     StatusBar,
     SplashScreen,

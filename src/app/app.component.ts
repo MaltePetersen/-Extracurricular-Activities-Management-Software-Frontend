@@ -74,12 +74,12 @@ export class AppComponent implements OnInit {
       icon: 'card'
     },
     {
-    title: 'Abmelden',
-    icon: 'log-out',
-    url: '/logout'
-  },
+      title: 'Abmelden',
+      icon: 'log-out',
+      url: '/logout'
+    },
   ];
-constructor(
+  constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
@@ -88,33 +88,24 @@ constructor(
     this.initializeApp();
   }
 
-ngOnInit(): void {
-    console.log('ngOnInit: ');
-    this.auth.authenticationState.subscribe(a => {
-      console.log('Inside ngOnInit: ');
-      console.log(a);
-      if (a === null) {
+  ngOnInit(): void {
+    this.auth.getCurrentUser.subscribe((currentUser) => {
+      if (currentUser === null) {
         this.isLoggedIn = false;
         this.ERZIEHUNGSBERECHTIGTE = false;
         this.BETREUER = false;
-      } else if (a !== null) {
-        if (a.isLoggedIn === true) {
-          this.isLoggedIn = true;
-          if (a.role === 'ROLE_PARENT') {
-            this.ERZIEHUNGSBERECHTIGTE = true;
-          } else if (a.role === 'ROLE_EMPLOYEE') {
-            this.BETREUER = true;
-          }
-        } else if (a.isLoggedIn === false) {
-          this.isLoggedIn = false;
-          this.ERZIEHUNGSBERECHTIGTE = false;
-          this.BETREUER = false;
-        }
+      } else {
+        this.isLoggedIn = true;
+        if (currentUser.role === 'ROLE_PARENT')
+          this.ERZIEHUNGSBERECHTIGTE = true;
+        if (currentUser.role === 'ROLE_EMPLOYEE') 
+          this.BETREUER = true;
       }
     });
   }
 
-initializeApp() {
+
+  initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
