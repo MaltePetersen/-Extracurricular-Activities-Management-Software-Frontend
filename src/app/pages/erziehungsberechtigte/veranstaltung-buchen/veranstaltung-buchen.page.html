@@ -10,4 +10,44 @@
                 </ion-select>
               </ion-item>
 
+                <div class="flex-container">
+                  <ion-label class="veranstaltung-label">
+                    Meine Schichten
+                  </ion-label>
+                </div>
+                <div class="schichten-container">
+                  <ion-item *ngFor="let schicht of schichten" lines="none" class="veranstaltung-item">
+                    <div class="veranstaltung-content-container">
+                      <ion-label class="tag-label">
+                        {{schicht.day}}
+                      </ion-label>
+                      <ion-row class="data-row">
+                        <ion-label class="data-label">
+                          Schule: {{schicht.schule}}
+                        </ion-label>
+                      </ion-row>
+                      <ion-row class="data-row">
+                        <ion-label class="data-label">
+                          Datum: {{schicht.datum}}
+                        </ion-label>
+                      </ion-row>
+                      <ion-row class="data-row">
+                        <ion-label class="data-label">
+                          Uhrzeit: {{schicht.uhrzeit}}
+                        </ion-label>
+                      </ion-row>
+                    </div>
+                  </ion-item>
+                </div>              
+
+
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-label slot="start">
+      Datum:
+    </ion-label>
+    <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD MMM YYYY" [(ngModel)]="datum"></ion-datetime>
+  </ion-toolbar>
+</ion-footer>
