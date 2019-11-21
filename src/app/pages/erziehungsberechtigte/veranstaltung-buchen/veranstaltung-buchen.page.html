@@ -2,7 +2,7 @@
 
 <ion-content>
 
-        <ion-item>
+              <ion-item>
                 <ion-label>Kind auswählen</ion-label>
                 <ion-select value="" ok-text="Okay" cancel-text="Abbrechen">
                   <ion-select-option value="">Kind A</ion-select-option>
@@ -10,35 +10,37 @@
                 </ion-select>
               </ion-item>
 
+            
                 <div class="flex-container">
-                  <ion-label class="veranstaltung-label">
-                    Meine Schichten
+                  <ion-label >
+                   Buche deine Veranstaltungen
                   </ion-label>
                 </div>
-                <div class="schichten-container">
-                  <ion-item *ngFor="let schicht of schichten" lines="none" class="veranstaltung-item">
+                <div class="veranstaltung-container">
+                  <ion-item *ngFor="let veranstaltung of veranstaltungen" lines="none" class="veranstaltung-item" (click)="chooseOffer(veranstaltung)">
                     <div class="veranstaltung-content-container">
                       <ion-label class="tag-label">
-                        {{schicht.day}}
+                        {{veranstaltung.veranstaltung}}
                       </ion-label>
-                      <ion-row class="data-row">
+                      <!-- <ion-row class="data-row">
                         <ion-label class="data-label">
-                          Schule: {{schicht.schule}}
+                          Tag: {{veranstaltung.day}}
                         </ion-label>
                       </ion-row>
                       <ion-row class="data-row">
                         <ion-label class="data-label">
-                          Datum: {{schicht.datum}}
+                          Datum: {{veranstaltung.datum}}
                         </ion-label>
                       </ion-row>
                       <ion-row class="data-row">
                         <ion-label class="data-label">
-                          Uhrzeit: {{schicht.uhrzeit}}
+                          Uhrzeit: {{veranstaltung.uhrzeit}}
                         </ion-label>
-                      </ion-row>
+                      </ion-row> -->
                     </div>
                   </ion-item>
-                </div>              
+                </div>         
+              
 
 
 </ion-content>
