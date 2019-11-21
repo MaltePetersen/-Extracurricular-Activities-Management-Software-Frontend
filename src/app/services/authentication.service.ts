@@ -20,8 +20,8 @@ export class AuthenticationService {
   public currentUser: Observable<User>;
 
   constructor(private storage: Storage, private router: Router, private http: HttpClient, private env: EnvService, ) {
-    if (localStorage.getItem('isLoggedin')) {
-      this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('isLoggedin')));
+    if (localStorage.getItem('isLoggedIn')) {
+      this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('isLoggedIn')));
       this.currentUser = this.currentUserSubject.asObservable();
     } else {
       this.currentUserSubject = new BehaviorSubject<User>(null);
@@ -52,13 +52,13 @@ export class AuthenticationService {
         if (authorities.includes('ROLE_EMPLOYEE')) {
           user.setRole('ROLE_EMPLOYEE');
           this.currentUserSubject.next(user);
-          localStorage.setItem('isLoggedin', JSON.stringify(user));
+          localStorage.setItem('isLoggedIn', JSON.stringify(user));
           return 'ROLE_EMPLOYEE';
         }
         if (authorities.includes('ROLE_PARENT')) {
           user.setRole('ROLE_PARENT');
           this.currentUserSubject.next(user);
-          localStorage.setItem('isLoggedin', JSON.stringify(user));
+          localStorage.setItem('isLoggedIn', JSON.stringify(user));
           return 'ROLE_PARENT';
         }
         return '';
@@ -67,7 +67,7 @@ export class AuthenticationService {
 
   logout() {
     // remove user from local storage to log user out
-    localStorage.removeItem('isLoggedin');
+    localStorage.removeItem('isLoggedIn');
     this.currentUserSubject.next(null);
     this.router.navigateByUrl('/login');
   }
