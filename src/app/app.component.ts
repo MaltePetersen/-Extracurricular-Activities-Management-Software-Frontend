@@ -93,7 +93,7 @@ export class AppComponent implements OnInit {
         this.isLoggedIn = true;
         if (currentUser.role === 'ROLE_PARENT')
           this.ERZIEHUNGSBERECHTIGTE = true;
-        if (currentUser.role === 'ROLE_EMPLOYEE') 
+                  if (currentUser.role === 'ROLE_EMPLOYEE') 
           this.BETREUER = true;
       }
     });

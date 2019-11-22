@@ -117,9 +117,12 @@ const routes: Routes = [
     data: {
       role: 'ROLE_PARENT'
     }
-  },  { path: 'veranstaltung-buchen-zeitraum', loadChildren: './pages/veranstaltung-buchen-zeitraum/veranstaltung-buchen-zeitraum.module#VeranstaltungBuchenZeitraumPageModule' }
-
-
+  },
+  { path: 'veranstaltung-buchen-zeitraum', loadChildren: './pages/erziehungsberechtigte/veranstaltung-buchen-zeitraum/veranstaltung-buchen-zeitraum.module#VeranstaltungBuchenZeitraumPageModule', canActivate: [AuthGuard],
+  data: {
+    role: 'ROLE_PARENT'
+  }
+},
 ];
 
 @NgModule({

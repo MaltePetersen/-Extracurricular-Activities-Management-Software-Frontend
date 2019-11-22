@@ -1,6 +1,6 @@
 export class GebuchteVeranstaltungen{
     
-    constructor(public veranstaltung:string){
+    constructor(public veranstaltung:string, public dummyVeranstaltungen: string){
 
     }
 }

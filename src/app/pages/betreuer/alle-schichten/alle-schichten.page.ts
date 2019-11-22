@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController, AlertController } from '@ionic/angular';
 import { alleSchichtenmodel } from 'src/app/models/alle-Schichten-model';
 import { SchichtModel } from 'src/app/models/schicht-model';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-alle-schichten',

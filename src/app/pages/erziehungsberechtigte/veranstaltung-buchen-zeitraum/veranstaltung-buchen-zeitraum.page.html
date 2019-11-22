@@ -1,9 +1,43 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>veranstaltung-buchen-zeitraum</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header></app-header>
 
 <ion-content>
-
+  <div class="flex-container">
+    <ion-label class="veranstaltung-label">
+      Bitten einen Zeitraum auswählen
+    </ion-label>
+  </div>
+  
+  <!-- <div class="veranstaltung-container">
+    <ion-list *ngFor="let item of days; let i = index;" class="accordion-list" lines="none" detail="false" class="ion-no-padding">
+      <ion-item class="ion-text-center" tappable (click)="toggleSelection(i)" [ngClass]="{'selection-active': item.open, 'selection': !item.open}">
+        <ion-icon slot="end" name="arrow-down" *ngIf="!item.open"></ion-icon>
+        <ion-icon slot="end" name="arrow-up" *ngIf="item.open"></ion-icon>
+        <ion-label>{{item.name}}</ion-label>
+      </ion-item>
+      <div *ngIf="item.schichten && item.open" class="veranstaltung-container">
+        <ion-item *ngFor="let veranstaltung of item.schichten" lines="none" class="schichten-item" (click)="presentAlert(veranstaltung.name)">
+          <div class="schichten-content-container">
+            <ion-label>
+              {{veranstaltung.name}}
+            </ion-label>
+            <ion-row>
+              <ion-label>
+                {{veranstaltung.name}}, {{veranstaltung.name}}
+              </ion-label>
+            </ion-row>
+          </div>
+        </ion-item>
+      </div>
+    </ion-list>
+  </div> -->
 </ion-content>
+
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-label slot="start">
+      Datum:
+    </ion-label>
+    <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD MMM YYYY" [(ngModel)]="datum"></ion-datetime>
+  </ion-toolbar>
+</ion-footer>
