@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SchichtModel } from 'src/app/models/schicht-model';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-meine-schichten',
@@ -12,7 +13,7 @@ export class MeineSchichtenPage implements OnInit {
 
   private datum:any;
 
-  constructor() { 
+  constructor(private auth: AuthenticationService) { 
     this.schichten = [
       new SchichtModel("Klaus Groth Schule", "17.10.2019", "10:00", "Donnerstag")
     ]

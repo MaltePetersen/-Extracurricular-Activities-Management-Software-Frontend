@@ -8,26 +8,40 @@ import { EnvService } from 'src/app/services/env.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-veranstaltung-buchen',
-  templateUrl: './veranstaltung-buchen.page.html',
-  styleUrls: ['./veranstaltung-buchen.page.scss'],
+  selector: 'app-veranstaltung-buchen-zeitraum',
+  templateUrl: './veranstaltung-buchen-zeitraum.page.html',
+  styleUrls: ['./veranstaltung-buchen-zeitraum.page.scss'],
 })
-export class VeranstaltungBuchenPage implements OnInit {
+export class VeranstaltungBuchenZeitraumPage implements OnInit {
 
   veranstaltungen:any;
+  zeiten:any
+  days: any;
   private datum:any;
 
   constructor(private alertController: AlertController, public router : Router ,public http: HttpClient, private env: EnvService) {
     this.getVeranstaltungen();
+    this.days = [
+      new GebuchteVeranstaltungen("Montag", this.zeiten.name),
+      new GebuchteVeranstaltungen("Dienstag", this.zeiten.name),
+      new GebuchteVeranstaltungen("Mittwoch", this.zeiten.name),
+      new GebuchteVeranstaltungen("Donnestag", this.zeiten.name),
+      new GebuchteVeranstaltungen("Freitag", this.zeiten.name)
+    ]
    }
 
-  ngOnInit() {
+   getVeranstaltungen() {
+    this.http.get<school[]>(`${environment.apiUrl}/api/schools`).subscribe((a) => {
+      this.zeiten = a;
+    });
   }
 
-  getVeranstaltungen() {
-    this.http.get<school[]>(`${environment.apiUrl}/api/schools`).subscribe((a) => {
-      this.veranstaltungen = a;
-    });
+  toggleSelection(i){
+    this.days[i].open = !this.days[i].open;
+  }
+
+  toggleItem(i, j){
+    this.days[i].children[j].open = !this.days[i].children.open[j];
   }
 
   async chooseOffer(name){
@@ -35,9 +49,9 @@ export class VeranstaltungBuchenPage implements OnInit {
       header: name,
       buttons: ['OK']
     });
+  }
 
-    await alert.present();
-    this.router.navigate(['veranstaltung-buchen-zeitraum', {name}]);
+  ngOnInit() {
   }
 
 }

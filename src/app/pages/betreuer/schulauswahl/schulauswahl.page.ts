@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { EnvService } from '../../../services/env.service';
 import { environment } from 'src/environments/environment';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-schulauswahl',
@@ -13,7 +14,7 @@ export class SchulauswahlPage implements OnInit {
 
   schools: any;
 
-  constructor(public router : Router ,public http: HttpClient, private env: EnvService) {
+  constructor(private auth: AuthenticationService, public router : Router ,public http: HttpClient, private env: EnvService) {
     this.getSchools();
   }
 
@@ -28,6 +29,10 @@ export class SchulauswahlPage implements OnInit {
     this.http.get<school[]>(`${environment.apiUrl}/api/schools`).subscribe((a) => {
       this.schools = a;
     });
+  }
+
+  logout() {
+    this.auth.logout();
   }
 
 }
