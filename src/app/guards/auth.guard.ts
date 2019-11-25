@@ -24,7 +24,7 @@ export class AuthGuard implements CanActivate {
     console.log('expected: ', expectedRole);
 
     // grap the returned user and map it. If the role of the returned user is the same with the one that is expected for the url to navigate to, then acces will be granted. If not there is a warning and a redirect to login page.
-    let  user = JSON.parse(localStorage.getItem('isLoggedin')) 
+    let  user = JSON.parse(localStorage.getItem('isLoggedIn')) 
           if (user && user.role && expectedRole === user.role) {
             return true;
           } else {
