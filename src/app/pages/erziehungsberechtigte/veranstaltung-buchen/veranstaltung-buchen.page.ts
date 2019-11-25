@@ -37,7 +37,7 @@ export class VeranstaltungBuchenPage implements OnInit {
     });
 
     await alert.present();
-    this.router.navigate(['veranstaltung-buchen-zeitraum', {name}]);
+    this.router.navigate(['veranstaltung-buchen-zeitraum']);
   }
 
 }

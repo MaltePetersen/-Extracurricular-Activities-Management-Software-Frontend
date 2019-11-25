@@ -1,6 +1,8 @@
+import { GebuchterZeitraum } from './gebuchterZeitraum';
+
 export class GebuchteVeranstaltungen{
     
-    constructor(public veranstaltung:string, public dummyVeranstaltungen: string){
+    constructor(public wochentag: String, public zeitraum: GebuchterZeitraum[]){
 
     }
 }

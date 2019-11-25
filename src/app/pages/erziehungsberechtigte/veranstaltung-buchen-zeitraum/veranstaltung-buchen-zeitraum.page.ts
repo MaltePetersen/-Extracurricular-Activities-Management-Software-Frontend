@@ -6,6 +6,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { EnvService } from 'src/app/services/env.service';
 import { environment } from 'src/environments/environment';
+import { GebuchterZeitraum } from 'src/app/models/gebuchterZeitraum';
 
 @Component({
   selector: 'app-veranstaltung-buchen-zeitraum',
@@ -14,26 +15,26 @@ import { environment } from 'src/environments/environment';
 })
 export class VeranstaltungBuchenZeitraumPage implements OnInit {
 
-  veranstaltungen:any;
-  zeiten:any
+  zeit: any;
   days: any;
-  private datum:any;
+  private datum: any;
 
   constructor(private alertController: AlertController, public router : Router ,public http: HttpClient, private env: EnvService) {
     this.getVeranstaltungen();
+
     this.days = [
-      new GebuchteVeranstaltungen("Montag", this.zeiten.name),
-      new GebuchteVeranstaltungen("Dienstag", this.zeiten.name),
-      new GebuchteVeranstaltungen("Mittwoch", this.zeiten.name),
-      new GebuchteVeranstaltungen("Donnestag", this.zeiten.name),
-      new GebuchteVeranstaltungen("Freitag", this.zeiten.name)
+      new GebuchteVeranstaltungen("Montag", this.zeit),
+      new GebuchteVeranstaltungen("Dienstag", this.zeit),
+      new GebuchteVeranstaltungen("Mittwoch", this.zeit),
+      new GebuchteVeranstaltungen("Donnestag", this.zeit),
+      new GebuchteVeranstaltungen("Freitag", this.zeit)
     ]
    }
 
    getVeranstaltungen() {
-    this.http.get<school[]>(`${environment.apiUrl}/api/schools`).subscribe((a) => {
-      this.zeiten = a;
-    });
+    this.zeit = [
+      new GebuchterZeitraum("13:00 - 15:00 Uhr", "Deutsch"),
+    ];
   }
 
   toggleSelection(i){
