@@ -6,6 +6,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { EnvService } from 'src/app/services/env.service';
 import { environment } from 'src/environments/environment';
+import { VeranstaltungensdatenService } from 'src/app/services/veranstaltungensdaten.service';
 
 @Component({
   selector: 'app-veranstaltung-buchen',
@@ -13,15 +14,17 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./veranstaltung-buchen.page.scss'],
 })
 export class VeranstaltungBuchenPage implements OnInit {
-
+  
+  veranstaltung: string;
   veranstaltungen:any;
   private datum:any;
 
-  constructor(private alertController: AlertController, public router : Router ,public http: HttpClient, private env: EnvService) {
+  constructor(private alertController: AlertController, public router : Router ,public http: HttpClient, private env: EnvService, private veranstaltungsDaten: VeranstaltungensdatenService) {
     this.getVeranstaltungen();
    }
 
   ngOnInit() {
+    this.veranstaltungsDaten.ausgewählteVeranstaltung.subscribe(veranstaltung => this.veranstaltung = veranstaltung)
   }
 
   getVeranstaltungen() {
@@ -31,12 +34,13 @@ export class VeranstaltungBuchenPage implements OnInit {
   }
 
   async chooseOffer(name){
-    const alert = await this.alertController.create({
-      header: name,
-      buttons: ['OK']
-    });
+    this.veranstaltungsDaten.changeVeranstaltung(name.toString())
+    // const alert = await this.alertController.create({
+    //   header: name,
+    //   buttons: ['OK']
+    //});
 
-    await alert.present();
+    //await alert.present();
     this.router.navigate(['veranstaltung-buchen-zeitraum']);
   }
 

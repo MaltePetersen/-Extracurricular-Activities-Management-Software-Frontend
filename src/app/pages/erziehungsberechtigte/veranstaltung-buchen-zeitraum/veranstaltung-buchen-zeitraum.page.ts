@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { EnvService } from 'src/app/services/env.service';
 import { environment } from 'src/environments/environment';
 import { GebuchterZeitraum } from 'src/app/models/gebuchterZeitraum';
+import { VeranstaltungensdatenService } from 'src/app/services/veranstaltungensdaten.service';
 
 @Component({
   selector: 'app-veranstaltung-buchen-zeitraum',
@@ -14,12 +15,12 @@ import { GebuchterZeitraum } from 'src/app/models/gebuchterZeitraum';
   styleUrls: ['./veranstaltung-buchen-zeitraum.page.scss'],
 })
 export class VeranstaltungBuchenZeitraumPage implements OnInit {
-
+  veranstaltung: string;
   zeit: any;
   days: any;
   private datum: any;
 
-  constructor(private alertController: AlertController, public router : Router ,public http: HttpClient, private env: EnvService) {
+  constructor(private alertController: AlertController, public router : Router ,public http: HttpClient, private env: EnvService, private veranstaltungsDaten: VeranstaltungensdatenService) {
     this.getVeranstaltungen();
 
     this.days = [
@@ -53,6 +54,7 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
   }
 
   ngOnInit() {
+    this.veranstaltungsDaten.ausgewählteVeranstaltung.subscribe(veranstaltung => this.veranstaltung = veranstaltung)
   }
 
 }
