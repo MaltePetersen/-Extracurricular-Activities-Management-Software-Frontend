@@ -2,17 +2,16 @@
 
 <ion-content>
 
-              <ion-item>
+              <ion-item> 
                 <ion-label>Kind auswählen</ion-label>
-                <ion-select value="" ok-text="Okay" cancel-text="Abbrechen">
-                  <ion-select-option value="">Kind A</ion-select-option>
-                  <ion-select-option value="">Kind B</ion-select-option>
+                <ion-select [(ngModel)]="kinder" ok-text="Okay" cancel-text="Abbrechen" (ionChange)="onSelectChange($event)">
+                  <ion-select-option *ngFor="let kind of veranstaltungen" value="{{kind.id}}">{{kind.name}}</ion-select-option>
                 </ion-select>
               </ion-item>
 
             
                 <div class="flex-container">
-                  <ion-label >
+                  <ion-label  class="veranstaltung-label">
                    Buche deine Veranstaltungen
                   </ion-label>
                 </div>
