@@ -21,11 +21,11 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
   kinderId:any
   zeit: any;
   days: any;
-  private datum: any;
+  datum: any;
+  weekNo: any;
 
   constructor(private alertController: AlertController, public router : Router ,public http: HttpClient, private env: EnvService, private veranstaltungsDaten: VeranstaltungensdatenService) {
     this.getVeranstaltungen();
-
     this.days = [
       new GebuchteVeranstaltungen("Montag", this.zeit),
       new GebuchteVeranstaltungen("Dienstag", this.zeit),
@@ -33,8 +33,9 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
       new GebuchteVeranstaltungen("Donnestag", this.zeit),
       new GebuchteVeranstaltungen("Freitag", this.zeit)
     ]
-   }
 
+   }
+ 
   //  getVeranstaltungen() {
   //   this.zeit = [
   //     new GebuchterZeitraum("13:00 - 15:00 Uhr", "Deutsch"),
@@ -69,7 +70,35 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
     await alert.present();
   }
 
-  ngOnInit() {
+  selectCalendarWeek(){
+    
+    let d: any;
+    d = new Date(this.datum);
+    console.log("Datum : "+ d)
+    let yearStart: any;
+
+   console.log("Datum : "+ this.datum)
+
+      // Copy date so don't modify original
+      d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+      // Set to nearest Thursday: current date + 4 - current day number
+      // Make Sunday's day number 7
+      d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay()||7));
+      // Get first day of year
+      yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+      // Calculate full weeks to nearest Thursday
+      this.weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1)/7);
+      // Return array of year and week number
+      console.log([d.getUTCFullYear(), this.weekNo]);
+     //return [d.getUTCFullYear(), weekNo];
+  
+
+  }
+
+
+ ngOnInit() {
+  this.datum = new Date().toDateString();
+  this.selectCalendarWeek();
   //   this.veranstaltungsDaten.ausgewählteVeranstaltung.subscribe(veranstaltung => this.veranstaltung = veranstaltung);
   //   console.log("Veranstaltung von zeitraum = "+ this.veranstaltung);
   //   console.log("Zeit 1 = "+ this.zeit);
@@ -77,6 +106,7 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
   //     new GebuchterZeitraum("13:00 - 15:00 Uhr", this.veranstaltung),
   //  ];
   //  console.log("Zeit 2 = "+ JSON.stringify(this.zeit));
+  console.log("this.datum: " +this.datum)
   }
 
 }

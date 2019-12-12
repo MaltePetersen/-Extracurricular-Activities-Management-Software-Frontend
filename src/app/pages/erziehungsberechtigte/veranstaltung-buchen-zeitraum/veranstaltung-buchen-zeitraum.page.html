@@ -2,9 +2,10 @@
 
 <ion-content>
   <div class="flex-container">
-    <ion-label class="veranstaltung-label">
-      Wähle deinen Zeitraum für {{veranstaltung}} aus?
+    <ion-label class="veranstaltungstyp">
+      Terminbuchung für {{veranstaltung}}
     </ion-label>
+    <ion-label class="veranstaltung-label"> -- Kalenderwoche {{weekNo}} -- </ion-label>
   </div>
   
   <div class="veranstaltung-container">
@@ -35,9 +36,9 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-label slot="start">
-      Datum:
+    <ion-label slot="start" class="data-label">
+      Zeitraum auswählen: 
     </ion-label>
-    <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD MMM YYYY" [(ngModel)]="datum"></ion-datetime>
+    <ion-datetime displayFormat="DD MMMM YYYY" pickerFormat="DD MMMM YYYY" max="2021" [(ngModel)]="datum"  (ionChange)="selectCalendarWeek()"></ion-datetime>
   </ion-toolbar>
 </ion-footer>
