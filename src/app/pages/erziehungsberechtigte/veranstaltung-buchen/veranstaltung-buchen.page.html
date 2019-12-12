@@ -4,8 +4,8 @@
 
               <ion-item> 
                 <ion-label>Kind auswählen</ion-label>
-                <ion-select [(ngModel)]="kinder" ok-text="Okay" cancel-text="Abbrechen" (ionChange)="onSelectChange($event)">
-                  <ion-select-option *ngFor="let kind of veranstaltungen" value="{{kind.id}}">{{kind.name}}</ion-select-option>
+                <ion-select [(ngModel)]="kinder" ok-text="Okay" cancel-text="Abbrechen" (ionChange)="chooseChild($event)">
+                  <ion-select-option *ngFor="let kind of veranstaltungen" value="{{kind.name}} {{kind.id}}">{{kind.name}}</ion-select-option>
                 </ion-select>
               </ion-item>
 

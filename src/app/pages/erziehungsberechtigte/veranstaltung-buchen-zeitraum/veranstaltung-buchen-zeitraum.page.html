@@ -14,8 +14,8 @@
         <ion-icon slot="end" name="arrow-up" *ngIf="item.open"></ion-icon>
         <ion-label>{{item.wochentag}}</ion-label>
       </ion-item>
-      <div *ngIf="item.zeitraum && item.open" class="veranstaltung-container">
-        <ion-item *ngFor="let zeit of item.zeitraum" lines="none" class="schichten-item" (click)="presentAlert(veranstaltung.name)">
+      <div *ngIf="item.zeitraum && item.open">
+        <ion-item *ngFor="let zeit of item.zeitraum" lines="none" class="schichten-item" (click)="presentAlert(zeit.thema, zeit.uhrzeit)">
           <div class="schichten-content-container">
             <ion-label>
                 {{zeit.thema}}
@@ -29,7 +29,7 @@
         </ion-item>
       </div>
     </ion-list>
-  </div> -->
+  </div>
 </ion-content>
 
 

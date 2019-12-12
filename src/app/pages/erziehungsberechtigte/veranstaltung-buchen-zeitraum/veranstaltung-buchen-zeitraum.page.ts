@@ -16,6 +16,9 @@ import { VeranstaltungensdatenService } from 'src/app/services/veranstaltungensd
 })
 export class VeranstaltungBuchenZeitraumPage implements OnInit {
   veranstaltung: string;
+  veranstaltungen:any;
+  kindername: any;
+  kinderId:any
   zeit: any;
   days: any;
   private datum: any;
@@ -32,10 +35,21 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
     ]
    }
 
-   getVeranstaltungen() {
+  //  getVeranstaltungen() {
+  //   this.zeit = [
+  //     new GebuchterZeitraum("13:00 - 15:00 Uhr", "Deutsch"),
+  //   ];
+    
+  // }
+
+  getVeranstaltungen() {
+    this.veranstaltungsDaten.ausgewählteVeranstaltung.subscribe(veranstaltung => this.veranstaltung = veranstaltung);
     this.zeit = [
-      new GebuchterZeitraum("13:00 - 15:00 Uhr", "Deutsch"),
-    ];
+      new GebuchterZeitraum("13:00 - 15:00 Uhr", this.veranstaltung),
+   ];
+   this.veranstaltungsDaten.ausgewähltesKind.subscribe(kindername => this.kindername = kindername);
+   this.veranstaltungsDaten.ausgewählteID.subscribe(kinderId => this.kinderId = kinderId);
+
   }
 
   toggleSelection(i){
@@ -46,15 +60,23 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
     this.days[i].children[j].open = !this.days[i].children.open[j];
   }
 
-  async chooseOffer(name){
+  async presentAlert(name, zeit){
     const alert = await this.alertController.create({
-      header: name,
+      header: "Erfolgreich",
+      message: "Du hast für "+this.kindername+" die Veranstaltung "+name+" am "+zeit+" gebucht.",
       buttons: ['OK']
     });
+    await alert.present();
   }
 
   ngOnInit() {
-    this.veranstaltungsDaten.ausgewählteVeranstaltung.subscribe(veranstaltung => this.veranstaltung = veranstaltung)
+  //   this.veranstaltungsDaten.ausgewählteVeranstaltung.subscribe(veranstaltung => this.veranstaltung = veranstaltung);
+  //   console.log("Veranstaltung von zeitraum = "+ this.veranstaltung);
+  //   console.log("Zeit 1 = "+ this.zeit);
+  //   this.zeit = [
+  //     new GebuchterZeitraum("13:00 - 15:00 Uhr", this.veranstaltung),
+  //  ];
+  //  console.log("Zeit 2 = "+ JSON.stringify(this.zeit));
   }
 
 }

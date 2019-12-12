@@ -17,6 +17,7 @@ export class VeranstaltungBuchenPage implements OnInit {
   
   veranstaltung: string;
   kindername: string;
+  kinderid: string; 
   veranstaltungen:any;
   private datum:any;
 
@@ -27,6 +28,7 @@ export class VeranstaltungBuchenPage implements OnInit {
   ngOnInit() {
     this.veranstaltungsDaten.ausgewählteVeranstaltung.subscribe(veranstaltung => this.veranstaltung = veranstaltung);
     this.veranstaltungsDaten.ausgewähltesKind.subscribe(kindername => this.kindername = kindername);
+    this.veranstaltungsDaten.ausgewählteID.subscribe(kinderid => this.kinderid = kinderid);
   }
 
   getVeranstaltungen() {
@@ -36,16 +38,30 @@ export class VeranstaltungBuchenPage implements OnInit {
     });
   }
 
-  async chooseChild(kindername){
-    this.veranstaltungsDaten.changeKind(kindername.toString());
-    console.log("Name des Kindes: " + this.kindername);
-  }
+  async chooseChild(kindername: any){
 
-  onSelectChange(selectedValue: any) {
-    console.log("test:" + selectedValue.target.value);
+    let kinderdaten = kindername.target.value.toString().split(" ");
+    let name = kinderdaten[0].toString();
+    let id  = kinderdaten[1].toString();
+    
+    this.veranstaltungsDaten.changeKind(name);
+    this.veranstaltungsDaten.changeKindId(id);  
+
   }
 
   async chooseOffer(name){
+    console.log("Momentamer Name: "+this.kindername);
+    if (this.kindername === "kindername") {
+
+       const alert = await this.alertController.create({
+       header: "Fehler",
+       message: "Bitte wähle zuerst das Kind aus!",
+       buttons: ['OK']
+    });
+
+    await alert.present();
+      
+    } else {
     this.veranstaltungsDaten.changeVeranstaltung(name.toString());
     // const alert = await this.alertController.create({
     //   header: name,
@@ -54,6 +70,7 @@ export class VeranstaltungBuchenPage implements OnInit {
 
     //await alert.present();
     this.router.navigate(['veranstaltung-buchen-zeitraum']);
+  }
   }
 
 }
