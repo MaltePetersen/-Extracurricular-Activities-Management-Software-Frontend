@@ -1,1 +1,13 @@
+<ion-list class="popover-content-container">
+  <ion-item>
+    Endzeit
+  </ion-item>
+  <ion-input [(ngModel)]="endzeit"></ion-input>
+  <ion-item>
+      <ion-label >Bemerkungen</ion-label>
+      <ion-input [(ngModel)]="bemerkung"></ion-input>
     </ion-item>
+  <ion-item button color="primary" (click)="closePopover()">
+    Speichern
+  </ion-item>
+</ion-list>

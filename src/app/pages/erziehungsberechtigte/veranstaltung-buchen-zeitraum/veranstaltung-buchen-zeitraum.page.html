@@ -16,7 +16,8 @@
         <ion-label>{{item.wochentag}}</ion-label>
       </ion-item>
       <div *ngIf="item.zeitraum && item.open">
-        <ion-item *ngFor="let zeit of item.zeitraum" lines="none" class="schichten-item" (click)="presentAlert(zeit.thema, zeit.uhrzeit)">
+        <!-- <ion-item *ngFor="let zeit of item.zeitraum" lines="none" class="schichten-item" (click)="presentAlert(zeit.thema, zeit.uhrzeit)"> -->
+            <ion-item *ngFor="let zeit of item.zeitraum" lines="none" class="schichten-item" (click)="presentPopover($event, zeit.thema, zeit.uhrzeit)">
           <div class="schichten-content-container">
             <ion-label>
                 {{zeit.thema}}

@@ -5,14 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-
-import { VeranstaltungBuchenZeitraumPage } from './veranstaltung-buchen-zeitraum.page';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { VeranstaltungsPopoverPage } from './veranstaltungs-popover.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: VeranstaltungBuchenZeitraumPage
+    component: VeranstaltungsPopoverPage
   }
 ];
 
@@ -20,10 +18,9 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
-    SharedModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [VeranstaltungBuchenZeitraumPage]
+  declarations: [VeranstaltungsPopoverPage]
 })
-export class VeranstaltungBuchenZeitraumPageModule {}
+export class VeranstaltungsPopoverPageModule {}

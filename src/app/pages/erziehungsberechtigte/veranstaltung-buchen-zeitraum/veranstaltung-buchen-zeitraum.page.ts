@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { GebuchteVeranstaltungen } from 'src/app/models/gebuchteVeranstalungen';
-import { AlertController } from '@ionic/angular';
+import { NavController, AlertController, ModalController, PopoverController} from '@ionic/angular';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { EnvService } from 'src/app/services/env.service';
 import { environment } from 'src/environments/environment';
 import { GebuchterZeitraum } from 'src/app/models/gebuchterZeitraum';
 import { VeranstaltungensdatenService } from 'src/app/services/veranstaltungensdaten.service';
+import { VeranstaltungsPopoverPage } from 'src/app/popover/veranstaltungs-popover/veranstaltungs-popover.page';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-veranstaltung-buchen-zeitraum',
@@ -23,8 +25,10 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
   days: any;
   datum: any;
   weekNo: any;
+  endzeit = "16:00";
+  bemerkung: any;
 
-  constructor(private alertController: AlertController, public router : Router ,public http: HttpClient, private env: EnvService, private veranstaltungsDaten: VeranstaltungensdatenService) {
+  constructor(private nav: NavController, private popoverController: PopoverController, private alertController: AlertController, public router : Router ,public http: HttpClient, private env: EnvService, private veranstaltungsDaten: VeranstaltungensdatenService) {
     this.getVeranstaltungen();
     this.days = [
       new GebuchteVeranstaltungen("Montag", this.zeit),
@@ -74,10 +78,7 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
     
     let d: any;
     d = new Date(this.datum);
-    console.log("Datum : "+ d)
     let yearStart: any;
-
-   console.log("Datum : "+ this.datum)
 
       // Copy date so don't modify original
       d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
@@ -94,6 +95,39 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
   
 
   }
+
+  async presentPopover(ev: any, name, zeit) {
+        console.log("name : "+name)
+        console.log("zeit : "+zeit)
+
+    const popover = await this.popoverController.create({
+      component: VeranstaltungsPopoverPage,
+      event: ev,
+      translucent: true,
+      componentProps: {
+        'endzeit': this.endzeit,
+        'veranstaltung' : this.veranstaltung,
+      }
+    });
+
+    popover.onDidDismiss().then((dataReturned) => {
+      if (dataReturned !== null) {
+        // console.log("KAKAKAKAKAKAKKA")
+         console.log(dataReturned.data)
+         console.log(dataReturned.role)
+        this.endzeit = dataReturned.data;
+        this.bemerkung = dataReturned.role;
+      }
+    });
+    // return await modal.present();
+    await popover.present()
+
+    //Diese Fuktion wird zu früh ausgeführt. Darf erst nach dem Popover ausgeführt werden.     
+    this.presentAlert(name, zeit);
+
+  }
+
+
 
 
  ngOnInit() {

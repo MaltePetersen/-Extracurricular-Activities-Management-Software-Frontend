@@ -123,6 +123,7 @@ const routes: Routes = [
     role: 'ROLE_PARENT'
   }
 },
+
 ];
 
 @NgModule({
