@@ -1,12 +1,12 @@
 <ion-list class="popover-content-container">
   <ion-item>
-    Endzeit
+    Betreuung bis: 
   </ion-item>
-  <ion-input [(ngModel)]="endzeit"></ion-input>
+  <ion-input class="betreuungseingabe"  [(ngModel)]="endzeit"></ion-input>
   <ion-item>
       <ion-label >Bemerkungen</ion-label>
-      <ion-input [(ngModel)]="bemerkung"></ion-input>
     </ion-item>
+    <ion-textarea class="bemerkungseingabe" [(ngModel)]="bemerkung"></ion-textarea>
   <ion-item button color="primary" (click)="closePopover()">
     Speichern
   </ion-item>

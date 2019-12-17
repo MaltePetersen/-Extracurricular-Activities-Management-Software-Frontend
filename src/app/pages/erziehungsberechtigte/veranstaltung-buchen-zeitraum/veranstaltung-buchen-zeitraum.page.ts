@@ -109,6 +109,8 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
         'veranstaltung' : this.veranstaltung,
       }
     });
+    
+    await popover.present()
 
     popover.onDidDismiss().then((dataReturned) => {
       if (dataReturned !== null) {
@@ -117,14 +119,10 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
          console.log(dataReturned.role)
         this.endzeit = dataReturned.data;
         this.bemerkung = dataReturned.role;
+        this.presentAlert(name, zeit);
       }
     });
     // return await modal.present();
-    await popover.present()
-
-    //Diese Fuktion wird zu früh ausgeführt. Darf erst nach dem Popover ausgeführt werden.     
-    this.presentAlert(name, zeit);
-
   }
 
 
