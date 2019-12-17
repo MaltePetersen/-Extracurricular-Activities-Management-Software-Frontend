@@ -27,8 +27,8 @@ export class VeranstaltungBuchenPage implements OnInit {
 
   ngOnInit() {
     this.veranstaltungsDaten.ausgewählteVeranstaltung.subscribe(veranstaltung => this.veranstaltung = veranstaltung);
-    this.veranstaltungsDaten.ausgewähltesKind.subscribe(kindername => this.kindername = kindername);
-    this.veranstaltungsDaten.ausgewählteID.subscribe(kinderid => this.kinderid = kinderid);
+    // this.veranstaltungsDaten.ausgewähltesKind.subscribe(kindername => this.kindername = kindername);
+    // this.veranstaltungsDaten.ausgewählteID.subscribe(kinderid => this.kinderid = kinderid);
   }
 
   getVeranstaltungen() {

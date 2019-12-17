@@ -52,8 +52,8 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
     this.zeit = [
       new GebuchterZeitraum("13:00 - 15:00 Uhr", this.veranstaltung),
    ];
-   this.veranstaltungsDaten.ausgewähltesKind.subscribe(kindername => this.kindername = kindername);
-   this.veranstaltungsDaten.ausgewählteID.subscribe(kinderId => this.kinderId = kinderId);
+    this.veranstaltungsDaten.ausgewähltesKind.subscribe(kindername => this.kindername = kindername);
+    this.veranstaltungsDaten.ausgewählteID.subscribe(kinderId => this.kinderId = kinderId);
 
   }
 
@@ -81,16 +81,16 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
     let yearStart: any;
 
       // Copy date so don't modify original
-      d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
       // Set to nearest Thursday: current date + 4 - current day number
       // Make Sunday's day number 7
-      d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay()||7));
+    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay()||7));
       // Get first day of year
-      yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+    yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
       // Calculate full weeks to nearest Thursday
-      this.weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1)/7);
+    this.weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1)/7);
       // Return array of year and week number
-      console.log([d.getUTCFullYear(), this.weekNo]);
+    console.log([d.getUTCFullYear(), this.weekNo]);
      //return [d.getUTCFullYear(), weekNo];
   
 
@@ -100,26 +100,26 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
         console.log("name : "+name)
         console.log("zeit : "+zeit)
 
-    const popover = await this.popoverController.create({
+        const popover = await this.popoverController.create({
       component: VeranstaltungsPopoverPage,
       event: ev,
       translucent: true,
       componentProps: {
-        'endzeit': this.endzeit,
-        'veranstaltung' : this.veranstaltung,
+        endzeit: this.endzeit,
+        veranstaltung: this.veranstaltung,
       }
     });
     
-    await popover.present()
+        await popover.present()
 
-    popover.onDidDismiss().then((dataReturned) => {
+        popover.onDidDismiss().then((dataReturned) => {
       if (dataReturned !== null) {
         // console.log("KAKAKAKAKAKAKKA")
          console.log(dataReturned.data)
          console.log(dataReturned.role)
-        this.endzeit = dataReturned.data;
-        this.bemerkung = dataReturned.role;
-        this.presentAlert(name, zeit);
+         this.endzeit = dataReturned.data;
+         this.bemerkung = dataReturned.role;
+         this.presentAlert(name, zeit);
       }
     });
     // return await modal.present();

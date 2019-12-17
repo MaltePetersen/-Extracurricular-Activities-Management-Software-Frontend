@@ -21,6 +21,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [VeranstaltungsPopoverPage]
+  declarations: [VeranstaltungsPopoverPage],
+  entryComponents:[VeranstaltungsPopoverPage]
 })
 export class VeranstaltungsPopoverPageModule {}

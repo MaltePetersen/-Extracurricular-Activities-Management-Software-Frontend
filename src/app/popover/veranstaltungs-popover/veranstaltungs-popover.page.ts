@@ -1,4 +1,4 @@
-import { NavParams, PopoverController } from '@ionic/angular';
+import { PopoverController } from '@ionic/angular';
 import { Component, OnInit, Input } from '@angular/core';
 
 
@@ -8,14 +8,15 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./veranstaltungs-popover.page.scss'],
 })
 export class VeranstaltungsPopoverPage implements OnInit {
-  endzeit = null;
+  @Input("endzeit") endzeit;
+  //endzeit = null;
   bemerkung = null;
 
-  constructor(private navParams: NavParams, private popoverController: PopoverController) { }
+  constructor(private popoverController: PopoverController) { }
 
   ngOnInit() {
-    console.table(this.navParams);
-    this.endzeit = this.navParams.data.endzeit;
+    
+    //this.endzeit = endzeit;
   }
 
   async closePopover(){
