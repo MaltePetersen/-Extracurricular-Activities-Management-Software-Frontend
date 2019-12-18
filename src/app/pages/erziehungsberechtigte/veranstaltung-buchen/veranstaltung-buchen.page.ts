@@ -16,7 +16,7 @@ import { VeranstaltungensdatenService } from 'src/app/services/veranstaltungensd
 export class VeranstaltungBuchenPage implements OnInit {
   
   veranstaltung: string;
-  kindername: string;
+  kindername = null; 
   kinderid: string; 
   veranstaltungen:any;
   private datum:any;
@@ -27,8 +27,8 @@ export class VeranstaltungBuchenPage implements OnInit {
 
   ngOnInit() {
     this.veranstaltungsDaten.ausgewählteVeranstaltung.subscribe(veranstaltung => this.veranstaltung = veranstaltung);
-    // this.veranstaltungsDaten.ausgewähltesKind.subscribe(kindername => this.kindername = kindername);
-    // this.veranstaltungsDaten.ausgewählteID.subscribe(kinderid => this.kinderid = kinderid);
+    this.veranstaltungsDaten.ausgewähltesKind.subscribe(kindername => this.kindername = kindername);
+    this.veranstaltungsDaten.ausgewählteID.subscribe(kinderid => this.kinderid = kinderid);
   }
 
   getVeranstaltungen() {
@@ -51,7 +51,7 @@ export class VeranstaltungBuchenPage implements OnInit {
 
   async chooseOffer(name){
     console.log("Momentamer Name: "+this.kindername);
-    if (this.kindername === "kindername") {
+    if (this.kindername === "kindername" || this.kindername === null  ) {
 
        const alert = await this.alertController.create({
        header: "Fehler",

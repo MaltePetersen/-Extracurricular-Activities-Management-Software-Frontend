@@ -36,8 +36,7 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
       new GebuchteVeranstaltungen("Mittwoch", this.zeit),
       new GebuchteVeranstaltungen("Donnestag", this.zeit),
       new GebuchteVeranstaltungen("Freitag", this.zeit)
-    ]
-
+    ];
    }
  
   //  getVeranstaltungen() {
