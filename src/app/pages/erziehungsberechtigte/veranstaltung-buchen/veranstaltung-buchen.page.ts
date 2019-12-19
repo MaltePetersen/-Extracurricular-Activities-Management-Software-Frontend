@@ -38,7 +38,7 @@ export class VeranstaltungBuchenPage implements OnInit {
     });
   }
 
-  async chooseChild(kindername: any){
+ chooseChild(kindername: any){
 
     let kinderdaten = kindername.target.value.toString().split(" ");
     let name = kinderdaten[0].toString();

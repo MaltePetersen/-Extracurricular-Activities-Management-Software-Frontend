@@ -32,15 +32,15 @@ const routes: Routes = [
       role: 'ROLE_PARENT'
     }
   },
-  {
-    path: 'veranstaltung-einsehen',
-    loadChildren:
-      './pages/erziehungsberechtigte/veranstaltung-einsehen/veranstaltung-einsehen.module#VeranstaltungEinsehenPageModule',
-    canActivate: [AuthGuard],
-    data: {
-      role: 'ROLE_PARENT'
-    }
-  },
+  // {
+  //   path: 'veranstaltung-einsehen',
+  //   loadChildren:
+  //     './pages/erziehungsberechtigte/veranstaltung-einsehen/veranstaltung-einsehen.module#VeranstaltungEinsehenPageModule',
+  //   canActivate: [AuthGuard],
+  //   data: {
+  //     role: 'ROLE_PARENT'
+  //   }
+  // },
   {
     path: 'kind-hinzufuegen',
     loadChildren:

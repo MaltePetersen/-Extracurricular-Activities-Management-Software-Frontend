@@ -26,11 +26,11 @@ export class AppComponent implements OnInit {
       url: '/veranstaltung-buchen',
       icon: 'school'
     },
-    {
-      title: 'Veranstaltung einsehen',
-      url: '/veranstaltung-einsehen',
-      icon: 'stats'
-    },
+    // {
+    //   title: 'Veranstaltung einsehen',
+    //   url: '/veranstaltung-einsehen',
+    //   icon: 'stats'
+    // },
     {
       title: 'Kinder',
       url: '/kind-uebersicht',

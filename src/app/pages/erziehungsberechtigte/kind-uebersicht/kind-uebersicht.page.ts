@@ -4,6 +4,8 @@ import { KinderAnzeigen } from 'src/app/models/kinder-model';
 import { VeranstaltungensdatenService } from 'src/app/services/veranstaltungensdaten.service';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
+import { KinderdatenService } from 'src/app/services/kinderdaten.service';
 
 @Component({
   selector: 'app-kind-uebersicht',
@@ -17,30 +19,21 @@ export class KindUebersichtPage implements OnInit {
   kinderid: string; 
   veranstaltungen:any;
   kinder: any;
+  kinderdaten: any;
 
-  constructor(public http: HttpClient, private router: Router, private veranstaltungsDaten: VeranstaltungensdatenService) {
-    console.log("1");
+  constructor(private childData: KinderdatenService, public http: HttpClient, private router: Router, private veranstaltungsDaten: VeranstaltungensdatenService) {
     this.datenZuweisen();
     }
 
-  //Hier muss ich mich noch um Async Await kümmern
-  async getVeranstaltungen() {
-    let done = false;
-    
-    console.log("2");
+  getVeranstaltungen() {
       this.http.get<school[]>(`${environment.apiUrl}/api/schools`).subscribe(async (a) => {
-        console.log("3");
         this.veranstaltungen = await a;
-        console.log("this.veranstaltungen");
-        console.log(this.veranstaltungen);
-        done = true;
       });
   }
 
   async datenZuweisen(){
     await this.getVeranstaltungen();
     setTimeout(()=> {
-    console.log("4");
     this.veranstaltungsDaten.ausgewählteVeranstaltung.subscribe(veranstaltung => this.veranstaltung = veranstaltung);
     this.kinder = [
       new KinderAnzeigen(this.veranstaltungen[0].name, this.veranstaltungen[0].address ,this.veranstaltungen[0].id, this.veranstaltungen[0].name),
@@ -50,8 +43,15 @@ export class KindUebersichtPage implements OnInit {
   },400);
   }
 
+  changeChildData(choosenChild: any){
+    this.childData.changeChildData(choosenChild);
+    this.router.navigateByUrl('/kind-bearbeiten');
+
+  }
+
 
   ngOnInit() {
+    this.childData.currentChildData.subscribe(kinderdaten => this.kinderdaten = kinderdaten);
   }
 
   navToKindHinzu() {
