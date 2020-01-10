@@ -21,7 +21,6 @@ export class AccountPage implements OnInit {
   }
 
   async saveChanges(){
-    console.log(this.schoolClass)
     console.log(this.username)
     console.log(this.fname)
     const alert = await this.alertController.create({

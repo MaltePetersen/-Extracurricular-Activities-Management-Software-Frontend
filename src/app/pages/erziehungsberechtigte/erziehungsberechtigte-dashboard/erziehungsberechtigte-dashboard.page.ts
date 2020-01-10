@@ -1,6 +1,9 @@
 import { Component, OnInit, NgModule } from '@angular/core';
 import { AuthenticationService } from '../../../services/authentication.service';
 import data from '../../../../assets/company.json';
+import { VeranstaltungensdatenService } from 'src/app/services/veranstaltungensdaten.service';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 
 
@@ -10,37 +13,33 @@ import data from '../../../../assets/company.json';
   styleUrls: ['./erziehungsberechtigte-dashboard.page.scss'],
 })
 export class ErziehungsberechtigteDashboardPage implements OnInit {
-  private veranstaltungen = data;
-  tableStyle = 'bootstrap';
-  light = true;
+  veranstaltung: string;
+  veranstaltungen:any;
 
-  constructor(private auth: AuthenticationService) {}
+  constructor(private auth: AuthenticationService, private veranstaltungsDaten: VeranstaltungensdatenService, public http: HttpClient) {
+    this.getVeranstaltungen();
+  }
 
   ngOnInit() {
-    console.log('ELTERN AuthenticationService');
-    console.log(this.auth);
-  }
-
-  switchStyle(){
-    if(this.tableStyle === 'dark'){
-      this.tableStyle = 'bootstrap';
-      this.light = true;
-    } else {
-      this.tableStyle = 'dark';
-      this.light = false;
-    }
-  }
-
-  getRowClasse(row){
+    this.veranstaltungsDaten.ausgewählteVeranstaltung.subscribe(veranstaltung => this.veranstaltung = veranstaltung);
 
   }
+
+  getVeranstaltungen() {
+    this.http.get<school[]>(`${environment.apiUrl}/api/schools`).subscribe((a) => {
+      this.veranstaltungen = a;
+      console.log(a);
+    });
+  }
+
+  async chooseOffer(name){
+    this.veranstaltungsDaten.changeVeranstaltung(name.toString());
+  }
+
+
 
   logout() {
     this.auth.logout();
-  }
-
-  async open(row) {
-    console.log(row);
   }
 
 }
