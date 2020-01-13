@@ -38,13 +38,13 @@
     align-items: center;
     justify-content: flex-end;
 }
-.schueler-item-angemeldet{
+.schueler-item-anwesend{
     margin-top: 1em;
     width: 100%;
     --border-width: 2px 2px 2px 2px;
-    --border-color: blue;
+    --border-color: green;
 }
-.schueler-item-noch-nicht-anwesend{
+.schueler-item-angemeldet{
     margin-top: 1em;
     width: 100%;
     --border-width: 2px 2px 2px 2px;
@@ -71,4 +71,17 @@
 }
 .zeile1{
     width: 100%;
+}
+.header-zeile{
+    align-items: center;
+    width: 100%;
+}
+.detail-button{
+    margin-left: auto;
+}
+.zuruecksetzen-button{
+    margin-left: auto;
+}
+.schueler-name-label{
+    font-size: x-large;
 }

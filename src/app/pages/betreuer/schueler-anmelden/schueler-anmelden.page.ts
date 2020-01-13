@@ -23,14 +23,14 @@ export class SchuelerAnmeldenPage implements OnInit {
   
   constructor(private alertController: AlertController, private thisRoute:ActivatedRoute) { 
     this.pupils = [
-      new SchuelerModel("Birgit", "Klaus Groth Schule", "5b", "15:00", "Muss nach Hause getragen werden", 0),
-      new SchuelerModel("Klaus", "Klaus Groth Schule", "6b", "16:00", "Faehrt mit dem Bus", 1),
-      new SchuelerModel("Timo", "Klaus Groth Schule", "7b", "17:00", "Faehrt mit der Bahn", 2),
-      new SchuelerModel("Max", "Klaus Groth Schule", "8b", "18:00", "Wird abgeholt", 3),
+      new SchuelerModel("Birgit", "Klaus Groth Schule", "5b", "15:00", "Muss nach Hause getragen werden", 1),
+      new SchuelerModel("Klaus", "Klaus Groth Schule", "6b", "16:00", "Faehrt mit dem Bus", 2),
+      new SchuelerModel("Timo", "Klaus Groth Schule", "7b", "17:00", "Faehrt mit der Bahn", 3),
+      new SchuelerModel("Max", "Klaus Groth Schule", "8b", "18:00", "Wird abgeholt", 4),
       new SchuelerModel("Max", "Klaus Groth Schule", "9b", "18:00", "Wird abgeholt", 3),
-      new SchuelerModel("Max", "Klaus Groth Schule", "10b", "18:00", "Wird abgeholt", 3),
-      new SchuelerModel("Max", "Klaus Groth Schule", "11b", "18:00", "Wird abgeholt", 3),
-      new SchuelerModel("Max", "Klaus Groth Schule", "12b", "18:00", "Wird abgeholt", 3),
+      new SchuelerModel("Max", "Klaus Groth Schule", "10b", "18:00", "Wird abgeholt", 2),
+      new SchuelerModel("Max", "Klaus Groth Schule", "11b", "18:00", "Wird abgeholt", 1),
+      new SchuelerModel("Max", "Klaus Groth Schule", "12b", "18:00", "Wird abgeholt", 2),
       new SchuelerModel("Max", "Klaus Groth Schule", "13b", "18:00", "Wird abgeholt", 3)
     ];
     this.filteredPupils = this.pupils;
@@ -76,12 +76,64 @@ export class SchuelerAnmeldenPage implements OnInit {
     this.selectedClass = "Alle";
   }
 
-  async presentAlert(model:SchuelerModel){
+  async presentAlertDetails(model:SchuelerModel){
     const alert = await this.alertController.create({
       header: model.name,
       message: "Schule: " + model.schule + "<br/>" + "Klasse: " + model.klasse + "<br/>" + "Betreuungsende: " + model.betreuungsende + "<br/>" + "Info: " + model.info,
       buttons: ['OK']
     });
     await alert.present();
+  }
+
+  async presentAlertStatus(model:SchuelerModel){
+    const alertAnwesend = await this.alertController.create({
+      header: model.name,
+      message: "Bestätigen Sie die Anwesenheit des Schülers",
+      buttons: [
+        {
+          text: 'Abbrechen',
+          //role: 'cancel',
+          //cssClass: 'secondary',
+          handler: () => {
+            console.log('Cancel Anwesend');
+          }
+        },
+        {
+          text: 'Ok',
+          //role: 'cancel',
+          //cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Anwesend');
+          }
+        }
+      ]
+    });
+    const alertGegangen = await this.alertController.create({
+      header: model.name,
+      message: "Bestätigen Sie, dass der Schüler gegangen ist",
+      buttons: [
+        {
+          text: 'Abbrechen',
+          //role: 'cancel',
+          //cssClass: 'secondary',
+          handler: () => {
+            console.log('Cancel Gegangen');
+          }
+        },
+        {
+          text: 'Ok',
+          //role: 'cancel',
+          //cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Gegangen');
+          }
+        }
+      ]
+    });
+    if(model.anwesenheit == 1 || model.anwesenheit == 2){
+      await alertAnwesend.present();
+    } else if(model.anwesenheit == 3){
+      await alertGegangen.present();
+    }
   }
 }

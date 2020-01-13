@@ -16,11 +16,16 @@
     </ion-row>
   </div>
   <div class="schueler-container">
-    <ion-item *ngFor="let pupil of filteredPupils" lines="none" [ngClass]="{'schueler-item-angemeldet':pupil.anwesenheit == 0, 'schueler-item-noch-nicht-anwesend':pupil.anwesenheit == 1, 'schueler-item-nach-Hause-gegangen':pupil.anwesenheit == 2, 'schueler-item-ueberfaellig':pupil.anwesenheit == 3.}" (click)="presentAlert(pupil)">
+    <ion-item *ngFor="let pupil of filteredPupils" lines="none" [ngClass]="{'schueler-item-angemeldet':pupil.anwesenheit == 1, 'schueler-item-ueberfaellig':pupil.anwesenheit == 2, 'schueler-item-anwesend':pupil.anwesenheit == 3, 'schueler-item-nach-Hause-gegangen':pupil.anwesenheit == 4.}" (click)="presentAlertStatus(pupil)">
       <div class="schueler-content-container">
-        <ion-label>
-          {{pupil.name}}
-        </ion-label>
+        <ion-row class="header-zeile">
+          <ion-label class="schueler-name-label" text-wrap>
+            {{pupil.name}}
+          </ion-label>
+          <ion-button (click)="presentAlertDetails(pupil);$event.stopPropagation();" class="detail-button">
+            Details
+          </ion-button>
+        </ion-row>
         <ion-row class="zeile1">
           <ion-label class="klasse-label">
             Klasse: {{pupil.klasse}}
@@ -31,7 +36,7 @@
             Betreuungsende: {{pupil.betreuungsende}}
           </ion-label>
         </ion-row>
-        <ion-row>
+        <ion-row class="zeile1">
           <ion-label>
             {{pupil.info}}
           </ion-label>  
