@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { KinderAnzeigen } from 'src/app/models/kinder-model';
 import { VeranstaltungensdatenService } from 'src/app/services/veranstaltungensdaten.service';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
 import { KinderdatenService } from 'src/app/services/kinderdaten.service';
 
 @Component({
@@ -25,22 +23,15 @@ export class KindUebersichtPage implements OnInit {
     this.datenZuweisen();
     }
 
-  getVeranstaltungen() {
-      this.http.get<school[]>(`${environment.apiUrl}/api/schools`).subscribe(async (a) => {
-        this.veranstaltungen = await a;
+  getChildren() {
+      this.http.get<children[]>(`${environment.apiUrl}/api/parent/childs`).subscribe(async (a) => {
+        console.log(a);
+        this.kinder = await a;
       });
   }
 
   async datenZuweisen(){
-    await this.getVeranstaltungen();
-    setTimeout(()=> {
-    this.veranstaltungsDaten.ausgewählteVeranstaltung.subscribe(veranstaltung => this.veranstaltung = veranstaltung);
-    this.kinder = [
-      new KinderAnzeigen(this.veranstaltungen[0].name, this.veranstaltungen[0].address ,this.veranstaltungen[0].id, this.veranstaltungen[0].name),
-      new KinderAnzeigen(this.veranstaltungen[1].name, this.veranstaltungen[1].address ,this.veranstaltungen[1].id, this.veranstaltungen[1].name),
-      new KinderAnzeigen(this.veranstaltungen[2].name, this.veranstaltungen[2].address ,this.veranstaltungen[2].id, this.veranstaltungen[2].name),
-    ];
-  },400);
+    await this.getChildren();
   }
 
   changeChildData(choosenChild: any){
