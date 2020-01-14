@@ -20,16 +20,10 @@ export class KindBearbeitenPage implements OnInit {
   constructor(private childData: KinderdatenService, private alertController: AlertController,  private router: Router,private alertService: AlertService) { }
 
   ngOnInit() {
-    //this.childData.currentChildData.subscribe(kinderdaten => this.kinderdaten = kinderdaten);
-    this.childData.currentChildData.subscribe(kinderdaten => this.fname = kinderdaten.fname);
-    this.childData.currentChildData.subscribe(kinderdaten => this.schoolClass = kinderdaten.schoolClass);
-    this.username ="Peter";
+     this.childData.currentChildData.subscribe(kinderdaten => this.schoolClass = kinderdaten.schoolClass);
   }
 
   async saveChanges(){
-    console.log(this.schoolClass)
-    console.log(this.username)
-    console.log(this.fname)
     const alert = await this.alertController.create({
       header: "Speichern erfolgreich",
       message: "Die Änderungen wurden erfolgreich übernommen.",
