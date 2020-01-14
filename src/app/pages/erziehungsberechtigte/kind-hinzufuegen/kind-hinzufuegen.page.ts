@@ -14,12 +14,12 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./kind-hinzufuegen.page.scss'],
 })
 export class KindHinzufuegenPage implements OnInit {
+  
+
   schule: any;
   validations_form: FormGroup;
   matching_passwords_group: FormGroup;
   responseData : any;
-  //childData = {fname: String,  lname: String,  bday: String,  school: String,  schoolClass: String,  username: String,  password: String,  passwordRepeat: String};
-
   constructor(public http: HttpClient, private router: Router, private auth: AuthenticationService, private alertService: AlertService, public formBuilder: FormBuilder) { }
 
   ngOnInit() {
@@ -36,15 +36,16 @@ export class KindHinzufuegenPage implements OnInit {
     });
 
     this.validations_form = this.formBuilder.group({
-      username: new FormControl('', Validators.compose([
-        UsernameValidator.validUsername,
-        Validators.maxLength(25),
-        Validators.minLength(5),
-        Validators.pattern('^(?=.*[a-zA-Z])||(?=.*[0-9])[a-zA-Z0-9]+$'),
-        Validators.required
-      ])),
-      matching_passwords: this.matching_passwords_group,
+      // username: new FormControl('', Validators.compose([
+      //   UsernameValidator.validUsername,
+      //   Validators.maxLength(25),
+      //   Validators.minLength(5),
+      //   Validators.pattern('^(?=.*[a-zA-Z])||(?=.*[0-9])[a-zA-Z0-9]+$'),
+      //   Validators.required
+      // ])),
+      // matching_passwords: this.matching_passwords_group,
       name: new FormControl('', Validators.required),
+      lname: new FormControl('', Validators.required),
       school: new FormControl('', Validators.required),
       schoolClass: new FormControl('', Validators.required)
     });
@@ -58,14 +59,23 @@ export class KindHinzufuegenPage implements OnInit {
     });
   }
 
-  chooseSchool(schoolname: any){
+  // chooseSchool(schoolname: any){
 
-    // let schooldata = schoolname.target.value.toString().split(" ");
-    // let name = schoolname[0].toString();
-    // let id  = schoolname[1].toString();
+  //   // let schooldata = schoolname.target.value.toString().split(" ");
+  //   // let name = schoolname[0].toString();
+  //   // let id  = schoolname[1].toString();
 
-    console.log("NAME" + name)
-    //console.log("schooldata" + schooldata)
+  //   console.log("NAME" + name)
+  //   //console.log("schooldata" + schooldata)
+  // }
+
+  createChild(){
+
+
+  }
+
+  abort(){
+    this.router.navigateByUrl('/kind-uebersicht');
   }
 
   validation_messages = {
@@ -89,6 +99,9 @@ export class KindHinzufuegenPage implements OnInit {
     ],
     'name': [
       { type: 'required', message: 'Vorname ist notwendig.' }
+    ],
+    'lname': [
+      { type: 'required', message: 'Nachname ist notwendig.' }
     ],
     'school': [
       { type: 'required', message: 'Schule ist notwendig.' },
