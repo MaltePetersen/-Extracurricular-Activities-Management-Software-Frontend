@@ -3,6 +3,8 @@ import { KinderdatenService } from 'src/app/services/kinderdaten.service';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/services/alert.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-kind-bearbeiten',
@@ -13,23 +15,20 @@ export class KindBearbeitenPage implements OnInit {
 
   kinderdaten: any;
   username: string;
-  fname: string;
+  fullname: string;
   schoolClass: string;
 
 
-  constructor(private childData: KinderdatenService, private alertController: AlertController,  private router: Router,private alertService: AlertService) { }
+  constructor(private childData: KinderdatenService, public http: HttpClient, private alertController: AlertController,  private router: Router,private alertService: AlertService) { }
 
   ngOnInit() {
     //this.childData.currentChildData.subscribe(kinderdaten => this.kinderdaten = kinderdaten);
-    this.childData.currentChildData.subscribe(kinderdaten => this.fname = kinderdaten.fname);
+    this.childData.currentChildData.subscribe(kinderdaten => this.fullname = kinderdaten.fullname);
     this.childData.currentChildData.subscribe(kinderdaten => this.schoolClass = kinderdaten.schoolClass);
-    this.username ="Peter";
+    this.childData.currentChildData.subscribe(kinderdaten => this.username = kinderdaten.username);
   }
 
   async saveChanges(){
-    console.log(this.schoolClass)
-    console.log(this.username)
-    console.log(this.fname)
     const alert = await this.alertController.create({
       header: "Speichern erfolgreich",
       message: "Die Änderungen wurden erfolgreich übernommen.",
@@ -45,6 +44,14 @@ export class KindBearbeitenPage implements OnInit {
 
   abort(){
     this.router.navigateByUrl('/kind-uebersicht');
+  }
+
+  getChildData(id) {
+    this.http.get<school[]>(`${environment.apiUrl}/api/parent/child/` + id).subscribe((a) => {
+      this.kinderdaten = a;
+      console.log("ERFOLG KIND GELADEN");
+      console.log(this.kinderdaten);
+    });
   }
 
   async deleteAccount(){
