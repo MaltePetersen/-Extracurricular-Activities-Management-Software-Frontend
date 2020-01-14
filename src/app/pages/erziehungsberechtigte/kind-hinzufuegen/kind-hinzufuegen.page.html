@@ -14,7 +14,9 @@
   
         <ion-card-content>
 
-            <ion-item>
+          <!--AUSKOMMENTIERT; DA DERZEIT NOCH KEIN KINDERACCOUNT IMPLEMENTIERT WIRD-->
+
+            <!-- <ion-item>
                 <ion-label position="floating">Nutzername </ion-label>
                 <ion-input type="text" formControlName="username"></ion-input>
               </ion-item>
@@ -72,7 +74,7 @@
                     </ng-container>
                   </div>
                 </div>
-                <!-- These validations are for the form group -->
+               
                 <div class="validation-errors">
                   <ng-container
                     *ngFor="let validation of validation_messages.matching_passwords"
@@ -85,7 +87,7 @@
                       validation.message }}
                     </div>
                   </ng-container>
-                </div>
+                </div> -->
         
                 <ion-item>
                   <ion-label position="floating" color="primary">Vorname</ion-label>
@@ -96,6 +98,21 @@
                     <div
                       class="error-message"
                       *ngIf="validations_form.get('name').hasError(validation.type) && (validations_form.get('name').dirty || validations_form.get('name').touched)"
+                    >
+                      <ion-icon name="information-circle-outline"></ion-icon> {{
+                      validation.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item>
+                  <ion-label position="floating" color="primary">Nachname</ion-label>
+                  <ion-input type="text" formControlName="lname"></ion-input>
+                </ion-item>
+                <div class="validation-errors">
+                  <ng-container *ngFor="let validation of validation_messages.name">
+                    <div
+                      class="error-message"
+                      *ngIf="validations_form.get('lname').hasError(validation.type) && (validations_form.get('lname').dirty || validations_form.get('lname').touched)"
                     >
                       <ion-icon name="information-circle-outline"></ion-icon> {{
                       validation.message }}
@@ -147,6 +164,7 @@
   expand="full"
   type="submit"
   [disabled]="!validations_form.valid"
+  (click)="createChild()"
   >Account anlegen</ion-button
 >
 <ion-button expand="block" color="medium" (click)="abort()">Abbrechen</ion-button>

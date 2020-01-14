@@ -22,7 +22,6 @@ export class KindBearbeitenPage implements OnInit {
   constructor(private childData: KinderdatenService, public http: HttpClient, private alertController: AlertController,  private router: Router,private alertService: AlertService) { }
 
   ngOnInit() {
-    //this.childData.currentChildData.subscribe(kinderdaten => this.kinderdaten = kinderdaten);
     this.childData.currentChildData.subscribe(kinderdaten => this.fullname = kinderdaten.fullname);
     this.childData.currentChildData.subscribe(kinderdaten => this.schoolClass = kinderdaten.schoolClass);
     this.childData.currentChildData.subscribe(kinderdaten => this.username = kinderdaten.username);
@@ -44,14 +43,6 @@ export class KindBearbeitenPage implements OnInit {
 
   abort(){
     this.router.navigateByUrl('/kind-uebersicht');
-  }
-
-  getChildData(id) {
-    this.http.get<school[]>(`${environment.apiUrl}/api/parent/child/` + id).subscribe((a) => {
-      this.kinderdaten = a;
-      console.log("ERFOLG KIND GELADEN");
-      console.log(this.kinderdaten);
-    });
   }
 
   async deleteAccount(){
