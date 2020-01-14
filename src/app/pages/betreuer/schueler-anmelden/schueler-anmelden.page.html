@@ -19,11 +19,14 @@
     <ion-item *ngFor="let pupil of filteredPupils" lines="none" [ngClass]="{'schueler-item-angemeldet':pupil.anwesenheit == 1, 'schueler-item-ueberfaellig':pupil.anwesenheit == 2, 'schueler-item-anwesend':pupil.anwesenheit == 3, 'schueler-item-nach-Hause-gegangen':pupil.anwesenheit == 4.}" (click)="presentAlertStatus(pupil)">
       <div class="schueler-content-container">
         <ion-row class="header-zeile">
-          <ion-label class="schueler-name-label" text-wrap>
+          <ion-label class="schueler-name-label" class="ion-text-wrap">
             {{pupil.name}}
           </ion-label>
           <ion-button (click)="presentAlertDetails(pupil);$event.stopPropagation();" class="detail-button">
             Details
+          </ion-button>
+          <ion-button (click)="presentPopover($event);$event.stopPropagation();">
+            <ion-icon slot="icon-only" name="md-more"></ion-icon>
           </ion-button>
         </ion-row>
         <ion-row class="zeile1">
@@ -45,12 +48,3 @@
     </ion-item>
   </div>
 </ion-content>
-
-<ion-footer>
-  <ion-toolbar>
-    <ion-label slot="start">
-      Datum:
-    </ion-label>
-    <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD MMM YYYY" [(ngModel)]="date" (ionChange)="dateChanged()"></ion-datetime>
-  </ion-toolbar>
-</ion-footer>

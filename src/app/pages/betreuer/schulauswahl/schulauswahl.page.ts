@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { EnvService } from '../../../services/env.service';
 import { environment } from 'src/environments/environment';
@@ -22,11 +22,16 @@ export class SchulauswahlPage implements OnInit {
   }
 
   schoolClick(schoolId:number) {
-    this.router.navigate(['schueler-anmelden', {id:schoolId}]);
+    let navigationExtras: NavigationExtras = {
+      state: {
+        id: schoolId
+      }
+    };
+    this.router.navigate(['meine-schichten'], navigationExtras);
   }
 
   getSchools() {
-    this.http.get<school[]>(`${environment.apiUrl}/api/schools`).subscribe((a) => {
+    this.http.get<school[]>(`${environment.apiUrl}/api/employee/schools`).subscribe((a) => {
       this.schools = a;
     });
   }

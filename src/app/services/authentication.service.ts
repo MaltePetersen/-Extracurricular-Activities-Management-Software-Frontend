@@ -47,6 +47,7 @@ export class AuthenticationService {
         'Authorization': 'Basic ' + user.authData
       })
     };
+    //TODO /login mit user/login ersetzen sobald das Backend umstrukturiert ist
     return this.http.get<string[]>(`${environment.apiUrl}/login`, httpOptions)
       .pipe(map(authorities => {
         if (authorities.includes('ROLE_EMPLOYEE')) {

@@ -18,10 +18,16 @@ import { BasicAuthInterceptor } from './intercepters/BasicAuthInterceptor';
 import { ErrorInterceptor } from './intercepters/ErrorInterceptor';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { AnwesenheitPopoverComponent } from './pages/betreuer/anwesenheit-popover/anwesenheit-popover.component';
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [
+    AppComponent,
+    AnwesenheitPopoverComponent
+  ],
+  entryComponents: [
+    AnwesenheitPopoverComponent
+  ],
   imports: [
     BrowserModule, 
     VeranstaltungsPopoverPageModule,
@@ -29,7 +35,7 @@ import { environment } from '../environments/environment';
     AppRoutingModule, 
     ReactiveFormsModule, 
     IonicStorageModule.forRoot(), 
-    NgxDatatableModule, 
+    NgxDatatableModule,
     HttpClientModule, 
     SharedModule, 
     ServiceWorkerModule.register('ngsw-worker.js', 
