@@ -47,7 +47,7 @@ export class AuthenticationService {
         'Authorization': 'Basic ' + user.authData
       })
     };
-    return this.http.get<string[]>(`${environment.apiUrl}/login`, httpOptions)
+    return this.http.get<string[]>(`${environment.apiUrl}/user/login`, httpOptions)
       .pipe(map(authorities => {
         if (authorities.includes('ROLE_EMPLOYEE')) {
           user.setRole('ROLE_EMPLOYEE');
@@ -70,17 +70,5 @@ export class AuthenticationService {
     localStorage.removeItem('isLoggedIn');
     this.currentUserSubject.next(null);
     this.router.navigateByUrl('/login');
-  }
-
-  register(fName: String, lName: String, email: String, password: String) {
-    return this.http.post(this.env.API_URL + 'REGISTRIERUNG',
-      { fName: fName, lName: lName, email: email, password: password }
-    )
-  }
-
-  childRegister(fname: String, lname: String, bday: String, school: String, schoolClass: String, username: String, password: String, passwordRepeat: String) {
-    return this.http.post(this.env.API_URL + 'REGISTRIERUNG',
-      { fname: fname, lname: lname, bday: bday, school: school, schoolClass: schoolClass, username: username, password: password, passwordRepeat: passwordRepeat }
-    )
   }
 }

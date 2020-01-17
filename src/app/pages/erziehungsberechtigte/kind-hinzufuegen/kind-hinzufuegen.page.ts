@@ -6,7 +6,8 @@ import { NgForm, Validators, FormControl, FormGroup, FormBuilder } from '@angula
 import { UsernameValidator } from '../registrierung/username.validator';
 import { PasswordValidator } from '../registrierung/password.validator';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Children } from 'src/app/models/children';
 
 @Component({
   selector: 'app-kind-hinzufuegen',
@@ -15,7 +16,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class KindHinzufuegenPage implements OnInit {
   
-
+  child: Children = new Children('Sesamstraße', 'a@bc.de', 'Peter Pan', '123456', '', '', '', true, '', '', '');
+  postId: any;
   schule: any;
   validations_form: FormGroup;
   matching_passwords_group: FormGroup;
@@ -51,10 +53,12 @@ export class KindHinzufuegenPage implements OnInit {
     });
   }
 
+  
+
   getSchool() {
     this.http.get<school[]>(`${environment.apiUrl}/api/schools`).subscribe((a) => {
       this.schule = a;
-      console.log("ERFOLG SCHULE GELADEN")
+      console.log('ERFOLG SCHULE GELADEN')
       console.log(this.schule)
     });
   }
@@ -70,9 +74,69 @@ export class KindHinzufuegenPage implements OnInit {
   // }
 
   createChild(){
+const postData = {
+"address": 'Sesamstraße',
+"email": 'a@bc.de',
+"fullname": 'Peter Pan',
+"iban": '123456',
+"password": 'string',
+"phoneNumber": 'string',
+"schoolClass": 'string',
+"schoolCoordinator": true,
+"subject": 'string',
+"userType": 'string',
+"username": 'string'
+};
 
+var requestoptions = {
+  headers: new HttpHeaders().set('Content-Type', 'application/json'),
+  body: JSON.stringify(postData)
+}
+
+console.log("POST");
+    // tslint:disable-next-line: max-line-length
+this.http.post(`${environment.apiUrl}/api/parent/child`,
+{
+  'username': "Parent_Test",
+  'password': "password",
+},
+{
+  headers:{
+  'content-type':"application/JSON",
+  }
+}
+).subscribe({
+      next: data => console.log(data) ,
+      error: error => console.error('There was an error!', error)
+  });
 
   }
+
+//   POST(url, data) {
+//     var headers = new Headers(), authtoken = localStorage.getItem('authtoken');
+//     headers.append("Content-Type", 'application/json');
+
+//     if (authtoken) {
+//     headers.append("Authorization", 'Token ' + authtoken)
+//     }
+//     headers.append("Accept", 'application/json');
+
+//     var requestoptions = new requestoptions({
+//       method: RequestMethod.Post,
+//       url: this.apiURL + url,
+//       headers: headers,
+//       body: JSON.stringify(data)
+//   })
+
+//     return this.http.request(new Request(requestoptions))
+//     .map((res: Response) => {
+//         if (res) {
+//             return { status: res.status, json: res.json() }
+//         }
+//     });
+// }
+
+
 
   abort(){
     this.router.navigateByUrl('/kind-uebersicht');
@@ -117,20 +181,20 @@ export class KindHinzufuegenPage implements OnInit {
 
 
   kindAnlegen(form: NgForm) {
-    this.auth.childRegister(form.value.fname,  form.value.lname,  form.value.bday,  form.value.school,  form.value.schoolClass,  form.value.username,  form.value.password,  form.value.passwordRepeat).subscribe(
-      data => {
-        this.alertService.presentToast('Ihr Kind wurde erfolgreich angelegt.');
-        this.router.navigateByUrl('/kind-uebersicht');
-      },
-      error => {
-        console.log(error);
-        this.alertService.presentToast('Es gab einen Fehler bei der Erstellung');
-        this.router.navigateByUrl('/kind-uebersicht');
-      },
-      () => {
+    // this.auth.childRegister(form.value.fname,  form.value.lname,  form.value.bday,  form.value.school,  form.value.schoolClass,  form.value.username,  form.value.password,  form.value.passwordRepeat).subscribe(
+    //   data => {
+    //     this.alertService.presentToast('Ihr Kind wurde erfolgreich angelegt.');
+    //     this.router.navigateByUrl('/kind-uebersicht');
+    //   },
+    //   error => {
+    //     console.log(error);
+    //     this.alertService.presentToast('Es gab einen Fehler bei der Erstellung');
+    //     this.router.navigateByUrl('/kind-uebersicht');
+    //   },
+    //   () => {
 
-      }
-    );
+    //   }
+    // );
   }
 
 

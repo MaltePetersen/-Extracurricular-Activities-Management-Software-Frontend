@@ -4,6 +4,7 @@ import { VeranstaltungensdatenService } from 'src/app/services/veranstaltungensd
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { KinderdatenService } from 'src/app/services/kinderdaten.service';
+import { Children } from 'src/app/models/children';
 
 @Component({
   selector: 'app-kind-uebersicht',
@@ -24,7 +25,8 @@ export class KindUebersichtPage implements OnInit {
     }
 
   getChildren() {
-      this.http.get<children[]>(`${environment.apiUrl}/api/parent/childs`).subscribe(async (a) => {
+      this.http.get<Children[]>(`${environment.apiUrl}/api/parent/childs`).subscribe(async (a) => {
+        console.log("Kinder werden abgefragt")
         console.log(a);
         this.kinder = await a;
       });

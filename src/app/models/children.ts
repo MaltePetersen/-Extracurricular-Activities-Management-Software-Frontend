@@ -1,14 +1,5 @@
-class children
-{
-    userType: String;
-    username: String;
-    password: String;
-    email: String;
-    fullname: String;
-    schoolClass: String;
-    phoneNumber: Number;
-    subject: String;
-    iban: String;
-    address: String;
-    schoolCoordinator: false
+export class Children {
+// tslint:disable-next-line: max-line-length
+constructor(public address: string, public email: string, public fullname: string, public iban: string, public password: string, public phoneNumber: string, public schoolClass: string, public schoolCoordinator: true, public subject: string, public userType: string, public username: string){}
+
 }
