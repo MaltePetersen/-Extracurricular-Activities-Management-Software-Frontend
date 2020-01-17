@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { NavController, AlertController } from '@ionic/angular';
 import { alleSchichtenmodel } from 'src/app/models/alle-Schichten-model';
 import { SchichtModel } from 'src/app/models/schicht-model';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-alle-schichten',
@@ -13,9 +15,10 @@ export class AlleSchichtenPage implements OnInit {
 
   days: any;
 
-  constructor(public navCtrl: NavController, private alertController: AlertController) {
+  constructor(public http: HttpClient, public navCtrl: NavController, private alertController: AlertController) {
+    //this.getAfterSchoolCares();
     let schichten = [
-      new SchichtModel("Testschule", "01.01.2019", "19:00", "Montag")
+      new SchichtModel("1", "Testschule", "01.01.2019", "19:00", "Montag")
     ];
 
     this.days = [
@@ -25,6 +28,12 @@ export class AlleSchichtenPage implements OnInit {
       new alleSchichtenmodel("Donnestag", schichten),
       new alleSchichtenmodel("Freitag", schichten)
     ];
+  }
+
+  getAfterSchoolCares(){
+    this.http.get<SchichtModel[]>(`${environment.apiUrl}/api/employee/afterschoolcares`).subscribe((a) => {
+      this.days = a;
+    });
   }
 
   ngOnInit() {

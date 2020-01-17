@@ -14,7 +14,7 @@ export class AbrechnungPage implements OnInit {
   
   constructor() {
     this.schichten = [
-      new SchichtModel("Klaus Groth Schule", "17.10.2019", "10:00", "Donnerstag")
+      new SchichtModel("1", "Klaus Groth Schule", "17.10.2019", "10:00", "Donnerstag")
     ]
   }
 

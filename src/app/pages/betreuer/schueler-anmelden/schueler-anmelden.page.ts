@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { DatePicker } from '@ionic-native/date-picker';
 import { NgModel } from '@angular/forms';
 import { SchuelerModel } from 'src/app/models/schueler-model';
-import { AlertController } from '@ionic/angular';
-import { ActivatedRoute } from '@angular/router';
+import { AlertController, PopoverController } from '@ionic/angular';
+import { Router, NavigationExtras } from '@angular/router';
+import { AnwesenheitPopoverComponent } from '../anwesenheit-popover/anwesenheit-popover.component';
 
 @Component({
   selector: 'app-schueler-anmelden',
@@ -16,12 +17,11 @@ export class SchuelerAnmeldenPage implements OnInit {
   classes:string[];
   pupils:SchuelerModel[];
   filteredPupils:SchuelerModel[];
-  date:Date;
-  schoolId:string;
+  listId:string;
   selectedClass:string;
   search:string;
   
-  constructor(private alertController: AlertController, private thisRoute:ActivatedRoute) { 
+  constructor(private alertController: AlertController, public router : Router, public popoverController : PopoverController) { 
     this.pupils = [
       new SchuelerModel("Birgit", "Klaus Groth Schule", "5b", "15:00", "Muss nach Hause getragen werden", 1),
       new SchuelerModel("Klaus", "Klaus Groth Schule", "6b", "16:00", "Faehrt mit dem Bus", 2),
@@ -38,7 +38,8 @@ export class SchuelerAnmeldenPage implements OnInit {
   }
 
   ngOnInit() {
-    this.schoolId = this.thisRoute.snapshot.paramMap.get('id');
+    this.listId = this.router.getCurrentNavigation().extras.state.id;
+    console.log(this.listId);
   }
 
   searchChanged(){
@@ -49,10 +50,6 @@ export class SchuelerAnmeldenPage implements OnInit {
   selectedClassChanged(){
     console.log(this.selectedClass);
       this.filterPupils();
-  }
-
-  dateChanged(){
-    console.log(this.date);
   }
 
   filterPupils(){
@@ -135,5 +132,14 @@ export class SchuelerAnmeldenPage implements OnInit {
     } else if(model.anwesenheit == 3){
       await alertGegangen.present();
     }
+  }
+
+  async presentPopover(ev: any) {
+    const popover = await this.popoverController.create({
+      component: AnwesenheitPopoverComponent,
+      event: ev,
+      translucent: true
+    });
+    return await popover.present();
   }
 }
