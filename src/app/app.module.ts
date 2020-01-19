@@ -23,10 +23,6 @@ import { AnwesenheitPopoverComponent } from './pages/betreuer/anwesenheit-popove
 @NgModule({
   declarations: [
     AppComponent,
-    AnwesenheitPopoverComponent
-  ],
-  entryComponents: [
-    AnwesenheitPopoverComponent
   ],
   imports: [
     BrowserModule, 

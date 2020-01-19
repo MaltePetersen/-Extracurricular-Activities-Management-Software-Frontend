@@ -7,21 +7,12 @@ import { IonicModule } from '@ionic/angular';
 
 import { VeranstaltungsPopoverPage } from './veranstaltungs-popover.page';
 
-const routes: Routes = [
-  {
-    path: '',
-    component: VeranstaltungsPopoverPage
-  }
-];
-
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
   ],
-  declarations: [VeranstaltungsPopoverPage],
-  entryComponents:[VeranstaltungsPopoverPage]
+  declarations: [VeranstaltungsPopoverPage]
 })
 export class VeranstaltungsPopoverPageModule {}
