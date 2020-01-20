@@ -2,13 +2,10 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ReactiveFormsModule } from '@angular/forms';
-import { VeranstaltungsPopoverPageModule } from './popover/veranstaltungs-popover/veranstaltungs-popover.module';
-
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { IonicStorageModule } from '@ionic/storage';
@@ -18,7 +15,6 @@ import { BasicAuthInterceptor } from './intercepters/BasicAuthInterceptor';
 import { ErrorInterceptor } from './intercepters/ErrorInterceptor';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { AnwesenheitPopoverComponent } from './pages/betreuer/anwesenheit-popover/anwesenheit-popover.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +22,6 @@ import { AnwesenheitPopoverComponent } from './pages/betreuer/anwesenheit-popove
   ],
   imports: [
     BrowserModule, 
-    VeranstaltungsPopoverPageModule,
     IonicModule.forRoot(), 
     AppRoutingModule, 
     ReactiveFormsModule, 

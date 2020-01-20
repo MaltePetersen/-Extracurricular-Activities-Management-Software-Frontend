@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { GebuchteVeranstaltungen } from 'src/app/models/gebuchteVeranstalungen';
-import { NavController, AlertController, ModalController, PopoverController} from '@ionic/angular';
+import { NavController, AlertController, PopoverController} from '@ionic/angular';
 import {  HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { GebuchterZeitraum } from 'src/app/models/gebuchterZeitraum';
 import { VeranstaltungensdatenService } from 'src/app/services/veranstaltungensdaten.service';
-import { VeranstaltungsPopoverPage } from 'src/app/popover/veranstaltungs-popover/veranstaltungs-popover.page';
+import { VeranstaltungsPopoverPage } from 'src/app/pages/erziehungsberechtigte/veranstaltung-buchen-zeitraum/veranstaltungs-popover/veranstaltungs-popover.page';
 
 @Component({
   selector: 'app-veranstaltung-buchen-zeitraum',

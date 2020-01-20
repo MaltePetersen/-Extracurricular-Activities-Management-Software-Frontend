@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { VeranstaltungBuchenZeitraumPage } from './veranstaltung-buchen-zeitraum.page';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { VeranstaltungsPopoverPageModule } from './veranstaltungs-popover/veranstaltungs-popover.module';
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
+    VeranstaltungsPopoverPageModule,
     SharedModule,
     IonicModule,
     RouterModule.forChild(routes)
