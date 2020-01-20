@@ -15,13 +15,13 @@ import { Children } from 'src/app/models/children';
   styleUrls: ['./kind-hinzufuegen.page.scss'],
 })
 export class KindHinzufuegenPage implements OnInit {
-  
+
   child: Children = new Children('Sesamstraße', 'a@bc.de', 'Peter Pan', '123456', '', '', '', true, '', '', '');
   postId: any;
   schule: any;
   validations_form: FormGroup;
   matching_passwords_group: FormGroup;
-  responseData : any;
+  responseData: any;
   constructor(public http: HttpClient, private router: Router, private auth: AuthenticationService, private alertService: AlertService, public formBuilder: FormBuilder) { }
 
   ngOnInit() {
@@ -53,7 +53,7 @@ export class KindHinzufuegenPage implements OnInit {
     });
   }
 
-  
+
 
   getSchool() {
     this.http.get<school[]>(`${environment.apiUrl}/api/schools`).subscribe((a) => {
@@ -73,72 +73,75 @@ export class KindHinzufuegenPage implements OnInit {
   //   //console.log("schooldata" + schooldata)
   // }
 
-  createChild(){
-const postData = {
-"address": 'Sesamstraße',
-"email": 'a@bc.de',
-"fullname": 'Peter Pan',
-"iban": '123456',
-"password": 'string',
-"phoneNumber": 'string',
-"schoolClass": 'string',
-"schoolCoordinator": true,
-"subject": 'string',
-"userType": 'string',
-"username": 'string'
+  createChild() {
+    const postData = {
+      "address": "Sesamstraße",
+      "email": "a@bc.de",
+      "fullname": "Peter Pan",
+      "iban": "123456",
+      "password": "string",
+      "phoneNumber": "string",
+      "schoolClass": "string",
+      "schoolCoordinator": true,
+      "subject": "string",
+      "userType": "string",
+      "username": "string"
 };
 
-var requestoptions = {
-  headers: new HttpHeaders().set('Content-Type', 'application/json'),
-  body: JSON.stringify(postData)
-}
+    // let headers = new Headers({ 'Content-Type': 'application/json' });
+    // let options = new RequestOptions({ headers: headers });
 
-console.log("POST");
+    let requestoptions = {
+      // headers: new HttpHeaders().set('Content-Type', 'application/json'),
+      body: JSON.stringify(postData)
+    }
+
+    console.log("POST");
     // tslint:disable-next-line: max-line-length
-this.http.post(`${environment.apiUrl}/api/parent/child`,
-{
-  'username': "Parent_Test",
-  'password': "password",
-},
-{
-  headers:{
-  'content-type':"application/JSON",
-  }
-}
-).subscribe({
-      next: data => console.log(data) ,
+    this.http.post(`${environment.apiUrl}/api/parent/child`, requestoptions,
+      // {
+      //   //   'username': "Parent_Test",
+      //   //   'password': "password",
+      //   // },
+        {
+        headers: {
+          'content-type': 'application/JSON',
+        }
+      },
+    ).subscribe({
+      next: data => console.log(data),
       error: error => console.error('There was an error!', error)
-  });
+    });
 
   }
 
-//   POST(url, data) {
-//     var headers = new Headers(), authtoken = localStorage.getItem('authtoken');
-//     headers.append("Content-Type", 'application/json');
+  //   POST(url, data) {
+  //     var headers = new Headers(), authtoken = localStorage.getItem('authtoken');
+  //     headers.append("Content-Type", 'application/json');
 
-//     if (authtoken) {
-//     headers.append("Authorization", 'Token ' + authtoken)
-//     }
-//     headers.append("Accept", 'application/json');
+  //     if (authtoken) {
+  //     headers.append("Authorization", 'Token ' + authtoken)
+  //     }
+  //     headers.append("Accept", 'application/json');
 
-//     var requestoptions = new requestoptions({
-//       method: RequestMethod.Post,
-//       url: this.apiURL + url,
-//       headers: headers,
-//       body: JSON.stringify(data)
-//   })
+  //     var requestoptions = new requestoptions({
+  //       method: RequestMethod.Post,
+  //       url: this.apiURL + url,
+  //       headers: headers,
+  //       body: JSON.stringify(data)
+  //   })
 
-//     return this.http.request(new Request(requestoptions))
-//     .map((res: Response) => {
-//         if (res) {
-//             return { status: res.status, json: res.json() }
-//         }
-//     });
-// }
+  //     return this.http.request(new Request(requestoptions))
+  //     .map((res: Response) => {
+  //         if (res) {
+  //             return { status: res.status, json: res.json() }
+  //         }
+  //     });
+  // }
 
 
 
-  abort(){
+  abort() {
     this.router.navigateByUrl('/kind-uebersicht');
   }
 
@@ -198,6 +201,6 @@ this.http.post(`${environment.apiUrl}/api/parent/child`,
   }
 
 
-  navToKindUebersicht(){ this.router.navigateByUrl('/kind-uebersicht')}
+  navToKindUebersicht() { this.router.navigateByUrl('/kind-uebersicht') }
 
 }
