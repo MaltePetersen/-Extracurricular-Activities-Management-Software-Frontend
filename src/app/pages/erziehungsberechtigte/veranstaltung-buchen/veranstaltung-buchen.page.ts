@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { GebuchteVeranstaltungen } from 'src/app/models/gebuchteVeranstalungen';
 import { AlertController } from '@ionic/angular';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import {  HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { EnvService } from 'src/app/services/env.service';
 import { environment } from 'src/environments/environment';
 import { VeranstaltungensdatenService } from 'src/app/services/veranstaltungensdaten.service';
 
@@ -21,7 +18,7 @@ export class VeranstaltungBuchenPage implements OnInit {
   veranstaltungen:any;
   private datum:any;
 
-  constructor(private alertController: AlertController, public router : Router ,public http: HttpClient, private env: EnvService, private veranstaltungsDaten: VeranstaltungensdatenService) {
+  constructor(private alertController: AlertController, public router : Router ,public http: HttpClient, private veranstaltungsDaten: VeranstaltungensdatenService) {
     this.getVeranstaltungen();
    }
 

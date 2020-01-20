@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { LoginPage } from './login.page';
 import { HttpClientModule } from '@angular/common/http';
-
+//TODO: Vielleicht ist das Routingproblem nachdem Login oder Logout hier
 const routes: Routes = [
   {
     path: '',

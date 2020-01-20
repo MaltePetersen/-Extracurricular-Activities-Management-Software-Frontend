@@ -8,6 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./veranstaltungs-popover.page.scss'],
 })
 export class VeranstaltungsPopoverPage implements OnInit {
+  //TODO: Muss endweder Teil von SharedModule oder von dem relevanten PageModul.
   @Input("endzeit") endzeit;
   //endzeit = null;
   bemerkung = null;

@@ -3,8 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
-import { filter, map } from 'rxjs/operators';
-import { EnvService } from './env.service';
+import {  map } from 'rxjs/operators';
 import { User } from '../models/user';
 import { environment } from 'src/environments/environment';
 
@@ -19,7 +18,7 @@ export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
 
-  constructor(private storage: Storage, private router: Router, private http: HttpClient, private env: EnvService, ) {
+  constructor(private storage: Storage, private router: Router, private http: HttpClient ) {
     if (localStorage.getItem('isLoggedIn')) {
       this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('isLoggedIn')));
       this.currentUser = this.currentUserSubject.asObservable();

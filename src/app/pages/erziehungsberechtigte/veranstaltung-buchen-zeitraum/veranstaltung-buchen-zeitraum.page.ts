@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from 'src/app/services/authentication.service';
 import { GebuchteVeranstaltungen } from 'src/app/models/gebuchteVeranstalungen';
 import { NavController, AlertController, ModalController, PopoverController} from '@ionic/angular';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import {  HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { EnvService } from 'src/app/services/env.service';
-import { environment } from 'src/environments/environment';
 import { GebuchterZeitraum } from 'src/app/models/gebuchterZeitraum';
 import { VeranstaltungensdatenService } from 'src/app/services/veranstaltungensdaten.service';
 import { VeranstaltungsPopoverPage } from 'src/app/popover/veranstaltungs-popover/veranstaltungs-popover.page';
-import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-veranstaltung-buchen-zeitraum',
@@ -28,7 +24,7 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
   endzeit = "16:00";
   bemerkung: any;
 
-  constructor(private nav: NavController, private popoverController: PopoverController, private alertController: AlertController, public router : Router ,public http: HttpClient, private env: EnvService, private veranstaltungsDaten: VeranstaltungensdatenService) {
+  constructor(private nav: NavController, private popoverController: PopoverController, private alertController: AlertController, public router : Router ,public http: HttpClient, private veranstaltungsDaten: VeranstaltungensdatenService) {
     this.getVeranstaltungen();
     this.days = [
       new GebuchteVeranstaltungen("Montag", this.zeit),

@@ -4,6 +4,7 @@ import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
+  //TODO: Erstellen von einem Routing Module per Role und zwei übergeordneten Modulen
   //{ path: 'login', loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)},
   {
     path: 'login',

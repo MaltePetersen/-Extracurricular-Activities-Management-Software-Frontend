@@ -6,7 +6,7 @@ import { NavParams, ModalController } from '@ionic/angular';
 })
 export class VeranstaltungBuchenModal {
     @Input() endZeit: string;
-
+//TODO: Refactoring in relevantes ModulPage oder SharedModul
   constructor(navParams: NavParams, private modalCtrl:ModalController) {
     console.log(navParams.get('endZeit: '+ this.endZeit));
     console.log(navParams.get('endZeit'));
