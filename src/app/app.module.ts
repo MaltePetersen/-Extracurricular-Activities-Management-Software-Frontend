@@ -15,6 +15,7 @@ import { BasicAuthInterceptor } from './intercepters/BasicAuthInterceptor';
 import { ErrorInterceptor } from './intercepters/ErrorInterceptor';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { ApiModule } from './api/api.module';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { environment } from '../environments/environment';
     NgxDatatableModule,
     HttpClientModule, 
     SharedModule, 
+    ApiModule,
     ServiceWorkerModule.register('ngsw-worker.js', 
     { enabled: environment.production })
   ],
