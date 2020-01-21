@@ -6,17 +6,23 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class VeranstaltungensdatenService {
 
-  private veranstalltungsTyp = new BehaviorSubject<string>('veranstaltungsTyp');
+  private veranstaltungsTyp = new BehaviorSubject<string>('veranstaltungsTyp');
+  private veranstaltungsTypId = new BehaviorSubject<number>(0);
   private kindername = new BehaviorSubject<string>('kindername');
   private kinderId = new BehaviorSubject<string>('kinderId');
-    ausgewählteVeranstaltung = this.veranstalltungsTyp.asObservable();
+    ausgewählteVeranstaltung = this.veranstaltungsTyp.asObservable();
+    ausgewählteVeranstaltungId = this.veranstaltungsTypId.asObservable();
     ausgewähltesKind = this.kindername.asObservable();
     ausgewählteID = this.kinderId.asObservable();
 
   constructor() { }
 
   changeVeranstaltung(veranstaltung: string) {
-    this.veranstalltungsTyp.next(veranstaltung);
+    this.veranstaltungsTyp.next(veranstaltung);
+}
+
+changeVeranstaltungId(veranstaltungId: number) {
+  this.veranstaltungsTypId.next(veranstaltungId);
 }
 
 changeKind(kindername: string) {

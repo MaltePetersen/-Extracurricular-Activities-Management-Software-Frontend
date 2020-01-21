@@ -60,7 +60,7 @@ export class VeranstaltungBuchenPage implements OnInit {
 
   }
 
-  async chooseOffer(name){
+  async chooseOffer(name, id){
     console.log("Momentamer Name: "+this.kindername);
     if (this.kindername === "kindername" || this.kindername === null  ) {
 
@@ -74,6 +74,9 @@ export class VeranstaltungBuchenPage implements OnInit {
       
     } else {
     this.veranstaltungsDaten.changeVeranstaltung(name.toString());
+    console.log('ID: '+id)
+    this.veranstaltungsDaten.changeVeranstaltungId(id);
+    
     // const alert = await this.alertController.create({
     //   header: name,
     //   buttons: ['OK']
