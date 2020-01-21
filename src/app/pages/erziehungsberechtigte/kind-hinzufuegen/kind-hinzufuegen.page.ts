@@ -8,6 +8,8 @@ import { PasswordValidator } from '../registrierung/password.validator';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Children } from 'src/app/models/children';
+import { CountryPhone } from 'src/app/models/country-phone.model';
+import { PhoneValidator } from 'src/app/pages/erziehungsberechtigte/registrierung/phone.validator';
 
 @Component({
   selector: 'app-kind-hinzufuegen',
@@ -15,17 +17,32 @@ import { Children } from 'src/app/models/children';
   styleUrls: ['./kind-hinzufuegen.page.scss'],
 })
 export class KindHinzufuegenPage implements OnInit {
-  
+
+
+  lastName: string;
+  firstName: string;
+  schoolname: string;
+  classname: string;
+  phonenumber: string;
+
   child: Children = new Children('Sesamstraße', 'a@bc.de', 'Peter Pan', '123456', '', '', '', true, '', '', '');
   postId: any;
   schule: any;
   validations_form: FormGroup;
   matching_passwords_group: FormGroup;
-  responseData : any;
+  country_phone_group: FormGroup;
+  countries: Array<CountryPhone>;
+  
+  responseData: any;
+
   constructor(public http: HttpClient, private router: Router, private auth: AuthenticationService, private alertService: AlertService, public formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    this.getSchool();
+
+    this.countries = [
+      new CountryPhone('DE', 'Germany'),
+    ];
+
     this.matching_passwords_group = new FormGroup({
       password: new FormControl('', Validators.compose([
         Validators.minLength(5),
@@ -36,6 +53,15 @@ export class KindHinzufuegenPage implements OnInit {
     }, (formGroup: FormGroup) => {
       return PasswordValidator.areEqual(formGroup);
     });
+    let country = new FormControl(this.countries[0], Validators.required);
+    let phone = new FormControl('', Validators.compose([
+    Validators.required,
+    PhoneValidator.validCountryPhone(country)
+      ]));
+      this.country_phone_group = new FormGroup({
+        country: country,
+        phone: phone
+      });
 
     this.validations_form = this.formBuilder.group({
       // username: new FormControl('', Validators.compose([
@@ -48,97 +74,63 @@ export class KindHinzufuegenPage implements OnInit {
       // matching_passwords: this.matching_passwords_group,
       name: new FormControl('', Validators.required),
       lname: new FormControl('', Validators.required),
+      country_phone: this.country_phone_group,
       school: new FormControl('', Validators.required),
       schoolClass: new FormControl('', Validators.required)
     });
   }
 
+
   
 
-  getSchool() {
-    this.http.get<school[]>(`${environment.apiUrl}/api/schools`).subscribe((a) => {
-      this.schule = a;
-      console.log('ERFOLG SCHULE GELADEN')
-      console.log(this.schule)
-    });
-  }
 
-  // chooseSchool(schoolname: any){
-
-  //   // let schooldata = schoolname.target.value.toString().split(" ");
-  //   // let name = schoolname[0].toString();
-  //   // let id  = schoolname[1].toString();
-
-  //   console.log("NAME" + name)
-  //   //console.log("schooldata" + schooldata)
-  // }
-
-  createChild(){
-const postData = {
-"address": 'Sesamstraße',
-"email": 'a@bc.de',
-"fullname": 'Peter Pan',
-"iban": '123456',
-"password": 'string',
-"phoneNumber": 'string',
-"schoolClass": 'string',
-"schoolCoordinator": true,
-"subject": 'string',
-"userType": 'string',
-"username": 'string'
+  createChild() {
+    const postData = {
+      "address": "null",
+      "email": "null",
+      "fullname": "TEST Pan",
+      "iban": "123456",
+      "password": "string",
+      "phoneNumber": "string",
+      "schoolClass": "string",
+      "schoolCoordinator": true,
+      "subject": "string",
+      "userType": "ROLE_CHILD",
+      "username": "null"
 };
 
-var requestoptions = {
-  headers: new HttpHeaders().set('Content-Type', 'application/json'),
-  body: JSON.stringify(postData)
-}
+    // let headers = new Headers({ 'Content-Type': 'application/json' });
+    // let options = new RequestOptions({ headers: headers });
 
-console.log("POST");
+    let requestoptions = {
+      // headers: new HttpHeaders().set('Content-Type', 'application/json'),
+      body: JSON.stringify(postData)
+    }
+
+    console.log("POST");
     // tslint:disable-next-line: max-line-length
-this.http.post(`${environment.apiUrl}/api/parent/child`,
-{
-  'username': "Parent_Test",
-  'password': "password",
-},
-{
-  headers:{
-  'content-type':"application/JSON",
-  }
-}
-).subscribe({
-      next: data => console.log(data) ,
-      error: error => console.error('There was an error!', error)
-  });
+    this.http.post(`${environment.apiUrl}/api/parent/child`, postData,
+      // {
+      //   //   'username': "Parent_Test",
+      //   //   'password': "password",
+      //   // },
+        {
+        headers: {
+          'content-type': 'application/JSON',
+        }
+      },
+    ).subscribe({
+      next: data => console.log("Success! " + data),
+      error: error => console.error('There was an error!', error),
+    });
 
   }
 
-//   POST(url, data) {
-//     var headers = new Headers(), authtoken = localStorage.getItem('authtoken');
-//     headers.append("Content-Type", 'application/json');
-
-//     if (authtoken) {
-//     headers.append("Authorization", 'Token ' + authtoken)
-//     }
-//     headers.append("Accept", 'application/json');
-
-//     var requestoptions = new requestoptions({
-//       method: RequestMethod.Post,
-//       url: this.apiURL + url,
-//       headers: headers,
-//       body: JSON.stringify(data)
-//   })
-
-//     return this.http.request(new Request(requestoptions))
-//     .map((res: Response) => {
-//         if (res) {
-//             return { status: res.status, json: res.json() }
-//         }
-//     });
-// }
+  
 
 
 
-  abort(){
+  abort() {
     this.router.navigateByUrl('/kind-uebersicht');
   }
 
@@ -166,6 +158,10 @@ this.http.post(`${environment.apiUrl}/api/parent/child`,
     ],
     'lname': [
       { type: 'required', message: 'Nachname ist notwendig.' }
+    ],
+    'phone': [
+      // { type: 'required', message: 'Telefonnummer ist notwendig.' },
+      { type: 'validCountryPhone', message: 'Keine gültige Telefonnummer.' }
     ],
     'school': [
       { type: 'required', message: 'Schule ist notwendig.' },
@@ -198,6 +194,6 @@ this.http.post(`${environment.apiUrl}/api/parent/child`,
   }
 
 
-  navToKindUebersicht(){ this.router.navigateByUrl('/kind-uebersicht')}
+  navToKindUebersicht() { this.router.navigateByUrl('/kind-uebersicht') }
 
 }
