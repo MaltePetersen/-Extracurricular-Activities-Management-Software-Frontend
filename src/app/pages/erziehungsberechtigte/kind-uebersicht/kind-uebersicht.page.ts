@@ -20,8 +20,8 @@ export class KindUebersichtPage implements OnInit {
   kinder: any;
   kinderdaten: any;
 
-  constructor(private childData: KinderdatenService, public http: HttpClient, private router: Router, private veranstaltungsDaten: VeranstaltungensdatenService) {
-    this.datenZuweisen();
+  constructor(private childData: KinderdatenService, public http: HttpClient, private router: Router, private veranstaltungsDaten: VeranstaltungensdatenService ) {
+      this.datenZuweisen();
     }
 
   getChildren() {
@@ -41,7 +41,9 @@ export class KindUebersichtPage implements OnInit {
     this.router.navigateByUrl('/kind-bearbeiten');
 
   }
-
+  ionViewWillEnter(){
+    this.datenZuweisen();
+  }
 
   ngOnInit() {
     this.childData.currentChildData.subscribe(kinderdaten => this.kinderdaten = kinderdaten);
