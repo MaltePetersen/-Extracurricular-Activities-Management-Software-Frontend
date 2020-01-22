@@ -122,7 +122,9 @@ const routes: Routes = [
   { path: 'veranstaltung-buchen-zeitraum', loadChildren: './pages/erziehungsberechtigte/veranstaltung-buchen-zeitraum/veranstaltung-buchen-zeitraum.module#VeranstaltungBuchenZeitraumPageModule', canActivate: [AuthGuard],
   data: {
     role: 'ROLE_PARENT'
-  }
+  }},
+  { path: 'example', 
+  loadChildren: () => import('./pages/example/example.module').then(m => m.ExampleModule)
 },
 
 ];
