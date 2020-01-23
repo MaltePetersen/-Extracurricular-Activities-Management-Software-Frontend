@@ -5,9 +5,6 @@ import { AuthGuard } from 'src/app/guards/auth.guard';
 
 const routes: Routes = [
   {
-    path:'', loadChildren: () => import('./test/test.module').then(m=>m.TestComponentModule)
-  },
-  {
     path: 'schulauswahl',
     loadChildren: () => import('./schulauswahl/schulauswahl.module').then(m => m.SchulauswahlPageModule),
     canActivate: [AuthGuard],
