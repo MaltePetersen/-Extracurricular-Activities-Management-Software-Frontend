@@ -5,9 +5,14 @@ import { ExampleComponent } from './example/example.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'test',
+    loadChildren: () => import('./example/example.module').then(m => m.ExampleComponentModule)
+  },
+  {
+    path: 'sec',
     loadChildren: () => import('./example/example.module').then(m => m.ExampleComponentModule)
   }
+
 ];
 
 @NgModule({
