@@ -91,7 +91,7 @@
         
                 <ion-item>
                   <ion-label position="floating" color="primary">Vorname</ion-label>
-                  <ion-input type="text" formControlName="name" [(ngModel)]="firstName"></ion-input>
+                  <ion-input type="text" formControlName="name"></ion-input>
                 </ion-item>
                 <div class="validation-errors">
                   <ng-container *ngFor="let validation of validation_messages.name">
@@ -106,7 +106,7 @@
                 </div>
                 <ion-item>
                   <ion-label position="floating" color="primary">Nachname</ion-label>
-                  <ion-input type="text" formControlName="lname" [(ngModel)]="lastName"></ion-input>
+                  <ion-input type="text" formControlName="lname" ></ion-input>
                 </ion-item>
                 <div class="validation-errors">
                   <ng-container *ngFor="let validation of validation_messages.name">
@@ -120,7 +120,7 @@
                   </ng-container>
                 </div>
 
-                <div formGroupName="country_phone">
+                <!-- <div formGroupName="country_phone">
                 <ion-item>
                   <ion-label position="floating" color="primary"
                     >Telefonummer</ion-label
@@ -143,12 +143,12 @@
                     </div>
                   </ng-container>
                 </div>
-                </div>
+                </div> -->
 
                 <ion-item>
                     <ion-label position="floating" color="primary">Schule</ion-label>
-                    <ion-select formControlName="school" ok-text="Okay" cancel-text="Abbrechen" [(ngModel)]="schoolname">
-                    <ion-select-option *ngFor="let s of schule" value="{{s.name}} {{s.id}}">{{s.name}}</ion-select-option>
+                    <ion-select formControlName="school" ok-text="Okay" cancel-text="Abbrechen">
+                    <ion-select-option *ngFor="let s of schools" value="{{s.name}} {{s.id}}">{{s.name}}</ion-select-option>
                   </ion-select>
                     <!-- <ion-input type="text" formControlName="school"></ion-input> -->
                   </ion-item>
@@ -166,7 +166,7 @@
 
                 <ion-item>
                     <ion-label position="floating" color="primary">Klasse</ion-label>
-                    <ion-input type="text" formControlName="schoolClass" [(ngModel)]="classname"></ion-input>
+                    <ion-input type="text" formControlName="schoolClass" ></ion-input>
                   </ion-item>
                   <div class="validation-errors">
                     <ng-container

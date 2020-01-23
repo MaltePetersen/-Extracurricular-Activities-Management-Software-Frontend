@@ -5,7 +5,7 @@
               <ion-item> 
                 <ion-label>Kind auswählen</ion-label>
                 <ion-select ok-text="OK" cancel-text="Abbrechen" (ionChange)="chooseChild($event)">
-                  <ion-select-option *ngFor="let kind of veranstaltungen" value="{{kind.name}} {{kind.id}}">{{kind.name}}</ion-select-option>
+                  <ion-select-option *ngFor="let kind of children" value="{{kind.fullname}} {{kind.id}}">{{kind.fullname}}</ion-select-option>
                 </ion-select>
               </ion-item>
 
@@ -16,7 +16,7 @@
                   </ion-label>
                 </div>
                 <div class="veranstaltung-container">
-                  <ion-item *ngFor="let veranstaltung of veranstaltungen" lines="none" class="veranstaltung-item" (click)="chooseOffer(veranstaltung.name)">
+                  <ion-item *ngFor="let veranstaltung of veranstaltungen" lines="none" class="veranstaltung-item" (click)="chooseOffer(veranstaltung.name, veranstaltung.id)">
                     <div class="veranstaltung-content-container">
                       <ion-label class="tag-label">
                         {{veranstaltung.name}}

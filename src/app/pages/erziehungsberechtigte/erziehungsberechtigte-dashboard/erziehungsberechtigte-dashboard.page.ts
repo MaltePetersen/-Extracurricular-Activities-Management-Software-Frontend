@@ -30,9 +30,9 @@ export class ErziehungsberechtigteDashboardPage implements OnInit {
   }
 
   getVeranstaltungen() {
-    this.http.get<school[]>(`${environment.apiUrl}/api/employee/schools`).subscribe((a) => {
+    this.http.get<school[]>(`${environment.apiUrl}/api/parent/booked_after_school_cares`).subscribe((a) => {
       this.veranstaltungen = a;
-      console.log(a);
+      console.table(a);
     });
   }
 

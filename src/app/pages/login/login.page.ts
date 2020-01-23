@@ -28,19 +28,19 @@ export class LoginPage implements OnInit {
     headers = headers.append('Content-Type', 'application/json');
 
     
-    this.http.get('https://development-fjoerde.herokuapp.com/api/parent/childs', {headers}).subscribe((test)=> console.table(test));
+    this.http.get('https://development-fjoerde.herokuapp.com/api/parent/children', {headers}).subscribe((test)=> console.table(test));
   
-    this.http.get('https://backend.softwareprojekt-kiel.de/api/parent/childs', {headers}).subscribe((test)=> console.table(test));
+    this.http.get('https://backend.softwareprojekt-kiel.de/api/parent/childdren', {headers}).subscribe((test)=> console.table(test));
   
   }
 
   login() {
     this.auth.login(this.user.email, this.user.pw).subscribe((role) => {
       if (role === 'ROLE_EMPLOYEE'){
-        this.router.navigateByUrl('/schulauswahl');
+        this.router.navigateByUrl('/employee/schulauswahl');
       }
       if (role === 'ROLE_PARENT'){
-      this.router.navigateByUrl('/erziehungsberechtigte-dashboard');
+      this.router.navigateByUrl('parent/erziehungsberechtigte-dashboard');
     }});
   }
 

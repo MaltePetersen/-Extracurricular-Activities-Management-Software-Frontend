@@ -33,7 +33,7 @@ export class KindBearbeitenPage implements OnInit {
       message: "Die Änderungen wurden erfolgreich übernommen.",
       buttons: [{text: 'OK',
                 handler: ()=> {
-                  this.router.navigateByUrl('/kind-uebersicht');
+                  this.router.navigateByUrl('parent/kind-uebersicht');
                 },
               }]
     });

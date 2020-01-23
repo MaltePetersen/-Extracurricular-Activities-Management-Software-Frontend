@@ -10,6 +10,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Children } from 'src/app/models/children';
 import { CountryPhone } from 'src/app/models/country-phone.model';
 import { PhoneValidator } from 'src/app/pages/erziehungsberechtigte/registrierung/phone.validator';
+import { KindUebersichtPage } from '../kind-uebersicht/kind-uebersicht.page';
 
 @Component({
   selector: 'app-kind-hinzufuegen',
@@ -18,27 +19,18 @@ import { PhoneValidator } from 'src/app/pages/erziehungsberechtigte/registrierun
 })
 export class KindHinzufuegenPage implements OnInit {
 
-
-  lastName: string;
-  firstName: string;
-  schoolname: string;
-  classname: string;
-  phonenumber: string;
-
-  child: Children = new Children('Sesamstraße', 'a@bc.de', 'Peter Pan', '123456', '', '', '', true, '', '', '');
   postId: any;
-  schule: any;
   validations_form: FormGroup;
   matching_passwords_group: FormGroup;
   country_phone_group: FormGroup;
   countries: Array<CountryPhone>;
-  
+  schools: any;
   responseData: any;
 
   constructor(public http: HttpClient, private router: Router, private auth: AuthenticationService, private alertService: AlertService, public formBuilder: FormBuilder) { }
 
   ngOnInit() {
-
+  this.getSchools();
     this.countries = [
       new CountryPhone('DE', 'Germany'),
     ];
@@ -80,48 +72,46 @@ export class KindHinzufuegenPage implements OnInit {
     });
   }
 
-
-  
-
+  getSchools() {
+    this.http.get<school[]>(`${environment.apiUrl}/api/parent/schools`).subscribe((a) => {
+      this.schools = a;
+      console.log(a);
+    });
+  }
 
   createChild() {
+
     const postData = {
-      "address": "null",
-      "email": "null",
-      "fullname": "TEST Pan",
-      "iban": "123456",
-      "password": "string",
-      "phoneNumber": "string",
-      "schoolClass": "string",
+      "address": null,
+      "email": null,
+      "fullname": this.validations_form.get('name').value + ' ' + this.validations_form.get('lname').value,
+      "iban": null,
+      "password": null,
+      "phoneNumber": null,
+      "schoolClass": this.validations_form.get('schoolClass').value,
       "schoolCoordinator": true,
-      "subject": "string",
+      "subject": null,
       "userType": "ROLE_CHILD",
-      "username": "null"
+      "username": null
 };
-
-    // let headers = new Headers({ 'Content-Type': 'application/json' });
-    // let options = new RequestOptions({ headers: headers });
-
-    let requestoptions = {
-      // headers: new HttpHeaders().set('Content-Type', 'application/json'),
-      body: JSON.stringify(postData)
-    }
 
     console.log("POST");
     // tslint:disable-next-line: max-line-length
     this.http.post(`${environment.apiUrl}/api/parent/child`, postData,
-      // {
-      //   //   'username': "Parent_Test",
-      //   //   'password': "password",
-      //   // },
         {
         headers: {
           'content-type': 'application/JSON',
         }
       },
     ).subscribe({
-      next: data => console.log("Success! " + data),
-      error: error => console.error('There was an error!', error),
+      // tslint:disable-next-line: max-line-length
+      next: () => {this.alertService.presentToast(this.validations_form.get('name').value + ' ' + this.validations_form.get('lname').value +' wurde erfolgreich angelegt.');
+                    this.router.navigateByUrl('parent/kind-uebersicht')},
+      error: error => {
+            console.log(error);
+            this.alertService.presentToast('Es gab einen Fehler bei der Erstellung');
+            this.router.navigateByUrl('parent/kind-uebersicht');
+          },
     });
 
   }
@@ -173,24 +163,6 @@ export class KindHinzufuegenPage implements OnInit {
 
   onSubmit(values) {
     console.log(values);
-  }
-
-
-  kindAnlegen(form: NgForm) {
-    // this.auth.childRegister(form.value.fname,  form.value.lname,  form.value.bday,  form.value.school,  form.value.schoolClass,  form.value.username,  form.value.password,  form.value.passwordRepeat).subscribe(
-    //   data => {
-    //     this.alertService.presentToast('Ihr Kind wurde erfolgreich angelegt.');
-    //     this.router.navigateByUrl('/kind-uebersicht');
-    //   },
-    //   error => {
-    //     console.log(error);
-    //     this.alertService.presentToast('Es gab einen Fehler bei der Erstellung');
-    //     this.router.navigateByUrl('/kind-uebersicht');
-    //   },
-    //   () => {
-
-    //   }
-    // );
   }
 
 

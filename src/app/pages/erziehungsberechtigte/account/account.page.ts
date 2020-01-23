@@ -28,7 +28,7 @@ export class AccountPage implements OnInit {
       message: "Die Änderungen wurden erfolgreich übernommen.",
       buttons: [{text: 'OK',
                 handler: ()=> {
-                  this.router.navigateByUrl('/erziehungsberechtigte-dashboard');
+                  this.router.navigateByUrl('parent/erziehungsberechtigte-dashboard');
                 },
               }]
     });
@@ -37,7 +37,7 @@ export class AccountPage implements OnInit {
   }
 
   abort(){
-    this.router.navigateByUrl('/erziehungsberechtigte-dashboard');
+    this.router.navigateByUrl('parent/erziehungsberechtigte-dashboard');
   }
 
   async deleteAccount(){
@@ -52,7 +52,7 @@ export class AccountPage implements OnInit {
     },
       {text: 'Abbrechen',
       handler: ()=> {
-        this.router.navigateByUrl('/erziehungsberechtigte-dashboard');
+        this.router.navigateByUrl('parent/erziehungsberechtigte-dashboard');
       }
     }]
 });
@@ -65,7 +65,7 @@ export class AccountPage implements OnInit {
       message: "Das Passwort wurde erfolgreich geändert.",
       buttons: [{text: 'OK',
       handler: ()=> {
-        this.router.navigateByUrl('/erziehungsberechtigte-dashboard');
+        this.router.navigateByUrl('parent/erziehungsberechtigte-dashboard');
       },
     }]
 });

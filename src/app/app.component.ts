@@ -18,12 +18,12 @@ export class AppComponent implements OnInit {
   public Eltern = [
     {
       title: 'Home',
-      url: '/erziehungsberechtigte-dashboard',
+      url: 'parent/erziehungsberechtigte-dashboard',
       icon: 'home'
     },
     {
       title: 'Veranstaltung buchen',
-      url: '/veranstaltung-buchen',
+      url: 'parent/veranstaltung-buchen',
       icon: 'school'
     },
     // {
@@ -33,12 +33,12 @@ export class AppComponent implements OnInit {
     // },
     {
       title: 'Kinder',
-      url: '/kind-uebersicht',
+      url: 'parent/kind-uebersicht',
       icon: 'people'
     },
     {
       title: 'Account',
-      url: '/account',
+      url: 'parent/account',
       icon: 'person'
     },
     {
@@ -50,23 +50,23 @@ export class AppComponent implements OnInit {
   public Betreuer = [
     {
       title: 'Schulauswahl',
-      url: '/schulauswahl',
+      url: '/employee/schulauswahl',
       icon: 'briefcase'
     },
     {
       title: 'Alle Schichten',
-      url: '/alle-schichten',
+      url: '/employee/alle-schichten',
       icon: 'clipboard'
     },
     {
       title: 'Abrechnung',
-      url: '/abrechnung',
+      url: '/employee/abrechnung',
       icon: 'card'
     },
     {
       title: 'Abmelden',
-      icon: 'log-out',
-      url: '/logout'
+      url: '/logout',
+      icon: 'log-out'
     },
   ];
   constructor(
