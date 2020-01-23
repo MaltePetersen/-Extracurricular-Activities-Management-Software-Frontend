@@ -3,6 +3,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import {  HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { EmployeeControllerService } from 'src/app/api/services';
 
 @Component({
   selector: 'app-schulauswahl',
@@ -13,11 +14,11 @@ export class SchulauswahlPage implements OnInit {
 
   schools: any;
 
-  constructor(private auth: AuthenticationService, public router : Router ,public http: HttpClient) {
-    this.getSchools();
+  constructor(private auth: AuthenticationService, public router : Router ,public http: HttpClient, private employeeController:EmployeeControllerService) {
   }
 
   ngOnInit() {
+    this.getSchools();
   }
 
   schoolClick(schoolId:number) {
@@ -30,9 +31,7 @@ export class SchulauswahlPage implements OnInit {
   }
 
   getSchools() {
-    this.http.get<school[]>(`${environment.apiUrl}/api/employee/schools`).subscribe((a) => {
-      this.schools = a;
-    });
+    this.employeeController.getSchoolsUsingGET().subscribe((schools)=> this.schools = schools);
   }
 
   logout() {

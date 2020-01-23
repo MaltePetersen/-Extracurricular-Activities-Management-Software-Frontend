@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavParams, PopoverController } from '@ionic/angular';
 
 @Component({
   selector: 'app-anwesenheit-popover',
@@ -7,7 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AnwesenheitPopoverComponent implements OnInit {
 
-  constructor() { }
+  private id:String;
+  
+  constructor(navParams: NavParams) {
+    this.id = navParams.get('child_id');
+    console.log(navParams.get('child_id'));
+  }
 
   ngOnInit() {}
 

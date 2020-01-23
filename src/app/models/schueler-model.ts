@@ -6,7 +6,7 @@ export class SchuelerModel{
     2 = gegangen
     3 = ueberfaellig
     */
-    constructor(public name:string, public schule:string, public klasse:string, public betreuungsende:any, public info:string, public anwesenheit:number){
+    constructor(public id:string, public name:string, public schule:string, public klasse:string, public betreuungsende:any, public info:string, public anwesenheit:number){
         
     }
 }
