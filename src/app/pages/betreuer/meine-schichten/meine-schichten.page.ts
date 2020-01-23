@@ -32,7 +32,7 @@ export class MeineSchichtenPage implements OnInit {
         id: listId
       }
     };
-    this.router.navigate(['schueler-anmelden'], navigationExtras);
+    this.router.navigate(['employee/schueler-anmelden'], navigationExtras);
   }
 
 }

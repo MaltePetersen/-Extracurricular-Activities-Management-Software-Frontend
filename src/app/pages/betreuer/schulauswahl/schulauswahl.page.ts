@@ -26,7 +26,7 @@ export class SchulauswahlPage implements OnInit {
         id: schoolId
       }
     };
-    this.router.navigate(['meine-schichten'], navigationExtras);
+    this.router.navigate(['employee/meine-schichten'], navigationExtras);
   }
 
   getSchools() {

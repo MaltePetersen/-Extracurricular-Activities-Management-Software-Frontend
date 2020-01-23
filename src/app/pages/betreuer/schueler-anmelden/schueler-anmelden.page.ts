@@ -4,7 +4,7 @@ import { NgModel } from '@angular/forms';
 import { SchuelerModel } from 'src/app/models/schueler-model';
 import { AlertController, PopoverController } from '@ionic/angular';
 import { Router, NavigationExtras } from '@angular/router';
-import { AnwesenheitPopoverComponent } from '../anwesenheit-popover/anwesenheit-popover.component';
+import { AnwesenheitPopoverComponent } from './anwesenheit-popover/anwesenheit-popover.component';
 
 @Component({
   selector: 'app-schueler-anmelden',

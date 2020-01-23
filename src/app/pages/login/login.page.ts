@@ -37,7 +37,7 @@ export class LoginPage implements OnInit {
   login() {
     this.auth.login(this.user.email, this.user.pw).subscribe((role) => {
       if (role === 'ROLE_EMPLOYEE'){
-        this.router.navigateByUrl('/schulauswahl');
+        this.router.navigateByUrl('/employee/schulauswahl');
       }
       if (role === 'ROLE_PARENT'){
       this.router.navigateByUrl('/erziehungsberechtigte-dashboard');
