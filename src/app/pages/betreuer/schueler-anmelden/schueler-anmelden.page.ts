@@ -32,10 +32,10 @@ export class SchuelerAnmeldenPage implements OnInit {
     this.listId = this.router.getCurrentNavigation().extras.state.id;
     this.getAfterSchoolCare(this.listId).then((response) =>{
       this.betreuungsende = response.endTime;
-      response.attendances.forEach((attendence)=>{
-        this.pupils.push(this.mapToPupil(attendence));
-        /*let school = this.getSchool(attendence.child.childschool).then((school)=>{
-          this.pupils.push(this.mapToPupil(attendence, school));
+      response.attendances.forEach((attendance)=>{
+        this.pupils.push(this.mapToPupil(attendance));
+        /*let school = this.getSchool(attendance.child.childschool).then((school)=>{
+          this.pupils.push(this.mapToPupil(attendance, school));
         });*/
       });
       this.filteredPupils = this.pupils;
@@ -43,12 +43,12 @@ export class SchuelerAnmeldenPage implements OnInit {
     });
   }
 
-  mapToPupil(attendence:AttendanceDTO):SchuelerModel{
-    return new SchuelerModel(attendence.id, attendence.child.fullname, 'placeholder', attendence.child.schoolClass, attendence.note, attendence.status);
+  mapToPupil(attendance:AttendanceDTO):SchuelerModel{
+    return new SchuelerModel(attendance.id, attendance.child.fullname, 'placeholder', attendance.child.schoolClass, attendance.note, attendance.status);
   }
 
-  /*mapToPupil(attendence:AttendanceDTO, school:SchoolDTO):SchuelerModel{
-    return new SchuelerModel(attendence.id, attendence.child.fullname, school.name, attendence.child.schoolClass, attendence.note, attendence.status);
+  /*mapToPupil(attendance:AttendanceDTO, school:SchoolDTO):SchuelerModel{
+    return new SchuelerModel(attendance.id, attendance.child.fullname, school.name, attendance.child.schoolClass, attendance.note, attendance.status);
   }*/
 
   getAfterSchoolCare(id:number) : Promise<AfterSchoolCareDTO>{
@@ -75,6 +75,14 @@ export class SchuelerAnmeldenPage implements OnInit {
     if(this.selectedClass != null && this.selectedClass != "Alle"){
       this.filteredPupils = this.filteredPupils.filter(pupil => pupil.klasse == this.selectedClass);
     }
+  }
+
+  updateAnwesend(id:number){
+
+  }
+
+  updateGegangen(id:number){
+
   }
 
   getClasses(){
