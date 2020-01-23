@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://backend.softwareprojekt-kiel.de'
+  apiUrl: 'https://backend.softwareprojekt-kiel.de',
+  devApiUrl: 'https://development-fjoerde.herokuapp.com'
 };
 
 /*

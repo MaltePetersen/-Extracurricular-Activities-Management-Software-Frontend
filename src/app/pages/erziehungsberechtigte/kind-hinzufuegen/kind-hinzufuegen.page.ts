@@ -97,7 +97,7 @@ export class KindHinzufuegenPage implements OnInit {
 
     console.log("POST");
     // tslint:disable-next-line: max-line-length
-    this.http.post(`${environment.apiUrl}/api/parent/child`, postData,
+    this.http.post(`${environment.devApiUrl}/api/parent/child`, postData,
         {
         headers: {
           'content-type': 'application/JSON',
