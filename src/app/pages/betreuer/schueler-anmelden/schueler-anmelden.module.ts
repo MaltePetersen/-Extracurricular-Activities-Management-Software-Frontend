@@ -26,6 +26,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     NgxDatatableModule
   ],
-  declarations: [SchuelerAnmeldenPage]
+  declarations: [SchuelerAnmeldenPage, AnwesenheitPopoverComponent],
+  entryComponents: [AnwesenheitPopoverComponent]
 })
 export class SchuelerAnmeldenPageModule {}

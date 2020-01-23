@@ -23,15 +23,15 @@ export class SchuelerAnmeldenPage implements OnInit {
   
   constructor(private alertController: AlertController, public router : Router, public popoverController : PopoverController) { 
     this.pupils = [
-      new SchuelerModel("Birgit", "Klaus Groth Schule", "5b", "15:00", "Muss nach Hause getragen werden", 1),
-      new SchuelerModel("Klaus", "Klaus Groth Schule", "6b", "16:00", "Faehrt mit dem Bus", 2),
-      new SchuelerModel("Timo", "Klaus Groth Schule", "7b", "17:00", "Faehrt mit der Bahn", 3),
-      new SchuelerModel("Max", "Klaus Groth Schule", "8b", "18:00", "Wird abgeholt", 4),
-      new SchuelerModel("Max", "Klaus Groth Schule", "9b", "18:00", "Wird abgeholt", 3),
-      new SchuelerModel("Max", "Klaus Groth Schule", "10b", "18:00", "Wird abgeholt", 2),
-      new SchuelerModel("Max", "Klaus Groth Schule", "11b", "18:00", "Wird abgeholt", 1),
-      new SchuelerModel("Max", "Klaus Groth Schule", "12b", "18:00", "Wird abgeholt", 2),
-      new SchuelerModel("Max", "Klaus Groth Schule", "13b", "18:00", "Wird abgeholt", 3)
+      new SchuelerModel("1", "Birgit", "Klaus Groth Schule", "5b", "15:00", "Muss nach Hause getragen werden", 1),
+      new SchuelerModel("2", "Klaus", "Klaus Groth Schule", "6b", "16:00", "Faehrt mit dem Bus", 2),
+      new SchuelerModel("3", "Timo", "Klaus Groth Schule", "7b", "17:00", "Faehrt mit der Bahn", 3),
+      new SchuelerModel("4", "Max", "Klaus Groth Schule", "8b", "18:00", "Wird abgeholt", 4),
+      new SchuelerModel("5", "Max", "Klaus Groth Schule", "9b", "18:00", "Wird abgeholt", 3),
+      new SchuelerModel("6", "Max", "Klaus Groth Schule", "10b", "18:00", "Wird abgeholt", 2),
+      new SchuelerModel("7", "Max", "Klaus Groth Schule", "11b", "18:00", "Wird abgeholt", 1),
+      new SchuelerModel("8", "Max", "Klaus Groth Schule", "12b", "18:00", "Wird abgeholt", 2),
+      new SchuelerModel("9", "Max", "Klaus Groth Schule", "13b", "18:00", "Wird abgeholt", 3)
     ];
     this.filteredPupils = this.pupils;
     this.getClasses();
@@ -134,12 +134,16 @@ export class SchuelerAnmeldenPage implements OnInit {
     }
   }
 
-  async presentPopover(ev: any) {
+  async presentPopover(ev: any, id:string) {
     const popover = await this.popoverController.create({
       component: AnwesenheitPopoverComponent,
       event: ev,
-      translucent: true
+      translucent: true,
+      componentProps: {
+        child_id: id,
+      }
     });
+    popover.style.cssText = '--background: transparent;';
     return await popover.present();
   }
 }
