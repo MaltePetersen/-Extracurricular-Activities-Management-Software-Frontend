@@ -106,11 +106,11 @@ export class KindHinzufuegenPage implements OnInit {
     ).subscribe({
       // tslint:disable-next-line: max-line-length
       next: () => {this.alertService.presentToast(this.validations_form.get('name').value + ' ' + this.validations_form.get('lname').value +' wurde erfolgreich angelegt.');
-                    this.router.navigateByUrl('/kind-uebersicht')},
+                    this.router.navigateByUrl('parent/kind-uebersicht')},
       error: error => {
             console.log(error);
             this.alertService.presentToast('Es gab einen Fehler bei der Erstellung');
-            this.router.navigateByUrl('/kind-uebersicht');
+            this.router.navigateByUrl('parent/kind-uebersicht');
           },
     });
 

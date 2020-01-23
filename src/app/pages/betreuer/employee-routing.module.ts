@@ -14,7 +14,6 @@ const routes: Routes = [
   },
   {
     path: 'schueler-anmelden',
-   // loadChildren: () => import('./schueler-anmelden/schueler-anmelden.module').then(m => m.SchuelerAnmeldenPageModule),
    loadChildren: () => import('./schueler-anmelden/schueler-anmelden.module').then(m => m.SchuelerAnmeldenPageModule),
  
    canActivate: [AuthGuard],

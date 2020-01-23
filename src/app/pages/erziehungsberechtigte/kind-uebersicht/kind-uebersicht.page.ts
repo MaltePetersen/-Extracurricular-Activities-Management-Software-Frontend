@@ -38,7 +38,7 @@ export class KindUebersichtPage implements OnInit {
 
   changeChildData(choosenChild: any){
     this.childData.changeChildData(choosenChild);
-    this.router.navigateByUrl('/kind-bearbeiten');
+    this.router.navigateByUrl('parent/kind-bearbeiten');
 
   }
   ionViewWillEnter(){
@@ -50,7 +50,7 @@ export class KindUebersichtPage implements OnInit {
   }
 
   navToKindHinzu() {
-    this.router.navigateByUrl('/kind-hinzufuegen');
+    this.router.navigateByUrl('parent/kind-hinzufuegen');
   }
 
 }
