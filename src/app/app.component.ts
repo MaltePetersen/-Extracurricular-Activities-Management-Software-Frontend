@@ -50,23 +50,23 @@ export class AppComponent implements OnInit {
   public Betreuer = [
     {
       title: 'Schulauswahl',
-      url: '/schulauswahl',
+      url: '/employee/schulauswahl',
       icon: 'briefcase'
     },
     {
       title: 'Alle Schichten',
-      url: '/alle-schichten',
+      url: '/employee/alle-schichten',
       icon: 'clipboard'
     },
     {
       title: 'Abrechnung',
-      url: '/abrechnung',
+      url: '/employee/abrechnung',
       icon: 'card'
     },
     {
       title: 'Abmelden',
-      icon: 'log-out',
-      url: '/logout'
+      url: '/logout',
+      icon: 'log-out'
     },
   ];
   constructor(

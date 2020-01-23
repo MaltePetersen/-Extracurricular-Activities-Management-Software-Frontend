@@ -12,6 +12,7 @@ import { AnwesenheitPopoverComponent } from './anwesenheit-popover.component';
     FormsModule,
     IonicModule,
   ],
-  declarations: [AnwesenheitPopoverComponent]
+  declarations: [AnwesenheitPopoverComponent], 
+  entryComponents: [AnwesenheitPopoverComponent]
 })
 export class AnwesenheitsPopoverModule {}
