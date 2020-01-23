@@ -128,6 +128,9 @@ const routes: Routes = [
 },
 { path: 'employee', 
   loadChildren: () => import('./pages/betreuer/employee.module').then(m => m.EmployeeModule)
+},
+{ path: 'parent', 
+loadChildren: () => import('./pages/erziehungsberechtigte/parent.module').then(m => m.ParentModule)
 }
 
 ];
