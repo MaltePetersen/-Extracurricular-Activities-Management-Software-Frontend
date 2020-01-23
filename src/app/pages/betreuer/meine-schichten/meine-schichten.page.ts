@@ -23,7 +23,6 @@ export class MeineSchichtenPage implements OnInit {
 
   ngOnInit() {
     this.schoolId = this.router.getCurrentNavigation().extras.state.id;
-    console.log(this.schoolId);
     this.getAfterSchoolCares().then(response => {
       response.forEach((value)=>{
         this.schichten.push(this.mapToModel(value));
@@ -36,17 +35,22 @@ export class MeineSchichtenPage implements OnInit {
   }
 
   mapToModel(care:AfterSchoolCareDTO) : MeineSchichtModel{
-    let model = new MeineSchichtModel(care.id, care.name, care.startTime, care.startTime, care.startTime);
-    console.log(model);
+    let model = new MeineSchichtModel(care.id, care.name, care.startTime, this.getDayFromDate(care.startTime));
     return model;
   }
 
-  openList(listId:String){
+  openList(listId:string){
     let navigationExtras: NavigationExtras = {
       state: {
         id: listId
       }
     };
     this.router.navigate(['employee/schueler-anmelden'], navigationExtras);
+  }
+
+  getDayFromDate(input:string) : String{
+    let days = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
+    let date = new Date(input);
+    return days[date.getDay()];
   }
 }

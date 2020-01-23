@@ -5,6 +5,8 @@ import { SchuelerModel } from 'src/app/models/schueler-model';
 import { AlertController, PopoverController } from '@ionic/angular';
 import { Router, NavigationExtras } from '@angular/router';
 import { AnwesenheitPopoverComponent } from './anwesenheit-popover/anwesenheit-popover.component';
+import { EmployeeControllerService } from 'src/app/api/services';
+import { AfterSchoolCare, AfterSchoolCareDTO, SchoolDTO, AttendanceDTO } from 'src/app/api/models';
 
 @Component({
   selector: 'app-schueler-anmelden',
@@ -15,40 +17,53 @@ export class SchuelerAnmeldenPage implements OnInit {
 
 
   classes:string[];
-  pupils:SchuelerModel[];
+  pupils:SchuelerModel[] = [];
   filteredPupils:SchuelerModel[];
-  listId:string;
+  listId:number;
   selectedClass:string;
   search:string;
+  care:AfterSchoolCareDTO;
+  betreuungsende:string = '';
   
-  constructor(private alertController: AlertController, public router : Router, public popoverController : PopoverController) { 
-    this.pupils = [
-      new SchuelerModel("1", "Birgit", "Klaus Groth Schule", "5b", "15:00", "Muss nach Hause getragen werden", 1),
-      new SchuelerModel("2", "Klaus", "Klaus Groth Schule", "6b", "16:00", "Faehrt mit dem Bus", 2),
-      new SchuelerModel("3", "Timo", "Klaus Groth Schule", "7b", "17:00", "Faehrt mit der Bahn", 3),
-      new SchuelerModel("4", "Max", "Klaus Groth Schule", "8b", "18:00", "Wird abgeholt", 4),
-      new SchuelerModel("5", "Max", "Klaus Groth Schule", "9b", "18:00", "Wird abgeholt", 3),
-      new SchuelerModel("6", "Max", "Klaus Groth Schule", "10b", "18:00", "Wird abgeholt", 2),
-      new SchuelerModel("7", "Max", "Klaus Groth Schule", "11b", "18:00", "Wird abgeholt", 1),
-      new SchuelerModel("8", "Max", "Klaus Groth Schule", "12b", "18:00", "Wird abgeholt", 2),
-      new SchuelerModel("9", "Max", "Klaus Groth Schule", "13b", "18:00", "Wird abgeholt", 3)
-    ];
-    this.filteredPupils = this.pupils;
-    this.getClasses();
+  constructor(private alertController: AlertController, public router : Router, public popoverController : PopoverController, private employeeController:EmployeeControllerService) { 
   }
 
   ngOnInit() {
     this.listId = this.router.getCurrentNavigation().extras.state.id;
-    console.log(this.listId);
+    this.getAfterSchoolCare(this.listId).then((response) =>{
+      this.betreuungsende = response.endTime;
+      response.attendances.forEach((attendence)=>{
+        this.pupils.push(this.mapToPupil(attendence));
+        /*let school = this.getSchool(attendence.child.childschool).then((school)=>{
+          this.pupils.push(this.mapToPupil(attendence, school));
+        });*/
+      });
+      this.filteredPupils = this.pupils;
+      this.getClasses();
+    });
+  }
+
+  mapToPupil(attendence:AttendanceDTO):SchuelerModel{
+    return new SchuelerModel(attendence.id, attendence.child.fullname, 'placeholder', attendence.child.schoolClass, attendence.note, attendence.status);
+  }
+
+  /*mapToPupil(attendence:AttendanceDTO, school:SchoolDTO):SchuelerModel{
+    return new SchuelerModel(attendence.id, attendence.child.fullname, school.name, attendence.child.schoolClass, attendence.note, attendence.status);
+  }*/
+
+  getAfterSchoolCare(id:number) : Promise<AfterSchoolCareDTO>{
+    return this.employeeController.getAfterSchoolCareUsingGET(id).toPromise();
+  }
+
+  getSchool(id:number):Promise<SchoolDTO>{
+    return this.employeeController.getSchoolUsingGET(id).toPromise();
   }
 
   searchChanged(){
-    console.log(this.search);
       this.filterPupils();
   }
 
   selectedClassChanged(){
-    console.log(this.selectedClass);
       this.filterPupils();
   }
 
@@ -76,7 +91,7 @@ export class SchuelerAnmeldenPage implements OnInit {
   async presentAlertDetails(model:SchuelerModel){
     const alert = await this.alertController.create({
       header: model.name,
-      message: "Schule: " + model.schule + "<br/>" + "Klasse: " + model.klasse + "<br/>" + "Betreuungsende: " + model.betreuungsende + "<br/>" + "Info: " + model.info,
+      message: "Schule: " + model.schule + "<br/>" + "Klasse: " + model.klasse + "<br/>" + "<br/>" + "Info: " + model.info,
       buttons: ['OK']
     });
     await alert.present();
