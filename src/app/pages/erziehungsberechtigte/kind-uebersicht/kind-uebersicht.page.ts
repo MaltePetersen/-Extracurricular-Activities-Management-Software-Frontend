@@ -25,7 +25,7 @@ export class KindUebersichtPage implements OnInit {
     }
 
   getChildren() {
-      this.http.get<Children[]>(`${environment.apiUrl}/api/parent/childs`).subscribe(async (a) => {
+      this.http.get<Children[]>(`${environment.devApiUrl}/api/parent/childs`).subscribe(async (a) => {
         console.log("Kinder werden abgefragt")
         console.log(a);
         this.kinder = await a;

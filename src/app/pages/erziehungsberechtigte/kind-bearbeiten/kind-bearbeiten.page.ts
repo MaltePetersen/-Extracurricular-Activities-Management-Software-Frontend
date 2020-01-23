@@ -42,7 +42,7 @@ export class KindBearbeitenPage implements OnInit {
   }
 
   abort(){
-    this.router.navigateByUrl('/kind-uebersicht');
+    this.router.navigateByUrl('parent/kind-uebersicht');
   }
 
   async deleteAccount(){
@@ -52,12 +52,12 @@ export class KindBearbeitenPage implements OnInit {
       buttons: [{text: 'OK',
       handler: ()=> {
         this.alertService.presentToast('Der Account wurde gelöscht');
-        this.router.navigateByUrl('/kind-uebersicht');
+        this.router.navigateByUrl('parent/kind-uebersicht');
       }
     },
       {text: 'Abbrechen',
       handler: ()=> {
-        this.router.navigateByUrl('/kind-uebersicht');
+        this.router.navigateByUrl('parent/kind-uebersicht');
       }
     }]
 });
@@ -70,7 +70,7 @@ export class KindBearbeitenPage implements OnInit {
       message: "Das Passwort wurde erfolgreich geändert.",
       buttons: [{text: 'OK',
       handler: ()=> {
-        this.router.navigateByUrl('/kind-uebersicht');
+        this.router.navigateByUrl('parent/kind-uebersicht');
       },
     }]
 });

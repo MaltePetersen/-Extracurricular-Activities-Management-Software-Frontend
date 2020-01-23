@@ -22,6 +22,7 @@ const routes: Routes = [
 },
 { path: 'parent', 
 loadChildren: () => import('./pages/erziehungsberechtigte/parent.module').then(m => m.ParentModule),
+canActivate: [AuthGuard],
 data: {
   role: 'ROLE_PARENT'
 }}

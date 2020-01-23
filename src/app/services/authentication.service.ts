@@ -37,7 +37,7 @@ export class AuthenticationService {
   }
 
 
-
+//TODO: Login should be POST by convention
   login(username: string, password: string) {
     let user = new User(username, password, window.btoa(username + ':' + password));
     const httpOptions = {
