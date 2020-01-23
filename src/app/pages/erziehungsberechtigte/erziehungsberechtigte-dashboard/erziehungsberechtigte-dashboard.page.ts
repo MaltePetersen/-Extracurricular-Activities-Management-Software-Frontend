@@ -26,7 +26,7 @@ export class ErziehungsberechtigteDashboardPage implements OnInit {
 
   ngOnInit() {
     this.veranstaltungsDaten.ausgewählteVeranstaltung.subscribe(veranstaltung => this.veranstaltung = veranstaltung);
-    this.parentController.createChildUsingPOST(new IUserDTO).subscribe(()=>console.log("worked"));
+    //this.parentController.createChildUsingPOST(new IUserDTO).subscribe(()=>console.log("worked"));
   }
 
   getVeranstaltungen() {

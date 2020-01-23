@@ -30,6 +30,10 @@ export class SchuelerAnmeldenPage implements OnInit {
 
   ngOnInit() {
     this.listId = this.router.getCurrentNavigation().extras.state.id;
+    this.loadPupils();
+  }
+
+  loadPupils(){
     this.getAfterSchoolCare(this.listId).then((response) =>{
       this.betreuungsende = response.endTime;
       response.attendances.forEach((attendance)=>{
@@ -78,11 +82,33 @@ export class SchuelerAnmeldenPage implements OnInit {
   }
 
   updateAnwesend(id:number){
-
+    let currentDateTime:string = new Date().toString();
+    const update = {
+      "arrivalTime" : currentDateTime,
+    };
+    const patch = {
+      "update" : update,
+      "id" : id
+    };
+    this.employeeController.updateAttendanceUsingPATCH(patch).toPromise().then(value => {
+      this.loadPupils();
+      console.log(patch);
+    });
   }
 
   updateGegangen(id:number){
-
+    let currentDateTime:string = new Date().toString();
+    const update = {
+      "leaveTime" : currentDateTime,
+    };
+    const patch = {
+      "update" : update,
+      "id" : id
+    };
+    this.employeeController.updateAttendanceUsingPATCH(patch).toPromise().then(value => {
+      this.loadPupils();
+      console.log(patch);
+    });
   }
 
   getClasses(){
@@ -124,6 +150,7 @@ export class SchuelerAnmeldenPage implements OnInit {
           //cssClass: 'secondary',
           handler: () => {
             console.log('Confirm Anwesend');
+            this.updateAnwesend(model.id);
           }
         }
       ]
@@ -146,6 +173,7 @@ export class SchuelerAnmeldenPage implements OnInit {
           //cssClass: 'secondary',
           handler: () => {
             console.log('Confirm Gegangen');
+            this.updateGegangen(model.id);
           }
         }
       ]

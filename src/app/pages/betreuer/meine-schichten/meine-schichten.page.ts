@@ -31,7 +31,9 @@ export class MeineSchichtenPage implements OnInit {
   }
 
   getAfterSchoolCares() : Promise<AfterSchoolCareDTO[]>{
-    return this.employeeController.getAfterSchoolCaresUsingGET().toPromise();
+    let params = {
+    }
+    return this.employeeController.getAfterSchoolCaresUsingGET(params).toPromise();
   }
 
   mapToModel(care:AfterSchoolCareDTO) : MeineSchichtModel{
