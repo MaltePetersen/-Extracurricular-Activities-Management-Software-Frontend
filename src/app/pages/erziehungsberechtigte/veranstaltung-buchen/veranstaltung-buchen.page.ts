@@ -32,7 +32,7 @@ export class VeranstaltungBuchenPage implements OnInit {
   }
 
   getChildren() {
-    this.http.get<Children[]>(`${environment.apiUrl}/api/parent/childs`).subscribe(async (a) => {
+    this.http.get<Children[]>(`${environment.devApiUrl}/api/parent/childs`).subscribe(async (a) => {
       console.log("Kinder werden abgefragt")
       console.log(a);
       this.children = await a;
@@ -40,7 +40,7 @@ export class VeranstaltungBuchenPage implements OnInit {
 }
 
   getVeranstaltungen() {
-    this.http.get<school[]>(`${environment.apiUrl}/api/parent/after_school_cares`).subscribe((a) => {
+    this.http.get(`${environment.apiUrl}/api/parent/after_school_cares`).subscribe((a) => {
       this.veranstaltungen = a;
       console.log(a);
     });
@@ -83,7 +83,7 @@ export class VeranstaltungBuchenPage implements OnInit {
     //});
 
     //await alert.present();
-    this.router.navigate(['veranstaltung-buchen-zeitraum']);
+    this.router.navigate(['parent/veranstaltung-buchen-zeitraum']);
   }
   }
 

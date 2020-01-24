@@ -7,30 +7,22 @@
     </ion-label>
     <ion-label class="veranstaltung-label"> -- Kalenderwoche {{weekNo}} -- </ion-label>
   </div>
-  
-  <div class="veranstaltung-container">
-    <ion-list *ngFor="let item of days; let i = index;" class="accordion-list" lines="none" detail="false" class="ion-no-padding">
-      <ion-item class="ion-text-center" tappable (click)="toggleSelection(i)" [ngClass]="{'selection-active': item.open, 'selection': !item.open}">
-        <ion-icon slot="end" name="arrow-down" *ngIf="!item.open"></ion-icon>
-        <ion-icon slot="end" name="arrow-up" *ngIf="item.open"></ion-icon>
-        <ion-label>{{item.wochentag}}</ion-label>
-      </ion-item>
-      <div *ngIf="item.zeitraum && item.open">
-            <ion-item *ngFor="let zeit of item.zeitraum" lines="none" class="schichten-item" (click)="presentPopover($event, zeit.thema, zeit.uhrzeit)">
-          <div class="schichten-content-container">
-            <ion-label>
-                {{zeit.thema}}
-            </ion-label>
-            <ion-row>
-              <ion-label>
-                {{zeit.uhrzeit}}
-              </ion-label>
-            </ion-row>
-          </div>
-        </ion-item>
-      </div>
-    </ion-list>
+
+  <div class="flex-container">
+    <ion-label  class="veranstaltung-label">
+     Buche deine Veranstaltungen
+    </ion-label>
   </div>
+  <div class="veranstaltung-container">
+    <ion-item *ngFor="let v of veranstaltungen" lines="none" class="veranstaltung-item">
+      <div class="veranstaltung-content-container">
+        <ion-label class="tag-label">
+          {{v.name}}
+        </ion-label>
+      </div>
+    </ion-item>
+  </div>   
+
 </ion-content>
 
 

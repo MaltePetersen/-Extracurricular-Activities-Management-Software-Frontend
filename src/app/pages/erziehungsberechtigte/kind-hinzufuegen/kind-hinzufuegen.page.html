@@ -148,7 +148,7 @@
                 <ion-item>
                     <ion-label position="floating" color="primary">Schule</ion-label>
                     <ion-select formControlName="school" ok-text="Okay" cancel-text="Abbrechen">
-                    <ion-select-option *ngFor="let s of schools" value="{{s.name}} {{s.id}}">{{s.name}}</ion-select-option>
+                    <ion-select-option *ngFor="let s of schools" value="{{s.id}}">{{s.name}}</ion-select-option>
                   </ion-select>
                     <!-- <ion-input type="text" formControlName="school"></ion-input> -->
                   </ion-item>

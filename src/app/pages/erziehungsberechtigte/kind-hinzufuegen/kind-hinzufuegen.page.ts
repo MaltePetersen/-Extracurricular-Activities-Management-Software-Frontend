@@ -11,6 +11,7 @@ import { Children } from 'src/app/models/children';
 import { CountryPhone } from 'src/app/models/country-phone.model';
 import { PhoneValidator } from 'src/app/pages/erziehungsberechtigte/registrierung/phone.validator';
 import { KindUebersichtPage } from '../kind-uebersicht/kind-uebersicht.page';
+import { id } from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'app-kind-hinzufuegen',
@@ -95,9 +96,18 @@ export class KindHinzufuegenPage implements OnInit {
       "username": null
 };
 
+
+const postDataBackend = {
+  "userType": "CHILD",
+  "fullname": this.validations_form.get('name').value + ' ' + this.validations_form.get('lname').value,
+  "schoolClass": this.validations_form.get('schoolClass').value,
+  "school": this.validations_form.get('school').value
+};
+
+
     console.log("POST");
     // tslint:disable-next-line: max-line-length
-    this.http.post(`${environment.devApiUrl}/api/parent/child`, postData,
+    this.http.post(`${environment.apiUrl}/api/parent/child`, postDataBackend,
         {
         headers: {
           'content-type': 'application/JSON',

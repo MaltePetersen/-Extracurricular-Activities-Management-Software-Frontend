@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { GebuchterZeitraum } from 'src/app/models/gebuchterZeitraum';
 import { VeranstaltungensdatenService } from 'src/app/services/veranstaltungensdaten.service';
 import { VeranstaltungsPopoverPage } from 'src/app/pages/erziehungsberechtigte/veranstaltung-buchen-zeitraum/veranstaltungs-popover/veranstaltungs-popover.page';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-veranstaltung-buchen-zeitraum',
@@ -13,8 +14,8 @@ import { VeranstaltungsPopoverPage } from 'src/app/pages/erziehungsberechtigte/v
   styleUrls: ['./veranstaltung-buchen-zeitraum.page.scss'],
 })
 export class VeranstaltungBuchenZeitraumPage implements OnInit {
-  veranstaltung: string;
-  veranstaltungen:any;
+  veranstaltungId: number;
+  veranstaltungen: any;
   kindername: any;
   kinderId:any
   zeit: any;
@@ -39,17 +40,21 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
   //   this.zeit = [
   //     new GebuchterZeitraum("13:00 - 15:00 Uhr", "Deutsch"),
   //   ];
-    
   // }
 
   getVeranstaltungen() {
-    this.veranstaltungsDaten.ausgewählteVeranstaltung.subscribe(veranstaltung => this.veranstaltung = veranstaltung);
-    this.zeit = [
-      new GebuchterZeitraum("13:00 - 15:00 Uhr", this.veranstaltung),
-   ];
-    this.veranstaltungsDaten.ausgewähltesKind.subscribe(kindername => this.kindername = kindername);
-    this.veranstaltungsDaten.ausgewählteID.subscribe(kinderId => this.kinderId = kinderId);
-
+    this.veranstaltungsDaten.ausgewählteVeranstaltungId.subscribe(veranstaltung => this.veranstaltungId = veranstaltung);
+    console.log("ID vorhanden? "+this.veranstaltungId)
+    this.http.get(`${environment.apiUrl}/api/parent/after_school_cares/${this.veranstaltungId}`).subscribe((a) => {
+      this.veranstaltungen = a;
+      console.log (a)
+  //   this.veranstaltungsDaten.ausgewählteVeranstaltung.subscribe(veranstaltung => this.veranstaltung = veranstaltung);
+  //   this.zeit = [
+  //     new GebuchterZeitraum("Montag","13:00 - 15:00 Uhr", this.veranstaltung),
+  //  ];
+  //   this.veranstaltungsDaten.ausgewähltesKind.subscribe(kindername => this.kindername = kindername);
+  //   this.veranstaltungsDaten.ausgewählteID.subscribe(kinderId => this.kinderId = kinderId);
+    });
   }
 
   toggleSelection(i){
@@ -101,7 +106,7 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
       translucent: true,
       componentProps: {
         endzeit: this.endzeit,
-        veranstaltung: this.veranstaltung,
+        veranstaltung: this.veranstaltungen,
       }
     });
     
