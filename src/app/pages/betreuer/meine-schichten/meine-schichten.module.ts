@@ -8,6 +8,8 @@ import { IonicModule } from '@ionic/angular';
 import { MeineSchichtenPage } from './meine-schichten.page';
 import { SharedModule } from 'src/app/shared/shared.module';
 
+import { MomentModule } from 'ngx-moment';
+
 const routes: Routes = [
   {
     path: '',
@@ -21,7 +23,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     SharedModule,
-    RouterModule.forChild(routes)
+    MomentModule,
+    RouterModule.forChild(routes),
   ],
   declarations: [MeineSchichtenPage]
 })

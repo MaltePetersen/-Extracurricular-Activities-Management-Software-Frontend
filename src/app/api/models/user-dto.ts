@@ -1,10 +1,11 @@
 /* tslint:disable */
 export interface UserDTO {
-  phoneNumber?: string;
+  school?: number;
   address?: string;
   fullname?: string;
   iban?: string;
   password?: string;
+  phoneNumber?: string;
   email?: string;
   schoolClass?: string;
   schoolCoordinator?: boolean;

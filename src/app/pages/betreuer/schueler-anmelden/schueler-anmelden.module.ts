@@ -10,6 +10,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AnwesenheitPopoverComponent } from './anwesenheit-popover/anwesenheit-popover.component';
 import { AnwesenheitsPopoverModule } from './anwesenheit-popover/anwesenheit-popover.module';
+import { MomentModule } from 'ngx-moment';
 
 const routes: Routes = [
   {
@@ -26,9 +27,10 @@ const routes: Routes = [
     SharedModule,
     AnwesenheitsPopoverModule,
     RouterModule.forChild(routes),
-    NgxDatatableModule
+    NgxDatatableModule,
+    MomentModule
   ],
-  declarations: [SchuelerAnmeldenPage, AnwesenheitPopoverComponent],
-  entryComponents: [AnwesenheitPopoverComponent]
+  declarations: [SchuelerAnmeldenPage],
+  entryComponents: []
 })
 export class SchuelerAnmeldenPageModule {}

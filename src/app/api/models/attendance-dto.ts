@@ -1,11 +1,13 @@
 /* tslint:disable */
-import { IUserDTO } from './iuser-dto';
+import { SimpleUserDTO } from './simple-user-dto';
+import { SchoolDTO } from './school-dto';
 export interface AttendanceDTO {
   afterSchoolCare?: number;
   arrivalTime?: string;
-  child?: IUserDTO;
+  child?: SimpleUserDTO;
   id?: number;
   leaveTime?: string;
   note?: string;
+  school?: SchoolDTO;
   status?: number;
 }

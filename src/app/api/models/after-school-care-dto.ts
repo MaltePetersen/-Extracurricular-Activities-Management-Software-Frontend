@@ -1,12 +1,12 @@
 /* tslint:disable */
 import { AttendanceDTO } from './attendance-dto';
-import { IUserDTO } from './iuser-dto';
+import { SimpleUserDTO } from './simple-user-dto';
 export interface AfterSchoolCareDTO {
   attendances?: Array<AttendanceDTO>;
-  employee?: IUserDTO;
   endTime?: string;
   id?: number;
   name?: string;
+  owner?: SimpleUserDTO;
   participatingSchool?: number;
   startTime?: string;
   type?: number;

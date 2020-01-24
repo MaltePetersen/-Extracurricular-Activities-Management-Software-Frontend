@@ -25,7 +25,7 @@ class EmployeeControllerService extends __BaseService {
   static readonly createAfterSchoolCareUsingPOSTPath = '/api/employee/after_school_cares';
   static readonly getAfterSchoolCareUsingGETPath = '/api/employee/after_school_cares/{id}';
   static readonly deleteAfterSchoolCareUsingDELETEPath = '/api/employee/after_school_cares/{id}';
-  static readonly changeAfterSchoolCareUsingPATCHPath = '/api/employee/after_school_cares/{id}';
+  static readonly updateAttendanceUsingPATCHPath = '/api/employee/attendance/{id}';
   static readonly createInvoiceUsingPOSTPath = '/api/employee/invoice';
   static readonly getInvoicesUsingGETPath = '/api/employee/invoice/{id}';
   static readonly deleteInvoiceUsingDELETEPath = '/api/employee/invoice/{id}';
@@ -45,12 +45,29 @@ class EmployeeControllerService extends __BaseService {
   }
 
   /**
+   * @param params The `EmployeeControllerService.GetAfterSchoolCaresUsingGETParams` containing the following parameters:
+   *
+   * - `principal`:
+   *
+   * - `details`:
+   *
+   * - `credentials`:
+   *
+   * - `authorities[0].authority`:
+   *
+   * - `authenticated`:
+   *
    * @return OK
    */
-  getAfterSchoolCaresUsingGETResponse(): __Observable<__StrictHttpResponse<Array<AfterSchoolCareDTO>>> {
+  getAfterSchoolCaresUsingGETResponse(params: EmployeeControllerService.GetAfterSchoolCaresUsingGETParams): __Observable<__StrictHttpResponse<Array<AfterSchoolCareDTO>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
+    if (params.principal != null) __params = __params.set('principal', params.principal.toString());
+    if (params.details != null) __params = __params.set('details', params.details.toString());
+    if (params.credentials != null) __params = __params.set('credentials', params.credentials.toString());
+    if (params.authorities0Authority != null) __params = __params.set('authorities[0].authority', params.authorities0Authority.toString());
+    if (params.authenticated != null) __params = __params.set('authenticated', params.authenticated.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/api/employee/after_school_cares`,
@@ -69,10 +86,22 @@ class EmployeeControllerService extends __BaseService {
     );
   }
   /**
+   * @param params The `EmployeeControllerService.GetAfterSchoolCaresUsingGETParams` containing the following parameters:
+   *
+   * - `principal`:
+   *
+   * - `details`:
+   *
+   * - `credentials`:
+   *
+   * - `authorities[0].authority`:
+   *
+   * - `authenticated`:
+   *
    * @return OK
    */
-  getAfterSchoolCaresUsingGET(): __Observable<Array<AfterSchoolCareDTO>> {
-    return this.getAfterSchoolCaresUsingGETResponse().pipe(
+  getAfterSchoolCaresUsingGET(params: EmployeeControllerService.GetAfterSchoolCaresUsingGETParams): __Observable<Array<AfterSchoolCareDTO>> {
+    return this.getAfterSchoolCaresUsingGETResponse(params).pipe(
       __map(_r => _r.body as Array<AfterSchoolCareDTO>)
     );
   }
@@ -184,23 +213,23 @@ class EmployeeControllerService extends __BaseService {
   }
 
   /**
-   * @param params The `EmployeeControllerService.ChangeAfterSchoolCareUsingPATCHParams` containing the following parameters:
+   * @param params The `EmployeeControllerService.UpdateAttendanceUsingPATCHParams` containing the following parameters:
+   *
+   * - `update`: update
    *
    * - `id`: id
    *
-   * - `AfterSchoolCare`: AfterSchoolCare
-   *
    * @return OK
    */
-  changeAfterSchoolCareUsingPATCHResponse(params: EmployeeControllerService.ChangeAfterSchoolCareUsingPATCHParams): __Observable<__StrictHttpResponse<AfterSchoolCareDTO>> {
+  updateAttendanceUsingPATCHResponse(params: EmployeeControllerService.UpdateAttendanceUsingPATCHParams): __Observable<__StrictHttpResponse<AfterSchoolCareDTO>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
+    __body = params.update;
 
-    __body = params.AfterSchoolCare;
     let req = new HttpRequest<any>(
       'PATCH',
-      this.rootUrl + `/api/employee/after_school_cares/${params.id}`,
+      this.rootUrl + `/api/employee/attendance/${params.id}`,
       __body,
       {
         headers: __headers,
@@ -216,16 +245,16 @@ class EmployeeControllerService extends __BaseService {
     );
   }
   /**
-   * @param params The `EmployeeControllerService.ChangeAfterSchoolCareUsingPATCHParams` containing the following parameters:
+   * @param params The `EmployeeControllerService.UpdateAttendanceUsingPATCHParams` containing the following parameters:
+   *
+   * - `update`: update
    *
    * - `id`: id
    *
-   * - `AfterSchoolCare`: AfterSchoolCare
-   *
    * @return OK
    */
-  changeAfterSchoolCareUsingPATCH(params: EmployeeControllerService.ChangeAfterSchoolCareUsingPATCHParams): __Observable<AfterSchoolCareDTO> {
-    return this.changeAfterSchoolCareUsingPATCHResponse(params).pipe(
+  updateAttendanceUsingPATCH(params: EmployeeControllerService.UpdateAttendanceUsingPATCHParams): __Observable<AfterSchoolCareDTO> {
+    return this.updateAttendanceUsingPATCHResponse(params).pipe(
       __map(_r => _r.body as AfterSchoolCareDTO)
     );
   }
@@ -600,19 +629,30 @@ class EmployeeControllerService extends __BaseService {
 module EmployeeControllerService {
 
   /**
-   * Parameters for changeAfterSchoolCareUsingPATCH
+   * Parameters for getAfterSchoolCaresUsingGET
    */
-  export interface ChangeAfterSchoolCareUsingPATCHParams {
+  export interface GetAfterSchoolCaresUsingGETParams {
+    principal?: {};
+    details?: {};
+    credentials?: {};
+    authorities0Authority?: string;
+    authenticated?: boolean;
+  }
+
+  /**
+   * Parameters for updateAttendanceUsingPATCH
+   */
+  export interface UpdateAttendanceUsingPATCHParams {
+
+    /**
+     * update
+     */
+    update: {[key: string]: string};
 
     /**
      * id
      */
     id: number;
-
-    /**
-     * AfterSchoolCare
-     */
-    AfterSchoolCare: AfterSchoolCare;
   }
 
   /**

@@ -19,12 +19,12 @@
         </ion-row>
         <ion-row class="data-row">
           <ion-label class="data-label">
-            Datum: {{schicht.datum}}
+            Datum: {{schicht.startTime | amDateFormat:'DD.MM.YYYY'}}
           </ion-label>
         </ion-row>
         <ion-row class="data-row">
           <ion-label class="data-label">
-            Uhrzeit: {{schicht.uhrzeit}}
+            Uhrzeit: {{schicht.startTime | amDateFormat:'hh:mm'}}
           </ion-label>
         </ion-row>
       </div>
