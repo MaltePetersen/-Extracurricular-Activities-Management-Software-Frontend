@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { AlleSchichtenPage } from './alle-schichten.page';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { DatePickerModule } from 'ionic4-date-picker';
+import { MomentModule } from 'ngx-moment';
 
 const routes: Routes = [
   {
@@ -21,6 +23,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     SharedModule,
+    MomentModule,
+    DatePickerModule,
     RouterModule.forChild(routes)
   ],
   declarations: [AlleSchichtenPage]

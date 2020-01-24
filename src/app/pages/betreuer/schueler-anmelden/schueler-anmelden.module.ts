@@ -27,7 +27,6 @@ const routes: Routes = [
     SharedModule,
     AnwesenheitsPopoverModule,
     RouterModule.forChild(routes),
-    NgxDatatableModule,
     MomentModule
   ],
   declarations: [SchuelerAnmeldenPage],

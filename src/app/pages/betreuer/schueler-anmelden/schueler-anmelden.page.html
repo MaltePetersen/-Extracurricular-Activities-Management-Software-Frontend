@@ -6,7 +6,7 @@
       Anwesenheitsliste
     </ion-label>
     <ion-label class="betreuungsende-label">
-      Betreuungsende: {{betreuungsende | amDateFormat:'hh:mm'}}
+      Betreuungsende: {{betreuungsende | amDateFormat:'HH:mm'}}
     </ion-label>
     <ion-input placeholder="Suchen" class="schueler-suchen" [(ngModel)]="search" (ionChange)="searchChanged()"></ion-input>
     <ion-row nowrap class="klasse-row">
@@ -19,7 +19,7 @@
     </ion-row>
   </div>
   <div class="schueler-container">
-    <ion-item *ngFor="let pupil of filteredPupils" lines="none" [ngClass]="{'schueler-item-angemeldet':pupil.anwesenheit == 1, 'schueler-item-ueberfaellig':pupil.anwesenheit == 2, 'schueler-item-anwesend':pupil.anwesenheit == 3, 'schueler-item-nach-Hause-gegangen':pupil.anwesenheit == 4.}" (click)="presentAlertStatus(pupil)">
+    <ion-item *ngFor="let pupil of filteredPupils" lines="none" [ngClass]="{'schueler-item-angemeldet':pupil.status == 1, 'schueler-item-ueberfaellig':pupil.status == 2, 'schueler-item-anwesend':pupil.status == 3, 'schueler-item-nach-Hause-gegangen':pupil.status == 4.}" (click)="presentAlertStatus(pupil)">
       <div class="schueler-content-container">
         <ion-row class="header-zeile">
           <ion-label class="schueler-name-label">
@@ -34,12 +34,12 @@
         </ion-row>
         <ion-row class="zeile1">
           <ion-label class="klasse-label">
-            Klasse: {{pupil.klasse}}
+            Klasse: {{pupil.schoolClass}}
           </ion-label>
         </ion-row>
         <ion-row class="zeile1">
           <ion-label no-wrap>
-            Info: {{pupil.info}}
+            Info: {{pupil.note}}
           </ion-label>  
         </ion-row>
       </div>

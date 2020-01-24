@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { DatePicker } from '@ionic-native/date-picker';
 import { NgModel } from '@angular/forms';
-import { SchuelerModel } from 'src/app/models/schueler-model';
 import { AlertController, PopoverController } from '@ionic/angular';
 import { Router, NavigationExtras } from '@angular/router';
 import { AnwesenheitPopoverComponent } from './anwesenheit-popover/anwesenheit-popover.component';
 import { EmployeeControllerService } from 'src/app/api/services';
-import { AfterSchoolCare, AfterSchoolCareDTO, SchoolDTO, AttendanceDTO } from 'src/app/api/models';
+import { AfterSchoolCare, AfterSchoolCareDTO, SchoolDTO, AttendanceDTO, SimpleUserDTO } from 'src/app/api/models';
+import moment from 'moment';
+import { PupilModel } from 'src/app/models/pupil-model';
 
 @Component({
   selector: 'app-schueler-anmelden',
@@ -16,9 +17,9 @@ import { AfterSchoolCare, AfterSchoolCareDTO, SchoolDTO, AttendanceDTO } from 's
 export class SchuelerAnmeldenPage implements OnInit {
 
 
-  classes:string[];
-  pupils:SchuelerModel[] = [];
-  filteredPupils:SchuelerModel[];
+  classes:string[] = [];
+  pupils:PupilModel[] = [];
+  filteredPupils:PupilModel[] =[];
   listId:number;
   selectedClass:string;
   search:string;
@@ -34,26 +35,32 @@ export class SchuelerAnmeldenPage implements OnInit {
   }
 
   loadPupils(){
+    this.pupils = [];
     this.getAfterSchoolCare(this.listId).then((response) =>{
       this.betreuungsende = response.endTime;
       response.attendances.forEach((attendance)=>{
-        this.pupils.push(this.mapToPupil(attendance));
-        /*let school = this.getSchool(attendance.child.childschool).then((school)=>{
-          this.pupils.push(this.mapToPupil(attendance, school));
-        });*/
+        let school = this.getSchool(attendance.child.childSchool).then((school)=>{
+          this.pupils.push(this.mapToPupil(attendance, school.name));
+        }).catch((error)=>{
+          this.pupils.push(this.mapToPupil(attendance, 'Keine Schule gefunden'));
+          console.log(error);
+        }).finally(()=> {
+          this.updateFilters();
+        });
       });
-      this.filteredPupils = this.pupils;
-      this.getClasses();
+    }).catch((error)=>{
+      console.log(error);
     });
   }
 
-  mapToPupil(attendance:AttendanceDTO):SchuelerModel{
-    return new SchuelerModel(attendance.id, attendance.child.fullname, 'placeholder', attendance.child.schoolClass, attendance.note, attendance.status);
+  updateFilters(){
+    this.filteredPupils = this.pupils;
+    this.getClasses();
   }
 
-  /*mapToPupil(attendance:AttendanceDTO, school:SchoolDTO):SchuelerModel{
-    return new SchuelerModel(attendance.id, attendance.child.fullname, school.name, attendance.child.schoolClass, attendance.note, attendance.status);
-  }*/
+  mapToPupil(attendance:AttendanceDTO, schoolName:string):PupilModel{
+    return new PupilModel(attendance.id, attendance.child.fullname, schoolName, attendance.child.schoolClass, (attendance.note == null) ? '' : attendance.note, attendance.status);
+  }
 
   getAfterSchoolCare(id:number) : Promise<AfterSchoolCareDTO>{
     return this.employeeController.getAfterSchoolCareUsingGET(id).toPromise();
@@ -77,12 +84,12 @@ export class SchuelerAnmeldenPage implements OnInit {
       this.filteredPupils = this.filteredPupils.filter(pupil => pupil.name.toUpperCase().includes(this.search.toUpperCase()));
     }
     if(this.selectedClass != null && this.selectedClass != "Alle"){
-      this.filteredPupils = this.filteredPupils.filter(pupil => pupil.klasse == this.selectedClass);
+      this.filteredPupils = this.filteredPupils.filter(pupil => pupil.schoolClass == this.selectedClass);
     }
   }
 
   updateAnwesend(id:number){
-    let currentDateTime:string = new Date().toString();
+    let currentDateTime = moment().format('YYYY-MM-DD[T]HH:mm:ss');
     const update = {
       "arrivalTime" : currentDateTime,
     };
@@ -91,13 +98,12 @@ export class SchuelerAnmeldenPage implements OnInit {
       "id" : id
     };
     this.employeeController.updateAttendanceUsingPATCH(patch).toPromise().then(value => {
-      this.loadPupils();
-      console.log(patch);
+      this.updatePupil(value, id)
     });
   }
 
   updateGegangen(id:number){
-    let currentDateTime:string = new Date().toString();
+    let currentDateTime = moment().format('YYYY-MM-DD[T]HH:mm:ss');
     const update = {
       "leaveTime" : currentDateTime,
     };
@@ -105,51 +111,55 @@ export class SchuelerAnmeldenPage implements OnInit {
       "update" : update,
       "id" : id
     };
-    this.employeeController.updateAttendanceUsingPATCH(patch).toPromise().then(value => {
-      this.loadPupils();
-      console.log(patch);
+    this.employeeController.updateAttendanceUsingPATCH(patch).toPromise().then(response => {
+      this.updatePupil(response, id)
+    });
+  }
+
+  updatePupil(care:AfterSchoolCareDTO, id:number){
+    care.attendances.forEach((attendance)=>{
+      if(attendance.id == id){
+        let index = this.pupils.findIndex((pupil)=>pupil.id == id);
+        let pupil = this.pupils[index];
+        pupil.status = attendance.status;
+        this.updateFilters();
+      }
     });
   }
 
   getClasses(){
     this.classes = ["Alle"];
     this.pupils.forEach((element) => {
-      if(!this.classes.includes(element.klasse)){
-        this.classes.push(element.klasse);
+      if(!this.classes.includes(element.schoolClass)){
+        this.classes.push(element.schoolClass);
       }
     });
     this.classes.sort();
     this.selectedClass = "Alle";
   }
 
-  async presentAlertDetails(model:SchuelerModel){
+  async presentAlertDetails(model:PupilModel){
     const alert = await this.alertController.create({
       header: model.name,
-      message: "Schule: " + model.schule + "<br/>" + "Klasse: " + model.klasse + "<br/>" + "<br/>" + "Info: " + model.info,
+      message: "Schule: " + model.school + "<br/>" + "Klasse: " + model.schoolClass + "<br/>" + "Info: " + model.note,
       buttons: ['OK']
     });
     await alert.present();
   }
 
-  async presentAlertStatus(model:SchuelerModel){
+  async presentAlertStatus(model:PupilModel){
     const alertAnwesend = await this.alertController.create({
       header: model.name,
       message: "Bestätigen Sie die Anwesenheit des Schülers",
       buttons: [
         {
           text: 'Abbrechen',
-          //role: 'cancel',
-          //cssClass: 'secondary',
           handler: () => {
-            console.log('Cancel Anwesend');
           }
         },
         {
           text: 'Ok',
-          //role: 'cancel',
-          //cssClass: 'secondary',
           handler: () => {
-            console.log('Confirm Anwesend');
             this.updateAnwesend(model.id);
           }
         }
@@ -161,26 +171,20 @@ export class SchuelerAnmeldenPage implements OnInit {
       buttons: [
         {
           text: 'Abbrechen',
-          //role: 'cancel',
-          //cssClass: 'secondary',
           handler: () => {
-            console.log('Cancel Gegangen');
           }
         },
         {
           text: 'Ok',
-          //role: 'cancel',
-          //cssClass: 'secondary',
           handler: () => {
-            console.log('Confirm Gegangen');
             this.updateGegangen(model.id);
           }
         }
       ]
     });
-    if(model.anwesenheit == 1 || model.anwesenheit == 2){
+    if(model.status == 1 || model.status == 2){
       await alertAnwesend.present();
-    } else if(model.anwesenheit == 3){
+    } else if(model.status == 3){
       await alertGegangen.present();
     }
   }
@@ -192,6 +196,7 @@ export class SchuelerAnmeldenPage implements OnInit {
       translucent: true,
       componentProps: {
         child_id: id,
+        homeRef : this
       }
     });
     popover.style.cssText = '--background: transparent;';

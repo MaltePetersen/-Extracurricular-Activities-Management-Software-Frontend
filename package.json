@@ -33,6 +33,8 @@
     "cordova-browser": "6.0.0",
     "core-js": "^2.5.4",
     "google-libphonenumber": "^3.2.6",
+    "ionic-calendar-date-picker": "^0.1.2",
+    "ionic4-date-picker": "^0.1.0",
     "moment": "^2.24.0",
     "ng-swagger-gen": "^1.8.1",
     "ngx-moment": "^3.5.0",

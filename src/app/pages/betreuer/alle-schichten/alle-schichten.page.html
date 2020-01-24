@@ -9,10 +9,10 @@
   
   <div class="schichten-container">
     <ion-list *ngFor="let item of days; let i = index;" class="accordion-list" lines="none" detail="false" class="ion-no-padding">
-      <ion-item class="ion-text-center" tappable (click)="toggleSelection(i)" [ngClass]="{'selection-active': item.open, 'selection': !item.open}">
+      <ion-item class="day-item" tappable (click)="toggleSelection(i)" [ngClass]="{'selection-active': item.open, 'selection': !item.open}">
         <ion-icon slot="end" name="arrow-down" *ngIf="!item.open"></ion-icon>
         <ion-icon slot="end" name="arrow-up" *ngIf="item.open"></ion-icon>
-        <ion-label>{{item.name}}</ion-label>
+        <ion-label class="item-name-label">{{item.name}}</ion-label>
       </ion-item>
       <div *ngIf="item.schichten && item.open" class="schicht-container">
         <ion-item *ngFor="let schicht of item.schichten" lines="none" class="schichten-item" (click)="presentAlert(schicht)">
@@ -22,7 +22,7 @@
             </ion-label>
             <ion-row>
               <ion-label>
-                {{schicht.datum}}, {{schicht.uhrzeit}}
+                {{schicht.datum | amDateFormat:'DD.MM.YYYY'}}, {{schicht.uhrzeit | amDateFormat:'HH:mm'}}
               </ion-label>
             </ion-row>
           </div>
@@ -34,10 +34,8 @@
 
 
 <ion-footer>
-  <ion-toolbar>
-    <ion-label slot="start">
-        Datum:
-    </ion-label>
-    <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD MMM YYYY" [(ngModel)]="datum"></ion-datetime>
+  <ion-button (click)="toggleDate()" class="hide-date-button">{{hideDateButton}}</ion-button>
+  <ion-toolbar *ngIf="hideDate">
+    <ionic-calendar-date-picker (onSelect)="dateSelected($event)" [monthLabels]="['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez']" [dayLabels]="['S', 'M', 'D', 'M', 'D', 'F', 'S']"></ionic-calendar-date-picker>	
   </ion-toolbar>
 </ion-footer>
