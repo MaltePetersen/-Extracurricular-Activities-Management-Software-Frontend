@@ -23,10 +23,5 @@
 </ion-content>
 
 <ion-footer>
-    <ion-toolbar>
-      <ion-label slot="start">
-        Datum:
-      </ion-label>
-      <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD MMM YYYY" [(ngModel)]="datum"></ion-datetime>
-    </ion-toolbar>
-  </ion-footer>
+  <ion-input readonly [(ngModel)]="datum" [liIonic4Datepicker]="datePickerDefaultSettings" (ionChange)="dateChange()"></ion-input>
+</ion-footer>

@@ -9,6 +9,7 @@ import { MeineSchichtenPage } from './meine-schichten.page';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 import { MomentModule } from 'ngx-moment';
+import { Ionic4DatepickerModule } from '@logisticinfotech/ionic4-datepicker';
 
 const routes: Routes = [
   {
@@ -24,6 +25,7 @@ const routes: Routes = [
     IonicModule,
     SharedModule,
     MomentModule,
+    Ionic4DatepickerModule,
     RouterModule.forChild(routes),
   ],
   declarations: [MeineSchichtenPage]

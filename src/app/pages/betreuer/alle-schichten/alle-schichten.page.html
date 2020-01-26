@@ -32,10 +32,6 @@
   </div>
 </ion-content>
 
-
 <ion-footer>
-  <ion-button (click)="toggleDate()" class="hide-date-button">{{hideDateButton}}</ion-button>
-  <ion-toolbar *ngIf="hideDate">
-    <ionic-calendar-date-picker (onSelect)="dateSelected($event)" [monthLabels]="['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez']" [dayLabels]="['S', 'M', 'D', 'M', 'D', 'F', 'S']"></ionic-calendar-date-picker>	
-  </ion-toolbar>
+  <ion-input readonly [(ngModel)]="datum" [liIonic4Datepicker]="datePickerDefaultSettings" (ionChange)="dateChange()"></ion-input>
 </ion-footer>

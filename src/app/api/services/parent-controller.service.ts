@@ -8,7 +8,7 @@ import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { AfterSchoolCareDTO } from '../models/after-school-care-dto';
-import { AfterSchoolCare } from '../models/after-school-care';
+import { AttendanceInputDTO } from '../models/attendance-input-dto';
 import { ChildDTO } from '../models/child-dto';
 import { UserDTO } from '../models/user-dto';
 import { IUserDTO } from '../models/iuser-dto';
@@ -22,12 +22,11 @@ import { SchoolDTO } from '../models/school-dto';
 })
 class ParentControllerService extends __BaseService {
   static readonly getAfterSchoolCaresUsingGET1Path = '/api/parent/after_school_cares';
+  static readonly addAttendanceUsingPOSTPath = '/api/parent/after_school_cares/{afterSchoolCareId}/attendance';
   static readonly getAfterSchoolCareUsingGET1Path = '/api/parent/after_school_cares/{id}';
+  static readonly deleteAttendanceUsingDELETEPath = '/api/parent/attendance/{id}';
   static readonly isParentUsingGETPath = '/api/parent/authority';
   static readonly getBookedAfterSchoolCaresUsingGETPath = '/api/parent/booked_after_school_cares';
-  static readonly createBookedAfterSchoolCareUsingPOSTPath = '/api/parent/booked_after_school_cares';
-  static readonly deleteBookedAfterSchoolCareUsingDELETEPath = '/api/parent/booked_after_school_cares/{id}';
-  static readonly changeBookedAfterSchoolCareUsingPATCHPath = '/api/parent/booked_after_school_cares/{id}';
   static readonly createChildUsingPOSTPath = '/api/parent/child';
   static readonly getChildUsingGETPath = '/api/parent/child/{id}';
   static readonly updateChildUsingPATCHPath = '/api/parent/child/{id}';
@@ -75,6 +74,53 @@ class ParentControllerService extends __BaseService {
   }
 
   /**
+   * @param params The `ParentControllerService.AddAttendanceUsingPOSTParams` containing the following parameters:
+   *
+   * - `attendanceInputDTO`: attendanceInputDTO
+   *
+   * - `afterSchoolCareId`: afterSchoolCareId
+   *
+   * @return Created
+   */
+  addAttendanceUsingPOSTResponse(params: ParentControllerService.AddAttendanceUsingPOSTParams): __Observable<__StrictHttpResponse<AfterSchoolCareDTO>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = params.attendanceInputDTO;
+
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/api/parent/after_school_cares/${params.afterSchoolCareId}/attendance`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<AfterSchoolCareDTO>;
+      })
+    );
+  }
+  /**
+   * @param params The `ParentControllerService.AddAttendanceUsingPOSTParams` containing the following parameters:
+   *
+   * - `attendanceInputDTO`: attendanceInputDTO
+   *
+   * - `afterSchoolCareId`: afterSchoolCareId
+   *
+   * @return Created
+   */
+  addAttendanceUsingPOST(params: ParentControllerService.AddAttendanceUsingPOSTParams): __Observable<AfterSchoolCareDTO> {
+    return this.addAttendanceUsingPOSTResponse(params).pipe(
+      __map(_r => _r.body as AfterSchoolCareDTO)
+    );
+  }
+
+  /**
    * @param id id
    * @return OK
    */
@@ -107,6 +153,42 @@ class ParentControllerService extends __BaseService {
   getAfterSchoolCareUsingGET1(id: number): __Observable<AfterSchoolCareDTO> {
     return this.getAfterSchoolCareUsingGET1Response(id).pipe(
       __map(_r => _r.body as AfterSchoolCareDTO)
+    );
+  }
+
+  /**
+   * @param id id
+   * @return OK
+   */
+  deleteAttendanceUsingDELETEResponse(id: number): __Observable<__StrictHttpResponse<string>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'DELETE',
+      this.rootUrl + `/api/parent/attendance/${id}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'text'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<string>;
+      })
+    );
+  }
+  /**
+   * @param id id
+   * @return OK
+   */
+  deleteAttendanceUsingDELETE(id: number): __Observable<string> {
+    return this.deleteAttendanceUsingDELETEResponse(id).pipe(
+      __map(_r => _r.body as string)
     );
   }
 
@@ -169,12 +251,29 @@ class ParentControllerService extends __BaseService {
   }
 
   /**
+   * @param params The `ParentControllerService.GetBookedAfterSchoolCaresUsingGETParams` containing the following parameters:
+   *
+   * - `principal`:
+   *
+   * - `details`:
+   *
+   * - `credentials`:
+   *
+   * - `authorities[0].authority`:
+   *
+   * - `authenticated`:
+   *
    * @return OK
    */
-  getBookedAfterSchoolCaresUsingGETResponse(): __Observable<__StrictHttpResponse<Array<AfterSchoolCareDTO>>> {
+  getBookedAfterSchoolCaresUsingGETResponse(params: ParentControllerService.GetBookedAfterSchoolCaresUsingGETParams): __Observable<__StrictHttpResponse<Array<AfterSchoolCareDTO>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
+    if (params.principal != null) __params = __params.set('principal', params.principal.toString());
+    if (params.details != null) __params = __params.set('details', params.details.toString());
+    if (params.credentials != null) __params = __params.set('credentials', params.credentials.toString());
+    if (params.authorities0Authority != null) __params = __params.set('authorities[0].authority', params.authorities0Authority.toString());
+    if (params.authenticated != null) __params = __params.set('authenticated', params.authenticated.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/api/parent/booked_after_school_cares`,
@@ -193,130 +292,23 @@ class ParentControllerService extends __BaseService {
     );
   }
   /**
+   * @param params The `ParentControllerService.GetBookedAfterSchoolCaresUsingGETParams` containing the following parameters:
+   *
+   * - `principal`:
+   *
+   * - `details`:
+   *
+   * - `credentials`:
+   *
+   * - `authorities[0].authority`:
+   *
+   * - `authenticated`:
+   *
    * @return OK
    */
-  getBookedAfterSchoolCaresUsingGET(): __Observable<Array<AfterSchoolCareDTO>> {
-    return this.getBookedAfterSchoolCaresUsingGETResponse().pipe(
+  getBookedAfterSchoolCaresUsingGET(params: ParentControllerService.GetBookedAfterSchoolCaresUsingGETParams): __Observable<Array<AfterSchoolCareDTO>> {
+    return this.getBookedAfterSchoolCaresUsingGETResponse(params).pipe(
       __map(_r => _r.body as Array<AfterSchoolCareDTO>)
-    );
-  }
-
-  /**
-   * @param AfterSchoolCare AfterSchoolCare
-   * @return Created
-   */
-  createBookedAfterSchoolCareUsingPOSTResponse(AfterSchoolCare: AfterSchoolCare): __Observable<__StrictHttpResponse<string>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-    __body = AfterSchoolCare;
-    let req = new HttpRequest<any>(
-      'POST',
-      this.rootUrl + `/api/parent/booked_after_school_cares`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'text'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<string>;
-      })
-    );
-  }
-  /**
-   * @param AfterSchoolCare AfterSchoolCare
-   * @return Created
-   */
-  createBookedAfterSchoolCareUsingPOST(AfterSchoolCare: AfterSchoolCare): __Observable<string> {
-    return this.createBookedAfterSchoolCareUsingPOSTResponse(AfterSchoolCare).pipe(
-      __map(_r => _r.body as string)
-    );
-  }
-
-  /**
-   * @param id id
-   * @return OK
-   */
-  deleteBookedAfterSchoolCareUsingDELETEResponse(id: number): __Observable<__StrictHttpResponse<string>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-    let req = new HttpRequest<any>(
-      'DELETE',
-      this.rootUrl + `/api/parent/booked_after_school_cares/${id}`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'text'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<string>;
-      })
-    );
-  }
-  /**
-   * @param id id
-   * @return OK
-   */
-  deleteBookedAfterSchoolCareUsingDELETE(id: number): __Observable<string> {
-    return this.deleteBookedAfterSchoolCareUsingDELETEResponse(id).pipe(
-      __map(_r => _r.body as string)
-    );
-  }
-
-  /**
-   * @param params The `ParentControllerService.ChangeBookedAfterSchoolCareUsingPATCHParams` containing the following parameters:
-   *
-   * - `id`: id
-   *
-   * - `AfterSchoolCare`: AfterSchoolCare
-   *
-   * @return OK
-   */
-  changeBookedAfterSchoolCareUsingPATCHResponse(params: ParentControllerService.ChangeBookedAfterSchoolCareUsingPATCHParams): __Observable<__StrictHttpResponse<string>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-    __body = params.AfterSchoolCare;
-    let req = new HttpRequest<any>(
-      'PATCH',
-      this.rootUrl + `/api/parent/booked_after_school_cares/${params.id}`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'text'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<string>;
-      })
-    );
-  }
-  /**
-   * @param params The `ParentControllerService.ChangeBookedAfterSchoolCareUsingPATCHParams` containing the following parameters:
-   *
-   * - `id`: id
-   *
-   * - `AfterSchoolCare`: AfterSchoolCare
-   *
-   * @return OK
-   */
-  changeBookedAfterSchoolCareUsingPATCH(params: ParentControllerService.ChangeBookedAfterSchoolCareUsingPATCHParams): __Observable<string> {
-    return this.changeBookedAfterSchoolCareUsingPATCHResponse(params).pipe(
-      __map(_r => _r.body as string)
     );
   }
 
@@ -834,6 +826,22 @@ class ParentControllerService extends __BaseService {
 module ParentControllerService {
 
   /**
+   * Parameters for addAttendanceUsingPOST
+   */
+  export interface AddAttendanceUsingPOSTParams {
+
+    /**
+     * attendanceInputDTO
+     */
+    attendanceInputDTO: AttendanceInputDTO;
+
+    /**
+     * afterSchoolCareId
+     */
+    afterSchoolCareId: number;
+  }
+
+  /**
    * Parameters for isParentUsingGET
    */
   export interface IsParentUsingGETParams {
@@ -845,19 +853,14 @@ module ParentControllerService {
   }
 
   /**
-   * Parameters for changeBookedAfterSchoolCareUsingPATCH
+   * Parameters for getBookedAfterSchoolCaresUsingGET
    */
-  export interface ChangeBookedAfterSchoolCareUsingPATCHParams {
-
-    /**
-     * id
-     */
-    id: number;
-
-    /**
-     * AfterSchoolCare
-     */
-    AfterSchoolCare: AfterSchoolCare;
+  export interface GetBookedAfterSchoolCaresUsingGETParams {
+    principal?: {};
+    details?: {};
+    credentials?: {};
+    authorities0Authority?: string;
+    authenticated?: boolean;
   }
 
   /**

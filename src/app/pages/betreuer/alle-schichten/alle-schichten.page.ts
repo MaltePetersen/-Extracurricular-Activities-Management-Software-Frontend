@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, AlertController } from '@ionic/angular';
 import { alleSchichtenmodel } from 'src/app/models/alle-Schichten-model';
-import { SchichtModel } from 'src/app/models/schicht-model';
+import { AlleSchichtModel } from 'src/app/models/alle-schicht-model';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { environment } from 'src/environments/environment';
 import { EmployeeControllerService } from 'src/app/api/services';
 import { AfterSchoolCareDTO, SchoolDTO, AfterSchoolCare } from 'src/app/api/models';
+import Moment from "moment"; 
+import { extendMoment } from "moment-range";
+
+const moment = extendMoment(Moment as any);
 
 @Component({
   selector: 'app-alle-schichten',
@@ -15,8 +19,21 @@ import { AfterSchoolCareDTO, SchoolDTO, AfterSchoolCare } from 'src/app/api/mode
 })
 export class AlleSchichtenPage implements OnInit {
 
+  datum:any = moment().locale('de').format('DD.MM.YYYY');
+  schoolId:number;
+  datePickerDefaultSettings:any = {
+    setLabel: 'Auswählen',
+    todayLabel: 'Heute',
+    closeLabel: 'Abbrechen',
+    titleLabel: 'Wähle ein Datum',
+    monthsList: ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sept", "Okt", "Nov", "Dez"],
+    weeksList: ["S", "M", "D", "M", "D", "F", "S"],
+    dateFormat: 'DD.MM.YYYY',
+    clearButton : false,
+    momentLocale: 'de'
+  };
   days: any = [];
-  schichten:SchichtModel[] = [];
+  schichten:AlleSchichtModel[] = [];
   selectedDate:Date;
   hideDate:boolean = false;
   hideDateButton:string = "Datum auswählen";
@@ -26,15 +43,6 @@ export class AlleSchichtenPage implements OnInit {
   }
 
   ngOnInit() {
-    /*this.days = [
-      new alleSchichtenmodel("Montag", []),
-      new alleSchichtenmodel("Dienstag", []),
-      new alleSchichtenmodel("Mittwoch", []),
-      new alleSchichtenmodel("Donnestag", []),
-      new alleSchichtenmodel("Freitag", []),
-      new alleSchichtenmodel("Samstag", []),
-      new alleSchichtenmodel("Sonntag", []),
-    ];*/
     this.getAfterSchoolCares().then((response)=>{
       response.forEach((care)=>{
         this.getSchool(care.participatingSchool).then((school)=>{
@@ -52,8 +60,8 @@ export class AlleSchichtenPage implements OnInit {
     });
   }
 
-  mapToModel(care:AfterSchoolCareDTO, schoolName:string):SchichtModel{
-    return new SchichtModel(care.id, schoolName, care.startTime, care.startTime, care.startTime);
+  mapToModel(care:AfterSchoolCareDTO, schoolName:string):AlleSchichtModel{
+    return new AlleSchichtModel(care.id, schoolName, care.startTime, care.startTime, this.getDayOfWeek(care.startTime), care.owner);
   }
 
   getDayOfWeek(date) {
@@ -79,10 +87,10 @@ export class AlleSchichtenPage implements OnInit {
     this.days[i].children[j].open = !this.days[i].children.open[j];
   }
 
-  async presentAlert(model:SchichtModel){
+  async presentAlert(model:AlleSchichtModel){
     const alert = await this.alertController.create({
       header: model.schule,
-      message: model.day + ", den " + model.datum,
+      message: model.day + ", den " + moment(model.datum).format('DD.MM.YYYY') + "<br>" + model.owner.fullname,
       buttons: ['OK']
     });
     await alert.present();
@@ -100,6 +108,15 @@ export class AlleSchichtenPage implements OnInit {
     }else {
       this.hideDateButton = "Datum auswählen"
     }
+  }
+
+  dateChange(){
+    let selectedDate = moment(this.datum,('DD.MM.YYYY'));
+    let start = moment(selectedDate).startOf('isoWeek');
+    let end = moment(selectedDate).endOf('isoWeek');
+    let range = moment.range(start, end);
+    let dateArray = Array.from(range.by('days')).map(m => m.format('DD.MM.YYYY'));
+    console.table(dateArray);
   }
 
 }

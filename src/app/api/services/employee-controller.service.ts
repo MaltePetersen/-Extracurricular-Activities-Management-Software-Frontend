@@ -47,6 +47,8 @@ class EmployeeControllerService extends __BaseService {
   /**
    * @param params The `EmployeeControllerService.GetAfterSchoolCaresUsingGETParams` containing the following parameters:
    *
+   * - `school`: school
+   *
    * - `principal`:
    *
    * - `details`:
@@ -63,6 +65,7 @@ class EmployeeControllerService extends __BaseService {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
+    if (params.school != null) __params = __params.set('school', params.school.toString());
     if (params.principal != null) __params = __params.set('principal', params.principal.toString());
     if (params.details != null) __params = __params.set('details', params.details.toString());
     if (params.credentials != null) __params = __params.set('credentials', params.credentials.toString());
@@ -87,6 +90,8 @@ class EmployeeControllerService extends __BaseService {
   }
   /**
    * @param params The `EmployeeControllerService.GetAfterSchoolCaresUsingGETParams` containing the following parameters:
+   *
+   * - `school`: school
    *
    * - `principal`:
    *
@@ -632,6 +637,11 @@ module EmployeeControllerService {
    * Parameters for getAfterSchoolCaresUsingGET
    */
   export interface GetAfterSchoolCaresUsingGETParams {
+
+    /**
+     * school
+     */
+    school?: number;
     principal?: {};
     details?: {};
     credentials?: {};

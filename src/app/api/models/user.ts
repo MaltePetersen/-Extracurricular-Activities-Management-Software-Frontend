@@ -3,6 +3,7 @@ import { Attendance } from './attendance';
 import { School } from './school';
 import { AfterSchoolCare } from './after-school-care';
 import { Role } from './role';
+import { VerificationToken } from './verification-token';
 export interface User {
   parent?: User;
   address?: string;
@@ -23,5 +24,6 @@ export interface User {
   schoolCoordinatorsSchools?: Array<School>;
   subject?: string;
   username?: string;
+  verificationTokens?: VerificationToken;
   verified?: boolean;
 }

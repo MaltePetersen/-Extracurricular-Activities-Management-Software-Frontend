@@ -6,6 +6,11 @@ import { EmployeeControllerService } from 'src/app/api/services';
 import { AfterSchoolCare, AfterSchoolCareDTO, SchoolDTO } from 'src/app/api/models';
 import { NgModel } from '@angular/forms';
 import { MeineSchichtModel } from 'src/app/models/meine-schicht-model';
+import Moment from "moment"; 
+import { extendMoment } from "moment-range";
+
+const moment = extendMoment(Moment as any);
+
 
 @Component({
   selector: 'app-meine-schichten',
@@ -15,10 +20,21 @@ import { MeineSchichtModel } from 'src/app/models/meine-schicht-model';
 export class MeineSchichtenPage implements OnInit {
 
   schichten:MeineSchichtModel[] = [];
-  private datum:any;
+  datum:any = moment().locale('de').format('DD.MM.YYYY');
   schoolId:number;
+  datePickerDefaultSettings:any = {
+    setLabel: 'Auswählen',
+    todayLabel: 'Heute',
+    closeLabel: 'Abbrechen',
+    titleLabel: 'Wähle ein Datum',
+    monthsList: ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sept", "Okt", "Nov", "Dez"],
+    weeksList: ["S", "M", "D", "M", "D", "F", "S"],
+    dateFormat: 'DD.MM.YYYY',
+    clearButton : false,
+    momentLocale: 'de'
+  };
 
-  constructor(private auth: AuthenticationService, public router : Router, private employeeController:EmployeeControllerService) { 
+  constructor(private auth: AuthenticationService, public router : Router, private employeeController:EmployeeControllerService) {
   }
 
   ngOnInit() {
@@ -32,6 +48,7 @@ export class MeineSchichtenPage implements OnInit {
 
   getAfterSchoolCares() : Promise<AfterSchoolCareDTO[]>{
     let params = {
+      school:this.schoolId
     }
     return this.employeeController.getAfterSchoolCaresUsingGET(params).toPromise();
   }
@@ -54,5 +71,21 @@ export class MeineSchichtenPage implements OnInit {
     let days = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
     let date = new Date(input);
     return days[date.getDay()];
+  }
+
+  getDateRange(date:any):string[]{
+    let start = moment(date).startOf('isoWeek');
+    let end = moment(date).endOf('isoWeek');
+    let range = moment.range(start, end);
+    return Array.from(range.by('days')).map(m => m.format('DD.MM.YYYY'));
+  }
+
+  dateChange(){
+    let selectedDate = moment(this.datum,('DD.MM.YYYY'));
+    let start = moment(selectedDate).startOf('isoWeek');
+    let end = moment(selectedDate).endOf('isoWeek');
+    let range = moment.range(start, end);
+    let dateArray = Array.from(range.by('days')).map(m => m.format('DD.MM.YYYY'));
+    console.table(dateArray);
   }
 }
