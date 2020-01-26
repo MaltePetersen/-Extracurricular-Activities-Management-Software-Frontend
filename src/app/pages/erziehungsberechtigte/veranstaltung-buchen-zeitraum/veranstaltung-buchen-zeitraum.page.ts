@@ -15,7 +15,7 @@ import { environment } from 'src/environments/environment';
 })
 export class VeranstaltungBuchenZeitraumPage implements OnInit {
   veranstaltungId: number;
-  veranstaltungen: any;
+  veranstaltungen = [];
   kindername: any;
   kinderId:any
   zeit: any;
@@ -46,7 +46,7 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
     this.veranstaltungsDaten.ausgewählteVeranstaltungId.subscribe(veranstaltung => this.veranstaltungId = veranstaltung);
     console.log("ID vorhanden? "+this.veranstaltungId)
     this.http.get(`${environment.apiUrl}/api/parent/after_school_cares/${this.veranstaltungId}`).subscribe((a) => {
-      this.veranstaltungen = a;
+      this.veranstaltungen = [a];
       console.log (a)
   //   this.veranstaltungsDaten.ausgewählteVeranstaltung.subscribe(veranstaltung => this.veranstaltung = veranstaltung);
   //   this.zeit = [
