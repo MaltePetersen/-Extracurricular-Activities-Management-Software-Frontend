@@ -28,7 +28,7 @@
           <ion-button (click)="presentAlertDetails(pupil);$event.stopPropagation();" class="detail-button">
             Details
           </ion-button>
-          <ion-button (click)="presentPopover($event, pupil.id);$event.stopPropagation();">
+          <ion-button (click)="presentPopover($event, pupil.id, pupil.status);$event.stopPropagation();">
             <ion-icon slot="icon-only" name="md-more"></ion-icon>
           </ion-button>
         </ion-row>

@@ -189,14 +189,19 @@ export class SchuelerAnmeldenPage implements OnInit {
     }
   }
 
-  async presentPopover(ev: any, id:string) {
+  async presentPopover(ev: any, id:string, status:number) {
+    let isPresent:Boolean = false;
+    if (status == 3){
+      isPresent = true;
+    }
     const popover = await this.popoverController.create({
       component: AnwesenheitPopoverComponent,
       event: ev,
       translucent: true,
       componentProps: {
         child_id: id,
-        homeRef : this
+        homeRef : this,
+        isPresent: isPresent
       }
     });
     popover.style.cssText = '--background: transparent;';

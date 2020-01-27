@@ -10,7 +10,7 @@
     <ion-item *ngFor="let schicht of schichten" lines="none" class="abrechnung-item">
       <div class="abrechnung-content-container">
         <ion-label class="datum-zeit-label">
-          {{schicht.datum}}, {{schicht.uhrzeit}}
+          {{schicht.datum | amDateFormat:'DD.MM.YYYY'}}, {{schicht.uhrzeit | amDateFormat:'HH:mm'}}
         </ion-label>
         <ion-row class="data-row">
           <ion-label class="data-label">
@@ -23,5 +23,5 @@
 </ion-content>
 
 <ion-footer>
-  <ion-input readonly [(ngModel)]="datum" [liIonic4Datepicker]="datePickerDefaultSettings" (ionChange)="dateChange()"></ion-input>
+  <ion-input readonly [(ngModel)]="datum" [liIonic4Datepicker]="datePickerDefaultSettings" (ionChange)="dateChange($event)"></ion-input>
 </ion-footer>

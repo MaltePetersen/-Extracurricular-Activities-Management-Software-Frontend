@@ -1,6 +1,5 @@
 /* tslint:disable */
 import { SimpleUserDTO } from './simple-user-dto';
-import { SchoolDTO } from './school-dto';
 export interface AttendanceDTO {
   afterSchoolCare?: number;
   arrivalTime?: string;
@@ -8,6 +7,5 @@ export interface AttendanceDTO {
   id?: number;
   leaveTime?: string;
   note?: string;
-  school?: SchoolDTO;
   status?: number;
 }

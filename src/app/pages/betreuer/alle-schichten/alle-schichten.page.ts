@@ -9,6 +9,7 @@ import { EmployeeControllerService } from 'src/app/api/services';
 import { AfterSchoolCareDTO, SchoolDTO, AfterSchoolCare } from 'src/app/api/models';
 import Moment from "moment"; 
 import { extendMoment } from "moment-range";
+import { DayModel } from 'src/app/models/day-model';
 
 const moment = extendMoment(Moment as any);
 
@@ -19,8 +20,10 @@ const moment = extendMoment(Moment as any);
 })
 export class AlleSchichtenPage implements OnInit {
 
-  datum:any = moment().locale('de').format('DD.MM.YYYY');
   schoolId:number;
+  startDate:any;
+  endDate:any
+  datum:any = moment().locale('de').format('DD.MM.YYYY');
   datePickerDefaultSettings:any = {
     setLabel: 'Auswählen',
     todayLabel: 'Heute',
@@ -43,21 +46,7 @@ export class AlleSchichtenPage implements OnInit {
   }
 
   ngOnInit() {
-    this.getAfterSchoolCares().then((response)=>{
-      response.forEach((care)=>{
-        this.getSchool(care.participatingSchool).then((school)=>{
-          if(!this.days.includes(this.getDayOfWeek(care.startTime))){
-            this.days.push(new alleSchichtenmodel(this.getDayOfWeek(care.startTime), []));
-          }
-          this.days.find(element => element.name == this.getDayOfWeek(care.startTime)).schichten.push(this.mapToModel(care, school.name));
-        }).catch((error)=>{
-          console.log("Keine Schule gefunden");
-          this.days[this.getDayOfWeek(care.startTime)].schichten.push(this.mapToModel(care, "No School"));
-        });
-      });
-    }).catch((error)=>{
-      console.log("Keine Veranstaltungen gefunden");
-    });
+    this.dateChange();
   }
 
   mapToModel(care:AfterSchoolCareDTO, schoolName:string):AlleSchichtModel{
@@ -69,10 +58,38 @@ export class AlleSchichtenPage implements OnInit {
     return isNaN(dayOfWeek) ? null : ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'][dayOfWeek];
   }
 
-  getAfterSchoolCares():Promise<AfterSchoolCareDTO[]>{
-    const params = {
-    };
-    return this.employeeController.getAfterSchoolCaresUsingGET(params).toPromise();
+  getAfterSchoolCares(){
+    this.days = [
+    ];
+    let params = {
+      school:this.schoolId,
+      startDate:this.startDate.format('YYYY-MM-DD[T]HH:mm:ss'),
+      endDate:this.endDate.format('YYYY-MM-DD[T]HH:mm:ss')
+    }
+    this.employeeController.getAfterSchoolCaresUsingGET(params).toPromise().then(response => {
+      response.forEach((care)=>{
+        this.employeeController.getSchoolUsingGET(care.participatingSchool).toPromise().then((school)=>{
+          this.checkEintrag(care, school.name);
+        });
+      });
+    });
+  }
+
+  checkEintrag(care:AfterSchoolCareDTO, schoolName:string){
+    let weekDay = this.getDayOfWeek(care.startTime);
+    let found:boolean = false;
+    let foundDay;
+    this.days.forEach((day)=>{
+      if(day.name == weekDay){
+        found = true;
+        foundDay = day;
+      }
+    });
+    if(found){
+      foundDay.schichten.push(this.mapToModel(care, schoolName));
+    } else {
+      this.days.push(new DayModel(weekDay, [this.mapToModel(care, schoolName)]));
+    }
   }
 
   getSchool(id:number):Promise<SchoolDTO>{
@@ -112,11 +129,9 @@ export class AlleSchichtenPage implements OnInit {
 
   dateChange(){
     let selectedDate = moment(this.datum,('DD.MM.YYYY'));
-    let start = moment(selectedDate).startOf('isoWeek');
-    let end = moment(selectedDate).endOf('isoWeek');
-    let range = moment.range(start, end);
-    let dateArray = Array.from(range.by('days')).map(m => m.format('DD.MM.YYYY'));
-    console.table(dateArray);
+    this.startDate = moment(selectedDate).startOf('isoWeek');
+    this.endDate = moment(selectedDate).endOf('isoWeek');
+    this.getAfterSchoolCares();
   }
 
 }

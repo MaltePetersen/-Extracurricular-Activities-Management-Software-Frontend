@@ -47,9 +47,15 @@ class EmployeeControllerService extends __BaseService {
   /**
    * @param params The `EmployeeControllerService.GetAfterSchoolCaresUsingGETParams` containing the following parameters:
    *
+   * - `type`: type
+   *
+   * - `startDate`: startDate
+   *
    * - `school`: school
    *
    * - `principal`:
+   *
+   * - `endDate`: endDate
    *
    * - `details`:
    *
@@ -65,8 +71,11 @@ class EmployeeControllerService extends __BaseService {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
+    if (params.type != null) __params = __params.set('type', params.type.toString());
+    if (params.startDate != null) __params = __params.set('startDate', params.startDate.toString());
     if (params.school != null) __params = __params.set('school', params.school.toString());
     if (params.principal != null) __params = __params.set('principal', params.principal.toString());
+    if (params.endDate != null) __params = __params.set('endDate', params.endDate.toString());
     if (params.details != null) __params = __params.set('details', params.details.toString());
     if (params.credentials != null) __params = __params.set('credentials', params.credentials.toString());
     if (params.authorities0Authority != null) __params = __params.set('authorities[0].authority', params.authorities0Authority.toString());
@@ -91,9 +100,15 @@ class EmployeeControllerService extends __BaseService {
   /**
    * @param params The `EmployeeControllerService.GetAfterSchoolCaresUsingGETParams` containing the following parameters:
    *
+   * - `type`: type
+   *
+   * - `startDate`: startDate
+   *
    * - `school`: school
    *
    * - `principal`:
+   *
+   * - `endDate`: endDate
    *
    * - `details`:
    *
@@ -639,10 +654,25 @@ module EmployeeControllerService {
   export interface GetAfterSchoolCaresUsingGETParams {
 
     /**
+     * type
+     */
+    type?: number;
+
+    /**
+     * startDate
+     */
+    startDate?: string;
+
+    /**
      * school
      */
     school?: number;
     principal?: {};
+
+    /**
+     * endDate
+     */
+    endDate?: string;
     details?: {};
     credentials?: {};
     authorities0Authority?: string;

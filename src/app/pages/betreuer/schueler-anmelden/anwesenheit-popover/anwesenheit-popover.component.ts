@@ -10,6 +10,7 @@ import { EmployeeControllerService } from 'src/app/api/services';
 export class AnwesenheitPopoverComponent implements OnInit {
 
   private id:number;
+  private isPresent:boolean;
   private homePage:any;
   
   constructor(private navParams: NavParams, private employeeController:EmployeeControllerService, private viewController:PopoverController) {
@@ -18,16 +19,26 @@ export class AnwesenheitPopoverComponent implements OnInit {
   ngOnInit() {
     this.id = this.navParams.get('child_id');
     this.homePage = this.navParams.get('homeRef');
+    this.isPresent = this.navParams.get('isPresent');
   }
 
   zuruecksetzen(){
-    const update = {
-      "leaveTime" : null,
-    };
+    let update = {};
+    if(this.isPresent){
+      update = {
+        "arrivalTime" : null,
+      };
+    } else {
+      update = {
+        "leaveTime" : null
+      };
+    }
+    
     const patch = {
       "update" : update,
       "id" : this.id
     };
+
     this.employeeController.updateAttendanceUsingPATCH(patch).toPromise().then((response)=>{
       this.homePage.updatePupil(response, this.id);
     }).catch((error)=>{
@@ -35,5 +46,4 @@ export class AnwesenheitPopoverComponent implements OnInit {
     });
     this.viewController.dismiss();
   }
-
 }

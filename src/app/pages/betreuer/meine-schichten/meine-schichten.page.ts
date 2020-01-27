@@ -6,10 +6,7 @@ import { EmployeeControllerService } from 'src/app/api/services';
 import { AfterSchoolCare, AfterSchoolCareDTO, SchoolDTO } from 'src/app/api/models';
 import { NgModel } from '@angular/forms';
 import { MeineSchichtModel } from 'src/app/models/meine-schicht-model';
-import Moment from "moment"; 
-import { extendMoment } from "moment-range";
-
-const moment = extendMoment(Moment as any);
+import moment from "moment"; 
 
 
 @Component({
@@ -20,8 +17,10 @@ const moment = extendMoment(Moment as any);
 export class MeineSchichtenPage implements OnInit {
 
   schichten:MeineSchichtModel[] = [];
-  datum:any = moment().locale('de').format('DD.MM.YYYY');
   schoolId:number;
+  startDate:any;
+  endDate:any;
+  datum:any = moment().format('DD.MM.YYYY');
   datePickerDefaultSettings:any = {
     setLabel: 'Auswählen',
     todayLabel: 'Heute',
@@ -39,22 +38,27 @@ export class MeineSchichtenPage implements OnInit {
 
   ngOnInit() {
     this.schoolId = this.router.getCurrentNavigation().extras.state.id;
-    this.getAfterSchoolCares().then(response => {
+    moment.locale('de');
+    this.dateChange();
+    this.getAfterSchoolCares();
+  }
+
+  getAfterSchoolCares(){
+    this.schichten = [];
+    let params = {
+      school:this.schoolId,
+      startDate:this.startDate.format('YYYY-MM-DD[T]HH:mm:ss'),
+      endDate:this.endDate.format('YYYY-MM-DD[T]HH:mm:ss')
+    }
+    this.employeeController.getAfterSchoolCaresUsingGET(params).toPromise().then(response => {
       response.forEach((value)=>{
         this.schichten.push(this.mapToModel(value));
       });
     });
   }
 
-  getAfterSchoolCares() : Promise<AfterSchoolCareDTO[]>{
-    let params = {
-      school:this.schoolId
-    }
-    return this.employeeController.getAfterSchoolCaresUsingGET(params).toPromise();
-  }
-
   mapToModel(care:AfterSchoolCareDTO) : MeineSchichtModel{
-    let model = new MeineSchichtModel(care.id, care.name, care.startTime, this.getDayFromDate(care.startTime));
+    let model = new MeineSchichtModel(care.id, care.name, care.startTime, this.getDayOfWeek(care.startTime));
     return model;
   }
 
@@ -67,25 +71,15 @@ export class MeineSchichtenPage implements OnInit {
     this.router.navigate(['employee/schueler-anmelden'], navigationExtras);
   }
 
-  getDayFromDate(input:string) : String{
-    let days = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
-    let date = new Date(input);
-    return days[date.getDay()];
-  }
-
-  getDateRange(date:any):string[]{
-    let start = moment(date).startOf('isoWeek');
-    let end = moment(date).endOf('isoWeek');
-    let range = moment.range(start, end);
-    return Array.from(range.by('days')).map(m => m.format('DD.MM.YYYY'));
+  getDayOfWeek(date) {
+    var dayOfWeek = new Date(date).getDay();
+    return isNaN(dayOfWeek) ? null : ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'][dayOfWeek];
   }
 
   dateChange(){
     let selectedDate = moment(this.datum,('DD.MM.YYYY'));
-    let start = moment(selectedDate).startOf('isoWeek');
-    let end = moment(selectedDate).endOf('isoWeek');
-    let range = moment.range(start, end);
-    let dateArray = Array.from(range.by('days')).map(m => m.format('DD.MM.YYYY'));
-    console.table(dateArray);
+    this.startDate = moment(selectedDate).startOf('isoWeek');
+    this.endDate = moment(selectedDate).endOf('isoWeek');
+    this.getAfterSchoolCares();
   }
 }

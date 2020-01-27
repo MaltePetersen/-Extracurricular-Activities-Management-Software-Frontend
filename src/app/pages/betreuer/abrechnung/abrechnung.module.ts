@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { AbrechnungPage } from './abrechnung.page';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Ionic4DatepickerModule } from '@logisticinfotech/ionic4-datepicker';
+import { MomentModule } from 'ngx-moment';
 
 const routes: Routes = [
   {
@@ -22,6 +23,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     SharedModule,
+    MomentModule,
     Ionic4DatepickerModule,
     RouterModule.forChild(routes)
   ],

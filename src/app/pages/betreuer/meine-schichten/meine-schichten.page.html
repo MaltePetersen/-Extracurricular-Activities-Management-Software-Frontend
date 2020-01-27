@@ -33,5 +33,5 @@
 </ion-content>
 
 <ion-footer>
-  <ion-input readonly [(ngModel)]="datum" [liIonic4Datepicker]="datePickerDefaultSettings" (ionChange)="dateChange()"></ion-input>
+  <ion-input readonly [(ngModel)]="datum" [liIonic4Datepicker]="datePickerDefaultSettings" (ionChange)="dateChange($event)"></ion-input>
 </ion-footer>
