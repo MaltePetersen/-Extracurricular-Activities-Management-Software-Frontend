@@ -20,9 +20,12 @@
             <ion-label>
               {{schicht.schule}}
             </ion-label>
+            <ion-label>
+              {{schicht.name}}
+            </ion-label>
             <ion-row>
               <ion-label>
-                {{schicht.datum | amDateFormat:'DD.MM.YYYY'}}, {{schicht.uhrzeit | amDateFormat:'HH:mm'}}
+                {{schicht.datum | amDateFormat:'DD.MM.YYYY'}} {{schicht.uhrzeit | amDateFormat:'HH:mm'}}
               </ion-label>
             </ion-row>
           </div>

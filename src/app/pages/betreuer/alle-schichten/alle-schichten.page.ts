@@ -49,7 +49,7 @@ export class AlleSchichtenPage implements OnInit {
   }
 
   mapToModel(care:AfterSchoolCareDTO, schoolName:string):AlleSchichtModel{
-    return new AlleSchichtModel(care.id, schoolName, care.startTime, care.startTime, this.getDayOfWeek(care.startTime), care.owner);
+    return new AlleSchichtModel(care.id, care.name, schoolName, care.startTime, care.startTime, this.getDayOfWeek(care.startTime), care.owner);
   }
 
   getDayOfWeek(date) {
