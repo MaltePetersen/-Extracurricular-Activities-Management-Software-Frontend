@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import {  HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { AuthenticationService } from 'src/app/services/authentication.service';
 import { EmployeeControllerService } from 'src/app/api/services';
 
 @Component({
@@ -14,7 +12,7 @@ export class SchulauswahlPage implements OnInit {
 
   schools: any;
 
-  constructor(private auth: AuthenticationService, public router : Router ,public http: HttpClient, private employeeController:EmployeeControllerService) {
+  constructor(public router : Router ,public http: HttpClient, private employeeController:EmployeeControllerService) {
   }
 
   ngOnInit() {
@@ -34,8 +32,6 @@ export class SchulauswahlPage implements OnInit {
     this.employeeController.getSchoolsUsingGET().subscribe((schools)=> this.schools = schools);
   }
 
-  logout() {
-    this.auth.logout();
-  }
+  
 
 }

@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { SchichtModel } from 'src/app/models/schicht-model';
-import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Router, NavigationExtras } from '@angular/router';
 import { EmployeeControllerService } from 'src/app/api/services';
-import { AfterSchoolCare, AfterSchoolCareDTO, SchoolDTO } from 'src/app/api/models';
-import { NgModel } from '@angular/forms';
+import {  AfterSchoolCareDTO } from 'src/app/api/models';
 import { MeineSchichtModel } from 'src/app/models/meine-schicht-model';
 
 @Component({
@@ -18,7 +15,7 @@ export class MeineSchichtenPage implements OnInit {
   private datum:any;
   schoolId:number;
 
-  constructor(private auth: AuthenticationService, public router : Router, private employeeController:EmployeeControllerService) { 
+  constructor( public router : Router, private employeeController:EmployeeControllerService) { 
   }
 
   ngOnInit() {

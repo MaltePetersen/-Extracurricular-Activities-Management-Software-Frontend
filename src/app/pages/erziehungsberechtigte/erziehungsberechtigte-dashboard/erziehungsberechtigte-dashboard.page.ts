@@ -1,6 +1,4 @@
 import { Component, OnInit, NgModule } from '@angular/core';
-import { AuthenticationService } from '../../../services/authentication.service';
-import data from '../../../../assets/company.json';
 import { VeranstaltungensdatenService } from 'src/app/services/veranstaltungensdaten.service';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -20,7 +18,7 @@ export class ErziehungsberechtigteDashboardPage implements OnInit {
   veranstaltung: string;
   veranstaltungen:any;
 
-  constructor(private auth: AuthenticationService, private veranstaltungsDaten: VeranstaltungensdatenService, public http: HttpClient, private parentController: ParentControllerService) {
+  constructor( private veranstaltungsDaten: VeranstaltungensdatenService, public http: HttpClient, private parentController: ParentControllerService) {
     this.getVeranstaltungen();
   }
 
@@ -38,12 +36,6 @@ export class ErziehungsberechtigteDashboardPage implements OnInit {
 
   async chooseOffer(name){
     this.veranstaltungsDaten.changeVeranstaltung(name.toString());
-  }
-
-
-
-  logout() {
-    this.auth.logout();
   }
 
 }

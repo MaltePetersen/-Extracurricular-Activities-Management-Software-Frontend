@@ -1,16 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/services/alert.service';
-import { NgForm, Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
-import { UsernameValidator } from '../registrierung/username.validator';
+import {  Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { PasswordValidator } from '../registrierung/password.validator';
 import { environment } from 'src/environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Children } from 'src/app/models/children';
+import { HttpClient } from '@angular/common/http';
 import { CountryPhone } from 'src/app/models/country-phone.model';
 import { PhoneValidator } from 'src/app/pages/erziehungsberechtigte/registrierung/phone.validator';
-import { KindUebersichtPage } from '../kind-uebersicht/kind-uebersicht.page';
 
 @Component({
   selector: 'app-kind-hinzufuegen',
@@ -27,7 +23,7 @@ export class KindHinzufuegenPage implements OnInit {
   schools: any;
   responseData: any;
 
-  constructor(public http: HttpClient, private router: Router, private auth: AuthenticationService, private alertService: AlertService, public formBuilder: FormBuilder) { }
+  constructor(public http: HttpClient, private router: Router,  private alertService: AlertService, public formBuilder: FormBuilder) { }
 
   ngOnInit() {
   this.getSchools();

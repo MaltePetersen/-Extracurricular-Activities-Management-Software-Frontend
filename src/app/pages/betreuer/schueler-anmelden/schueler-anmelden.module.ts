@@ -9,6 +9,7 @@ import { SchuelerAnmeldenPage } from './schueler-anmelden.page';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AnwesenheitsPopoverModule } from './anwesenheit-popover/anwesenheit-popover.module';
+import { AnwesenheitPopoverComponent } from './anwesenheit-popover/anwesenheit-popover.component';
 
 const routes: Routes = [
   {

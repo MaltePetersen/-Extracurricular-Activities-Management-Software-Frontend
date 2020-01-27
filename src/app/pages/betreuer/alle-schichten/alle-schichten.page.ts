@@ -3,7 +3,6 @@ import { NavController, AlertController } from '@ionic/angular';
 import { alleSchichtenmodel } from 'src/app/models/alle-Schichten-model';
 import { SchichtModel } from 'src/app/models/schicht-model';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { AuthenticationService } from 'src/app/services/authentication.service';
 import { environment } from 'src/environments/environment';
 
 @Component({

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgForm, Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import {Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { AlertService } from 'src/app/services/alert.service';
 import { UsernameValidator } from 'src/app/pages/erziehungsberechtigte/registrierung/username.validator';
 import { PasswordValidator } from 'src/app/pages/erziehungsberechtigte/registrierung/password.validator';
@@ -24,7 +23,7 @@ export class RegistrierungPage implements OnInit {
   responseData: any;
   userData = { 'username': '', 'password': '', 'name': '', 'email': '' };
 
-  constructor(public formBuilder: FormBuilder, private router: Router, private auth: AuthenticationService, private alertService: AlertService) { }
+  constructor(public formBuilder: FormBuilder, private router: Router, private alertService: AlertService) { }
 
   ngOnInit() {
     this.countries = [
