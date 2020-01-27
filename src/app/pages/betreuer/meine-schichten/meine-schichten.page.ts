@@ -30,11 +30,7 @@ export class MeineSchichtenPage implements OnInit {
     momentLocale: 'de'
   };
 
-<<<<<<< HEAD
-  constructor(private auth: AuthenticationService, public router : Router, private employeeController:EmployeeControllerService) {
-=======
   constructor( public router : Router, private employeeController:EmployeeControllerService) { 
->>>>>>> bugfix/WIN-372-frontend-auth-guard-bug
   }
 
   ngOnInit() {
