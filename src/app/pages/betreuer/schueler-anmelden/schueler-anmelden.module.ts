@@ -8,7 +8,6 @@ import { IonicModule } from '@ionic/angular';
 import { SchuelerAnmeldenPage } from './schueler-anmelden.page';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { AnwesenheitPopoverComponent } from './anwesenheit-popover/anwesenheit-popover.component';
 import { AnwesenheitsPopoverModule } from './anwesenheit-popover/anwesenheit-popover.module';
 import { MomentModule } from 'ngx-moment';
 

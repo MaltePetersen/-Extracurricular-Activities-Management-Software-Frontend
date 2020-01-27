@@ -6,12 +6,20 @@ const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
+    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule),
+    canActivate: [AuthGuard],
+    data: {
+      role: 'NULL'
+    }
   },
   {
     path: 'registrierung',
     loadChildren: () => import('./pages/erziehungsberechtigte/registrierung/registrierung.module')
-    .then(m => m.RegistrierungPageModule)
+    .then(m => m.RegistrierungPageModule),
+    canActivate: [AuthGuard],
+    data: {
+      role: 'NULL'
+    }
   },
 { path: 'employee', 
   loadChildren: () => import('./pages/betreuer/employee.module').then(m => m.EmployeeModule),

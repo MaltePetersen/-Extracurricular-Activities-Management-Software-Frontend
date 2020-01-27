@@ -12,7 +12,6 @@ const TOKEN_KEY = 'auth-token';
 @Injectable({
   providedIn: 'root'
 })
-// Goal is a role based login. A normal User should only be able to see whats for his eyes. An admin for example needs to see more. In this app we will use 3 different roles.
 
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
@@ -65,9 +64,8 @@ export class AuthenticationService {
   }
 
   logout() {
-    // remove user from local storage to log user out
     localStorage.removeItem('isLoggedIn');
     this.currentUserSubject.next(null);
-    this.router.navigateByUrl('/login');
+    location.reload();
   }
 }

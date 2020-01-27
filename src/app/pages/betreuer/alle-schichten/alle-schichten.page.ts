@@ -3,7 +3,6 @@ import { NavController, AlertController } from '@ionic/angular';
 import { alleSchichtenmodel } from 'src/app/models/alle-Schichten-model';
 import { AlleSchichtModel } from 'src/app/models/alle-schicht-model';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { AuthenticationService } from 'src/app/services/authentication.service';
 import { environment } from 'src/environments/environment';
 import { EmployeeControllerService } from 'src/app/api/services';
 import { AfterSchoolCareDTO, SchoolDTO, AfterSchoolCare } from 'src/app/api/models';

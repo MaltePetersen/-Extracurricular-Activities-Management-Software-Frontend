@@ -61,14 +61,7 @@ const routes: Routes = [
     data: {
       role: 'ROLE_PARENT'
     }
-  },
-  {
-    path: 'logout', loadChildren: () => import( '../logout/logout.module').then(m => m.LogoutPageModule),
-    canActivate: [AuthGuard],
-    data: {
-      role: 'ROLE_PARENT'
-    }
-  },
+  }
 ];
 
 @NgModule({
