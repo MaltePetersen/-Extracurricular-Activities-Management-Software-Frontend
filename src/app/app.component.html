@@ -8,27 +8,46 @@
             </ion-header>
             <ion-content>
               <ion-list>
+                <ion-menu-toggle auto-hide="false"  *ngIf="ERZIEHUNGSBERECHTIGTE || BETREUER" >
                 <div *ngIf="ERZIEHUNGSBERECHTIGTE">
-                <ion-menu-toggle auto-hide="false" *ngFor="let p of Eltern">
-                    <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
-                        <ion-icon slot="start" [name]="p.icon"></ion-icon>
-                        <ion-label>
-                          {{p.title}}
-                        </ion-label>
-                      </ion-item>
-                    </ion-menu-toggle>
+                  <ion-item [routerDirection]="'root'" routerLink="parent/erziehungsberechtigte-dashboard">
+                    <ion-icon slot="start" name="home"></ion-icon>
+                      <ion-label>Home</ion-label>
+                    </ion-item> 
+                    <ion-item [routerDirection]="'root'" routerLink="parent/veranstaltung-buchen">
+                      <ion-icon slot="start" name="school"></ion-icon>
+                        <ion-label>Veranstaltung buchen</ion-label>
+                      </ion-item> 
+                      <ion-item [routerDirection]="'root'" routerLink="parent/kind-uebersicht">
+                        <ion-icon slot="start" name="people"></ion-icon>
+                          <ion-label>Kinder</ion-label>
+                        </ion-item> 
+                        <ion-item [routerDirection]="'root'" routerLink="parent/account">
+                          <ion-icon slot="start" name="person"></ion-icon>
+                            <ion-label>Account</ion-label>
+                          </ion-item> 
                 </div>
-                <div *ngIf="BETREUER">
-                <ion-menu-toggle auto-hide="false" *ngFor="let p of Betreuer">
-                  <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
-                    <ion-icon slot="start" [name]="p.icon"></ion-icon>
-                    <ion-label>
-                      {{p.title}}
-                    </ion-label>
+                   <div *ngIf="BETREUER">
+                  <ion-item [routerDirection]="'root'" routerLink="/employee/schulauswahl">
+                    <ion-icon slot="start" name="briefcase"></ion-icon>
+                    <ion-label>Schulauswahl</ion-label>
                   </ion-item>
-                </ion-menu-toggle>
+                  <ion-item [routerDirection]="'root'" routerLink="/employee/alle-schichten">
+                    <ion-icon slot="start" name="clipboard"></ion-icon>
+                    <ion-label>Alle Schichten</ion-label>
+                  </ion-item>
+                  <ion-item [routerDirection]="'root'" routerLink="/employee/abrechnung">
+                    <ion-icon slot="start" name="card"></ion-icon>
+                    <ion-label>Abrechnung</ion-label>
+                  </ion-item>
               </div>
-
+              <ion-item (click)="logout()">
+                <ion-icon slot="start" name="log-out"></ion-icon>
+                <ion-label>
+                    Abmelden
+                </ion-label>
+              </ion-item>
+            </ion-menu-toggle>
               </ion-list>
             </ion-content>
           </ion-menu>
