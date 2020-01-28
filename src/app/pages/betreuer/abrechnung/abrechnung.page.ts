@@ -18,7 +18,7 @@ export class AbrechnungPage implements OnInit {
   schichten:any;
   startDate:any;
   endDate:any;
-  datum:any = moment().locale('de').format('DD.MM.YYYY');
+  datum:any = moment().locale('de').format('DD.MM.YYYY [Monat:] MMMM');
   datePickerDefaultSettings:any = {
     setLabel: 'Auswählen',
     todayLabel: 'Heute',
@@ -26,7 +26,7 @@ export class AbrechnungPage implements OnInit {
     titleLabel: 'Wähle ein Datum',
     monthsList: ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sept", "Okt", "Nov", "Dez"],
     weeksList: ["S", "M", "D", "M", "D", "F", "S"],
-    dateFormat: 'DD.MM.YYYY',
+    dateFormat: 'DD.MM.YYYY [Monat:] MMMM',
     clearButton : false,
     momentLocale: 'de'
   };

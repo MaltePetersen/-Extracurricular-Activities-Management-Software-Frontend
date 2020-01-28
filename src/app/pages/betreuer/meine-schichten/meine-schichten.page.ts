@@ -17,7 +17,7 @@ export class MeineSchichtenPage implements OnInit {
   schoolId:number;
   startDate:any;
   endDate:any;
-  datum:any = moment().format('DD.MM.YYYY');
+  datum:any = moment().format('DD.MM.YYYY [Kalenderwoche:] WW');
   datePickerDefaultSettings:any = {
     setLabel: 'Auswählen',
     todayLabel: 'Heute',
@@ -25,7 +25,7 @@ export class MeineSchichtenPage implements OnInit {
     titleLabel: 'Wähle ein Datum',
     monthsList: ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sept", "Okt", "Nov", "Dez"],
     weeksList: ["S", "M", "D", "M", "D", "F", "S"],
-    dateFormat: 'DD.MM.YYYY',
+    dateFormat: 'DD.MM.YYYY [Kalenderwoche:] WW',
     clearButton : false,
     momentLocale: 'de'
   };
