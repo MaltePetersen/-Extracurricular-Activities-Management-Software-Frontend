@@ -56,6 +56,7 @@ export class SchuelerAnmeldenPage implements OnInit {
   updateFilters(){
     this.filteredPupils = this.pupils;
     this.getClasses();
+    this.filteredPupils.sort((a, b)=> a.name.localeCompare(b.name));
   }
 
   mapToPupil(attendance:AttendanceDTO, schoolName:string):PupilModel{
@@ -97,8 +98,8 @@ export class SchuelerAnmeldenPage implements OnInit {
       "update" : update,
       "id" : id
     };
-    this.employeeController.updateAttendanceUsingPATCH(patch).toPromise().then(value => {
-      this.updatePupil(value, id)
+    this.employeeController.updateAttendanceUsingPATCH(patch).toPromise().then(response => {
+      this.updatePupil(response, id);
     });
   }
 
@@ -112,11 +113,11 @@ export class SchuelerAnmeldenPage implements OnInit {
       "id" : id
     };
     this.employeeController.updateAttendanceUsingPATCH(patch).toPromise().then(response => {
-      this.updatePupil(response, id)
+      this.updatePupil(response, id);
     });
   }
 
-  updatePupil(care:AfterSchoolCareDTO, id:number){
+  updatePupil(care, id){
     care.attendances.forEach((attendance)=>{
       if(attendance.id == id){
         let index = this.pupils.findIndex((pupil)=>pupil.id == id);
