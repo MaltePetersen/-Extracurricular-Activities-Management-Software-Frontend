@@ -30,6 +30,7 @@ class ParentControllerService extends __BaseService {
   static readonly createChildUsingPOSTPath = '/api/parent/child';
   static readonly getChildUsingGETPath = '/api/parent/child/{id}';
   static readonly updateChildUsingPATCHPath = '/api/parent/child/{id}';
+  static readonly deleteChildUsingDELETEPath = '/api/parent/child/{username}';
   static readonly getChildsUsingGETPath = '/api/parent/children';
   static readonly getSchoolsUsingGET1Path = '/api/parent/schools';
 
@@ -41,12 +42,26 @@ class ParentControllerService extends __BaseService {
   }
 
   /**
+   * @param params The `ParentControllerService.GetAfterSchoolCaresUsingGET1Params` containing the following parameters:
+   *
+   * - `type`: type
+   *
+   * - `startDate`: startDate
+   *
+   * - `school`: school
+   *
+   * - `endDate`: endDate
+   *
    * @return OK
    */
-  getAfterSchoolCaresUsingGET1Response(): __Observable<__StrictHttpResponse<Array<AfterSchoolCareDTO>>> {
+  getAfterSchoolCaresUsingGET1Response(params: ParentControllerService.GetAfterSchoolCaresUsingGET1Params): __Observable<__StrictHttpResponse<Array<AfterSchoolCareDTO>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
+    if (params.type != null) __params = __params.set('type', params.type.toString());
+    if (params.startDate != null) __params = __params.set('startDate', params.startDate.toString());
+    if (params.school != null) __params = __params.set('school', params.school.toString());
+    if (params.endDate != null) __params = __params.set('endDate', params.endDate.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/api/parent/after_school_cares`,
@@ -65,10 +80,20 @@ class ParentControllerService extends __BaseService {
     );
   }
   /**
+   * @param params The `ParentControllerService.GetAfterSchoolCaresUsingGET1Params` containing the following parameters:
+   *
+   * - `type`: type
+   *
+   * - `startDate`: startDate
+   *
+   * - `school`: school
+   *
+   * - `endDate`: endDate
+   *
    * @return OK
    */
-  getAfterSchoolCaresUsingGET1(): __Observable<Array<AfterSchoolCareDTO>> {
-    return this.getAfterSchoolCaresUsingGET1Response().pipe(
+  getAfterSchoolCaresUsingGET1(params: ParentControllerService.GetAfterSchoolCaresUsingGET1Params): __Observable<Array<AfterSchoolCareDTO>> {
+    return this.getAfterSchoolCaresUsingGET1Response(params).pipe(
       __map(_r => _r.body as Array<AfterSchoolCareDTO>)
     );
   }
@@ -728,6 +753,73 @@ class ParentControllerService extends __BaseService {
   }
 
   /**
+   * @param params The `ParentControllerService.DeleteChildUsingDELETEParams` containing the following parameters:
+   *
+   * - `username`: username
+   *
+   * - `principal`:
+   *
+   * - `details`:
+   *
+   * - `credentials`:
+   *
+   * - `authorities[0].authority`:
+   *
+   * - `authenticated`:
+   *
+   * @return OK
+   */
+  deleteChildUsingDELETEResponse(params: ParentControllerService.DeleteChildUsingDELETEParams): __Observable<__StrictHttpResponse<string>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    if (params.principal != null) __params = __params.set('principal', params.principal.toString());
+    if (params.details != null) __params = __params.set('details', params.details.toString());
+    if (params.credentials != null) __params = __params.set('credentials', params.credentials.toString());
+    if (params.authorities0Authority != null) __params = __params.set('authorities[0].authority', params.authorities0Authority.toString());
+    if (params.authenticated != null) __params = __params.set('authenticated', params.authenticated.toString());
+    let req = new HttpRequest<any>(
+      'DELETE',
+      this.rootUrl + `/api/parent/child/${params.username}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'text'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<string>;
+      })
+    );
+  }
+  /**
+   * @param params The `ParentControllerService.DeleteChildUsingDELETEParams` containing the following parameters:
+   *
+   * - `username`: username
+   *
+   * - `principal`:
+   *
+   * - `details`:
+   *
+   * - `credentials`:
+   *
+   * - `authorities[0].authority`:
+   *
+   * - `authenticated`:
+   *
+   * @return OK
+   */
+  deleteChildUsingDELETE(params: ParentControllerService.DeleteChildUsingDELETEParams): __Observable<string> {
+    return this.deleteChildUsingDELETEResponse(params).pipe(
+      __map(_r => _r.body as string)
+    );
+  }
+
+  /**
    * @param params The `ParentControllerService.GetChildsUsingGETParams` containing the following parameters:
    *
    * - `principal`:
@@ -824,6 +916,32 @@ class ParentControllerService extends __BaseService {
 }
 
 module ParentControllerService {
+
+  /**
+   * Parameters for getAfterSchoolCaresUsingGET1
+   */
+  export interface GetAfterSchoolCaresUsingGET1Params {
+
+    /**
+     * type
+     */
+    type?: number;
+
+    /**
+     * startDate
+     */
+    startDate?: string;
+
+    /**
+     * school
+     */
+    school?: number;
+
+    /**
+     * endDate
+     */
+    endDate?: string;
+  }
 
   /**
    * Parameters for addAttendanceUsingPOST
@@ -946,6 +1064,22 @@ module ParentControllerService {
      * id
      */
     id: number;
+  }
+
+  /**
+   * Parameters for deleteChildUsingDELETE
+   */
+  export interface DeleteChildUsingDELETEParams {
+
+    /**
+     * username
+     */
+    username: string;
+    principal?: {};
+    details?: {};
+    credentials?: {};
+    authorities0Authority?: string;
+    authenticated?: boolean;
   }
 
   /**

@@ -9,6 +9,7 @@ import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { AfterSchoolCareDTO } from '../models/after-school-care-dto';
 import { AfterSchoolCare } from '../models/after-school-care';
+import { ResponseEntity } from '../models/response-entity';
 import { InvoiceDTO } from '../models/invoice-dto';
 import { ISchool } from '../models/ischool';
 import { School } from '../models/school';
@@ -241,7 +242,7 @@ class EmployeeControllerService extends __BaseService {
    *
    * @return OK
    */
-  updateAttendanceUsingPATCHResponse(params: EmployeeControllerService.UpdateAttendanceUsingPATCHParams): __Observable<__StrictHttpResponse<AfterSchoolCareDTO>> {
+  updateAttendanceUsingPATCHResponse(params: EmployeeControllerService.UpdateAttendanceUsingPATCHParams): __Observable<__StrictHttpResponse<ResponseEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -260,7 +261,7 @@ class EmployeeControllerService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<AfterSchoolCareDTO>;
+        return _r as __StrictHttpResponse<ResponseEntity>;
       })
     );
   }
@@ -273,9 +274,9 @@ class EmployeeControllerService extends __BaseService {
    *
    * @return OK
    */
-  updateAttendanceUsingPATCH(params: EmployeeControllerService.UpdateAttendanceUsingPATCHParams): __Observable<AfterSchoolCareDTO> {
+  updateAttendanceUsingPATCH(params: EmployeeControllerService.UpdateAttendanceUsingPATCHParams): __Observable<ResponseEntity> {
     return this.updateAttendanceUsingPATCHResponse(params).pipe(
-      __map(_r => _r.body as AfterSchoolCareDTO)
+      __map(_r => _r.body as ResponseEntity)
     );
   }
 

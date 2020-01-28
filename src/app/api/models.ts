@@ -9,6 +9,7 @@ export { IUserDTO } from './models/iuser-dto';
 export { InvoiceDTO } from './models/invoice-dto';
 export { ModelAndView } from './models/model-and-view';
 export { Privilege } from './models/privilege';
+export { ResponseEntity } from './models/response-entity';
 export { Role } from './models/role';
 export { School } from './models/school';
 export { SchoolDTO } from './models/school-dto';
