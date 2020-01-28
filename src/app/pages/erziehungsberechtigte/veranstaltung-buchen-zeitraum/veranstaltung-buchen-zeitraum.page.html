@@ -2,6 +2,45 @@
 
 <ion-content>
   <div class="flex-container">
+    <ion-label class="schichten-label">
+      Veranstaltungen buchen
+    </ion-label>
+  </div>
+  
+  <div class="schichten-container">
+    <ion-list *ngFor="let item of days; let i = index;" class="accordion-list" lines="none" detail="false" class="ion-no-padding">
+      <ion-item class="day-item" tappable (click)="toggleSelection(i)" [ngClass]="{'selection-active': item.open, 'selection': !item.open}">
+        <ion-icon slot="end" name="arrow-down" *ngIf="!item.open"></ion-icon>
+        <ion-icon slot="end" name="arrow-up" *ngIf="item.open"></ion-icon>
+        <ion-label class="item-name-label">{{item.name}}</ion-label>
+      </ion-item>
+      <div *ngIf="item.schichten && item.open" class="schicht-container">
+        <ion-item *ngFor="let schicht of item.schichten" lines="none" class="schichten-item" (click)="presentAlert(schicht)">
+          <div class="schichten-content-container">
+            <ion-label>
+              {{schicht.schule}}
+            </ion-label>
+            <ion-label>
+              {{schicht.name}}
+            </ion-label>
+            <ion-row>
+              <ion-label>
+                {{schicht.datum | amDateFormat:'DD.MM.YYYY'}} {{schicht.uhrzeit | amDateFormat:'HH:mm'}}
+              </ion-label>
+            </ion-row>
+          </div>
+        </ion-item>
+      </div>
+    </ion-list>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-input readonly [(ngModel)]="datum" [liIonic4Datepicker]="datePickerDefaultSettings" (ionChange)="dateChange($event)"></ion-input>
+</ion-footer>
+
+<!-- <ion-content>
+  <div class="flex-container">
     <ion-label class="veranstaltungstyp">
       Terminbuchung für {{veranstaltung}}
     </ion-label>
@@ -29,4 +68,4 @@
     </ion-label>
     <ion-datetime displayFormat="DD MMMM YYYY" pickerFormat="DD MMMM YYYY" max="2021" [(ngModel)]="datum"  (ionChange)="selectCalendarWeek()"></ion-datetime>
   </ion-toolbar>
-</ion-footer>
+</ion-footer> -->
