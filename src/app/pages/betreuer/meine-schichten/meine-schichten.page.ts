@@ -48,6 +48,7 @@ export class MeineSchichtenPage implements OnInit {
       endDate:this.endDate.format('YYYY-MM-DD[T]HH:mm:ss')
     }
     this.employeeController.getAfterSchoolCaresUsingGET(params).toPromise().then(response => {
+      console.log(response)
       response.forEach((value)=>{
         this.schichten.push(this.mapToModel(value));
       });

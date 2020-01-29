@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { VeranstaltungBuchenPage } from './veranstaltung-buchen.page';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { MomentModule } from 'ngx-moment';
 
 const routes: Routes = [
   {
@@ -19,6 +20,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
+    MomentModule,
     SharedModule,
     IonicModule,
     RouterModule.forChild(routes)
