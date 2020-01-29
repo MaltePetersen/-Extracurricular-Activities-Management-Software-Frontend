@@ -1,5 +1,8 @@
 /* tslint:disable */
 export interface AttendanceInputDTO {
-  childId?: number;
+  allowedToLeaveAfterFinishedHomework?: boolean;
+  childUsername?: string;
+  latestArrivalTime?: string;
   note?: string;
+  predefinedLeaveTime?: string;
 }

@@ -22,15 +22,16 @@ import { SchoolDTO } from '../models/school-dto';
 })
 class ParentControllerService extends __BaseService {
   static readonly getAfterSchoolCaresUsingGET1Path = '/api/parent/after_school_cares';
+  static readonly getAfterSchoolCaresTypesUsingGETPath = '/api/parent/after_school_cares/types';
   static readonly addAttendanceUsingPOSTPath = '/api/parent/after_school_cares/{afterSchoolCareId}/attendance';
   static readonly getAfterSchoolCareUsingGET1Path = '/api/parent/after_school_cares/{id}';
   static readonly deleteAttendanceUsingDELETEPath = '/api/parent/attendance/{id}';
   static readonly isParentUsingGETPath = '/api/parent/authority';
   static readonly getBookedAfterSchoolCaresUsingGETPath = '/api/parent/booked_after_school_cares';
   static readonly createChildUsingPOSTPath = '/api/parent/child';
-  static readonly getChildUsingGETPath = '/api/parent/child/{id}';
-  static readonly updateChildUsingPATCHPath = '/api/parent/child/{id}';
+  static readonly getChildUsingGETPath = '/api/parent/child/{username}';
   static readonly deleteChildUsingDELETEPath = '/api/parent/child/{username}';
+  static readonly updateChildUsingPATCHPath = '/api/parent/child/{username}';
   static readonly getChildsUsingGETPath = '/api/parent/children';
   static readonly getSchoolsUsingGET1Path = '/api/parent/schools';
 
@@ -95,6 +96,39 @@ class ParentControllerService extends __BaseService {
   getAfterSchoolCaresUsingGET1(params: ParentControllerService.GetAfterSchoolCaresUsingGET1Params): __Observable<Array<AfterSchoolCareDTO>> {
     return this.getAfterSchoolCaresUsingGET1Response(params).pipe(
       __map(_r => _r.body as Array<AfterSchoolCareDTO>)
+    );
+  }
+
+  /**
+   * @return OK
+   */
+  getAfterSchoolCaresTypesUsingGETResponse(): __Observable<__StrictHttpResponse<{[key: string]: string}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/parent/after_school_cares/types`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<{[key: string]: string}>;
+      })
+    );
+  }
+  /**
+   * @return OK
+   */
+  getAfterSchoolCaresTypesUsingGET(): __Observable<{[key: string]: string}> {
+    return this.getAfterSchoolCaresTypesUsingGETResponse().pipe(
+      __map(_r => _r.body as {[key: string]: string})
     );
   }
 
@@ -670,17 +704,17 @@ class ParentControllerService extends __BaseService {
   }
 
   /**
-   * @param id id
+   * @param username username
    * @return OK
    */
-  getChildUsingGETResponse(id: number): __Observable<__StrictHttpResponse<UserDTO>> {
+  getChildUsingGETResponse(username: string): __Observable<__StrictHttpResponse<UserDTO>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/parent/child/${id}`,
+      this.rootUrl + `/api/parent/child/${username}`,
       __body,
       {
         headers: __headers,
@@ -696,59 +730,12 @@ class ParentControllerService extends __BaseService {
     );
   }
   /**
-   * @param id id
+   * @param username username
    * @return OK
    */
-  getChildUsingGET(id: number): __Observable<UserDTO> {
-    return this.getChildUsingGETResponse(id).pipe(
+  getChildUsingGET(username: string): __Observable<UserDTO> {
+    return this.getChildUsingGETResponse(username).pipe(
       __map(_r => _r.body as UserDTO)
-    );
-  }
-
-  /**
-   * @param params The `ParentControllerService.UpdateChildUsingPATCHParams` containing the following parameters:
-   *
-   * - `update`: update
-   *
-   * - `id`: id
-   *
-   * @return OK
-   */
-  updateChildUsingPATCHResponse(params: ParentControllerService.UpdateChildUsingPATCHParams): __Observable<__StrictHttpResponse<IUserDTO>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-    __body = params.update;
-
-    let req = new HttpRequest<any>(
-      'PATCH',
-      this.rootUrl + `/api/parent/child/${params.id}`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<IUserDTO>;
-      })
-    );
-  }
-  /**
-   * @param params The `ParentControllerService.UpdateChildUsingPATCHParams` containing the following parameters:
-   *
-   * - `update`: update
-   *
-   * - `id`: id
-   *
-   * @return OK
-   */
-  updateChildUsingPATCH(params: ParentControllerService.UpdateChildUsingPATCHParams): __Observable<IUserDTO> {
-    return this.updateChildUsingPATCHResponse(params).pipe(
-      __map(_r => _r.body as IUserDTO)
     );
   }
 
@@ -816,6 +803,53 @@ class ParentControllerService extends __BaseService {
   deleteChildUsingDELETE(params: ParentControllerService.DeleteChildUsingDELETEParams): __Observable<string> {
     return this.deleteChildUsingDELETEResponse(params).pipe(
       __map(_r => _r.body as string)
+    );
+  }
+
+  /**
+   * @param params The `ParentControllerService.UpdateChildUsingPATCHParams` containing the following parameters:
+   *
+   * - `username`: username
+   *
+   * - `update`: update
+   *
+   * @return OK
+   */
+  updateChildUsingPATCHResponse(params: ParentControllerService.UpdateChildUsingPATCHParams): __Observable<__StrictHttpResponse<IUserDTO>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    __body = params.update;
+    let req = new HttpRequest<any>(
+      'PATCH',
+      this.rootUrl + `/api/parent/child/${params.username}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<IUserDTO>;
+      })
+    );
+  }
+  /**
+   * @param params The `ParentControllerService.UpdateChildUsingPATCHParams` containing the following parameters:
+   *
+   * - `username`: username
+   *
+   * - `update`: update
+   *
+   * @return OK
+   */
+  updateChildUsingPATCH(params: ParentControllerService.UpdateChildUsingPATCHParams): __Observable<IUserDTO> {
+    return this.updateChildUsingPATCHResponse(params).pipe(
+      __map(_r => _r.body as IUserDTO)
     );
   }
 
@@ -1051,22 +1085,6 @@ module ParentControllerService {
   }
 
   /**
-   * Parameters for updateChildUsingPATCH
-   */
-  export interface UpdateChildUsingPATCHParams {
-
-    /**
-     * update
-     */
-    update: {[key: string]: string};
-
-    /**
-     * id
-     */
-    id: number;
-  }
-
-  /**
    * Parameters for deleteChildUsingDELETE
    */
   export interface DeleteChildUsingDELETEParams {
@@ -1080,6 +1098,22 @@ module ParentControllerService {
     credentials?: {};
     authorities0Authority?: string;
     authenticated?: boolean;
+  }
+
+  /**
+   * Parameters for updateChildUsingPATCH
+   */
+  export interface UpdateChildUsingPATCHParams {
+
+    /**
+     * username
+     */
+    username: string;
+
+    /**
+     * update
+     */
+    update: {[key: string]: string};
   }
 
   /**

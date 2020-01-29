@@ -52,6 +52,8 @@ class EmployeeControllerService extends __BaseService {
    *
    * - `startDate`: startDate
    *
+   * - `showOnlyOwn`: showOnlyOwn
+   *
    * - `school`: school
    *
    * - `principal`:
@@ -74,6 +76,7 @@ class EmployeeControllerService extends __BaseService {
     let __body: any = null;
     if (params.type != null) __params = __params.set('type', params.type.toString());
     if (params.startDate != null) __params = __params.set('startDate', params.startDate.toString());
+    if (params.showOnlyOwn != null) __params = __params.set('showOnlyOwn', params.showOnlyOwn.toString());
     if (params.school != null) __params = __params.set('school', params.school.toString());
     if (params.principal != null) __params = __params.set('principal', params.principal.toString());
     if (params.endDate != null) __params = __params.set('endDate', params.endDate.toString());
@@ -104,6 +107,8 @@ class EmployeeControllerService extends __BaseService {
    * - `type`: type
    *
    * - `startDate`: startDate
+   *
+   * - `showOnlyOwn`: showOnlyOwn
    *
    * - `school`: school
    *
@@ -663,6 +668,11 @@ module EmployeeControllerService {
      * startDate
      */
     startDate?: string;
+
+    /**
+     * showOnlyOwn
+     */
+    showOnlyOwn?: boolean;
 
     /**
      * school
