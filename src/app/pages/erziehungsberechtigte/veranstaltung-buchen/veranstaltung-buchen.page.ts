@@ -38,46 +38,31 @@ export class VeranstaltungBuchenPage implements OnInit {
   }
 
   getChildren() {
-    this.http.get<Children[]>(`${environment.devApiUrl}/api/parent/childs`).subscribe(async (a) => {
-      console.log("Kinder werden abgefragt")
-      console.log(a);
+    this.http.get<Children[]>(`${environment.apiUrl}/api/parent/children`).subscribe(async (a) => {
       this.children = await a;
+      console.table(a)
     });
 }
 
   getVeranstaltungen() {
-    let params = {
-      //school:this.schoolId,
-      // startDate:this.startDate.format('YYYY-MM-DD[T]HH:mm:ss'),
-      // endDate:this.endDate.format('YYYY-MM-DD[T]HH:mm:ss')
-    }
+    let params = {};
       this.parentController.getAfterSchoolCaresUsingGET1(params).toPromise().then(response => {
-        console.log(response);
+        this.veranstaltungen = response;
         });
-      console.log("AFTER SCHOOL CARES")
-      console.table(this.veranstaltungen)
-
-    // this.http.get(`${environment.apiUrl}/api/parent/after_school_cares`).subscribe((a) => {
-    //   this.veranstaltungen = a;
-    //   console.log(a);
-    // });
   }
 
  chooseChild(kindername: any){
-
-    // let kinderdaten = kindername.target.value.toString().split(" ");
-    // let name = kinderdaten[0].toString();
-    // let id  = kinderdaten[1].toString();
-    
-    // this.veranstaltungsDaten.changeKind(name);
-    // this.veranstaltungsDaten.changeKindId(id);  
+   let schoolId = kindername.target.value.split(":");
+   console.log(schoolId[1])
     let kinderdaten =  kindername.target.value.toString();
     console.log("Kindername: " + kindername.target.value.toString())
     this.veranstaltungsDaten.changeKind(kinderdaten);
-
+    this.veranstaltungsDaten.changeChildSchoolId(schoolId[1]);
   }
 
-  async chooseOffer(name, id){
+
+
+  async chooseOffer(name, type){
     console.log("Momentamer Name: "+this.kindername);
     if (this.kindername === "kindername" || this.kindername === null  ) {
 
@@ -91,8 +76,8 @@ export class VeranstaltungBuchenPage implements OnInit {
       
     } else {
     this.veranstaltungsDaten.changeVeranstaltung(name.toString());
-    console.log('ID: '+id)
-    this.veranstaltungsDaten.changeVeranstaltungId(id);
+    console.log('Type: ' + type)
+    this.veranstaltungsDaten.changeVeranstaltungType(type);
     
     // const alert = await this.alertController.create({
     //   header: name,

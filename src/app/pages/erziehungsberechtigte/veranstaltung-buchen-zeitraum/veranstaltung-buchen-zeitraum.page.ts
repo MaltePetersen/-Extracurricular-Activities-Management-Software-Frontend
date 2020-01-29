@@ -12,7 +12,9 @@ import moment from 'moment';
 import { ParentControllerService } from 'src/app/api/services';
 import { AfterSchoolCareDTO, SchoolDTO } from 'src/app/api/models';
 import { DayModel } from 'src/app/models/day-model';
+import { ParentDayModel } from 'src/app/models/parent-day-model';
 import { VeranstaltungBuchenModel } from 'src/app/models/veranstaltungen-buchen-model';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-veranstaltung-buchen-zeitraum',
@@ -21,7 +23,11 @@ import { VeranstaltungBuchenModel } from 'src/app/models/veranstaltungen-buchen-
 })
 export class VeranstaltungBuchenZeitraumPage implements OnInit {
 
-  after_school_care_id: number;
+  endzeit: any;
+  bemerkung: any;
+  veranstaltungenBuchen: any;
+  veranstaltungType: number;
+  after_school_care_type: number;
   schoolId:number;
   startDate:any;
   endDate:any
@@ -44,15 +50,19 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
   hideDateButton:string = "Datum auswählen";
 
 
-  constructor(private alertController: AlertController, private parentController:ParentControllerService, private veranstaltungsId:VeranstaltungensdatenService) {
+  constructor(public router : Router, private alertService: AlertService, private popoverController: PopoverController, private alertController: AlertController, private veranstaltungsDaten: VeranstaltungensdatenService, private parentController:ParentControllerService) {
   }
 
   ngOnInit() {
+    this.veranstaltungsDaten.ausgewählteSchulId.subscribe(schoolId => this.schoolId = schoolId)
+    this.veranstaltungsDaten.ausgewählteVeranstaltungType.subscribe(veranstaltungType => this.after_school_care_type = veranstaltungType);
+    console.log("veranstaltungsnummer: " +this.after_school_care_type)
+    console.log("schulid vom kind : " +this.schoolId)
     this.dateChange();
   }
 
   mapToModel(care:AfterSchoolCareDTO,):VeranstaltungBuchenModel{
-    return new VeranstaltungBuchenModel(care.id, care.name, care.startTime, care.startTime, this.getDayOfWeek(care.startTime), care.owner);
+    return new VeranstaltungBuchenModel(care.id, care.name, care.startTime, care.endTime, this.getDayOfWeek(care.startTime), care.owner);
   }
 
   getDayOfWeek(date) {
@@ -61,23 +71,20 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
   }
 
   getAfterSchoolCares(){
-    this.veranstaltungsId.ausgewählteVeranstaltungId.subscribe(veranstaltung => this.after_school_care_id = veranstaltung);
-    this.days = [
-    ];
+    this.schichten = [];
+    this.days = [];
     let params = {
       school:this.schoolId,
       startDate:this.startDate.format('YYYY-MM-DD[T]HH:mm:ss'),
       endDate:this.endDate.format('YYYY-MM-DD[T]HH:mm:ss'),
-      type:this.after_school_care_id,
+      type:this.after_school_care_type,
     }
     this.parentController.getAfterSchoolCaresUsingGET1(params).toPromise().then(response => {
+      console.table(response)
       response.forEach((care)=>{
-        // this.parentController.getSchoolUsingGET(care.participatingSchool).toPromise().then((school)=>{
-        //   this.checkEintrag(care, school.name);
-        // });
-        this.checkEintrag(care);
+          this.checkEintrag(care);
+        });
       });
-    });
   }
 
   checkEintrag(care:AfterSchoolCareDTO){
@@ -93,15 +100,9 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
     if(found){
       foundDay.schichten.push(this.mapToModel(care));
     } else {
-
-      console.log("Bis hierher und nicht weiter.... Zeile 97 im Quellcode.")
-      // this.days.push(new DayModel(weekDay, [this.mapToModel(care)]));
+      this.days.push(new ParentDayModel(weekDay, [this.mapToModel(care)]));
     }
   }
-
-  // getSchool(id:number):Promise<SchoolDTO>{
-  //   return this.parentController.getSchoolUsingGET(id).toPromise();
-  // }
 
   toggleSelection(i){
     this.days[i].open = !this.days[i].open;
@@ -111,14 +112,42 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
     this.days[i].children[j].open = !this.days[i].children.open[j];
   }
 
-  async presentAlert(model:VeranstaltungBuchenModel){
-    const alert = await this.alertController.create({
-      header: model.name,
-      message: model.day + ", den " + moment(model.datum).format('DD.MM.YYYY') + "<br>" + model.owner.fullname,
-      buttons: ['OK']
-    });
-    await alert.present();
-  }
+  async presentPopover(model:VeranstaltungBuchenModel) {
+          const popover = await this.popoverController.create({
+          component: VeranstaltungsPopoverPage,
+          // event: model.name,
+          translucent: true,
+          componentProps: {
+            endzeit: model.uhrzeit ,
+            veranstaltung: model.name,
+          }
+        });
+        
+            await popover.present()
+    
+            popover.onDidDismiss().then((dataReturned) => {
+              console.log("dataReturned")
+              console.log(dataReturned)
+              console.log(dataReturned.data)
+              console.log(dataReturned.role)
+          if (dataReturned !== null) {
+             this.endzeit = dataReturned.data;
+             this.bemerkung = dataReturned.role;
+             this.alertService.presentToast('Die Veranstaltung wurde erfolgreich angelegt.');
+                    this.router.navigateByUrl('parent/veranstaltung-buchen')
+            //  this.presentAlert(model);
+          } else {
+
+            // es wird null zurückgegeben, also warum passiert dies nicht?
+            // Die Farbe vom Toast muss rot werden
+            // Die Button müssen nebeneinander sein, nicht übereinander.
+
+            this.alertService.presentToast('Die Veranstaltung wurde nicht gebucht.');
+            this.router.navigateByUrl('parent/veranstaltung-buchen')
+          }
+        });
+        // return await modal.present();
+      }
 
   dateSelected($event){
     this.selectedDate = new Date($event);
@@ -140,134 +169,5 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
     this.endDate = moment(selectedDate).endOf('isoWeek');
     this.getAfterSchoolCares();
   }
-
-
-
-//   veranstaltungId: number;
-//   veranstaltungen = [];
-//   kindername: any;
-//   kinderId:any
-//   zeit: any;
-//   days: any;
-//   datum: any;
-//   weekNo: any;
-//   endzeit = "16:00";
-//   bemerkung: any;
-
-//   constructor(private nav: NavController, private popoverController: PopoverController, private alertController: AlertController, public router : Router ,public http: HttpClient, private veranstaltungsDaten: VeranstaltungensdatenService) {
-//     this.getVeranstaltungen();
-//     this.days = [
-//       new GebuchteVeranstaltungen("Montag", this.zeit),
-//       new GebuchteVeranstaltungen("Dienstag", this.zeit),
-//       new GebuchteVeranstaltungen("Mittwoch", this.zeit),
-//       new GebuchteVeranstaltungen("Donnestag", this.zeit),
-//       new GebuchteVeranstaltungen("Freitag", this.zeit)
-//     ];
-//    }
- 
-//   //  getVeranstaltungen() {
-//   //   this.zeit = [
-//   //     new GebuchterZeitraum("13:00 - 15:00 Uhr", "Deutsch"),
-//   //   ];
-//   // }
-
-//   getVeranstaltungen() {
-//     this.veranstaltungsDaten.ausgewählteVeranstaltungId.subscribe(veranstaltung => this.veranstaltungId = veranstaltung);
-//     console.log("ID vorhanden? "+this.veranstaltungId)
-//     this.http.get(`${environment.apiUrl}/api/parent/after_school_cares/${this.veranstaltungId}`).subscribe((a) => {
-//       this.veranstaltungen = [a];
-//       console.log (a)
-//   //   this.veranstaltungsDaten.ausgewählteVeranstaltung.subscribe(veranstaltung => this.veranstaltung = veranstaltung);
-//   //   this.zeit = [
-//   //     new GebuchterZeitraum("Montag","13:00 - 15:00 Uhr", this.veranstaltung),
-//   //  ];
-//   //   this.veranstaltungsDaten.ausgewähltesKind.subscribe(kindername => this.kindername = kindername);
-//   //   this.veranstaltungsDaten.ausgewählteID.subscribe(kinderId => this.kinderId = kinderId);
-//     });
-//   }
-
-//   toggleSelection(i){
-//     this.days[i].open = !this.days[i].open;
-//   }
-
-//   toggleItem(i, j){
-//     this.days[i].children[j].open = !this.days[i].children.open[j];
-//   }
-
-//   async presentAlert(name, zeit){
-//     const alert = await this.alertController.create({
-//       header: "Erfolgreich",
-//       message: "Du hast für "+this.kindername+" die Veranstaltung "+name+" am "+zeit+" gebucht.",
-//       buttons: ['OK']
-//     });
-//     await alert.present();
-//   }
-
-//   selectCalendarWeek(){
-    
-//     let d: any;
-//     d = new Date(this.datum);
-//     let yearStart: any;
-
-//       // Copy date so don't modify original
-//     d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-//       // Set to nearest Thursday: current date + 4 - current day number
-//       // Make Sunday's day number 7
-//     d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay()||7));
-//       // Get first day of year
-//     yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
-//       // Calculate full weeks to nearest Thursday
-//     this.weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1)/7);
-//       // Return array of year and week number
-//     console.log([d.getUTCFullYear(), this.weekNo]);
-//      //return [d.getUTCFullYear(), weekNo];
-  
-
-//   }
-
-//   async presentPopover(ev: any, name, zeit) {
-//         console.log("name : "+name)
-//         console.log("zeit : "+zeit)
-
-//         const popover = await this.popoverController.create({
-//       component: VeranstaltungsPopoverPage,
-//       event: ev,
-//       translucent: true,
-//       componentProps: {
-//         endzeit: this.endzeit,
-//         veranstaltung: this.veranstaltungen,
-//       }
-//     });
-    
-//         await popover.present()
-
-//         popover.onDidDismiss().then((dataReturned) => {
-//       if (dataReturned !== null) {
-//         // console.log("KAKAKAKAKAKAKKA")
-//          console.log(dataReturned.data)
-//          console.log(dataReturned.role)
-//          this.endzeit = dataReturned.data;
-//          this.bemerkung = dataReturned.role;
-//          this.presentAlert(name, zeit);
-//       }
-//     });
-//     // return await modal.present();
-//   }
-
-
-
-
-//  ngOnInit() {
-//   this.datum = new Date().toDateString();
-//   this.selectCalendarWeek();
-//   //   this.veranstaltungsDaten.ausgewählteVeranstaltung.subscribe(veranstaltung => this.veranstaltung = veranstaltung);
-//   //   console.log("Veranstaltung von zeitraum = "+ this.veranstaltung);
-//   //   console.log("Zeit 1 = "+ this.zeit);
-//   //   this.zeit = [
-//   //     new GebuchterZeitraum("13:00 - 15:00 Uhr", this.veranstaltung),
-//   //  ];
-//   //  console.log("Zeit 2 = "+ JSON.stringify(this.zeit));
-//   console.log("this.datum: " +this.datum)
-//   }
-
 }
+

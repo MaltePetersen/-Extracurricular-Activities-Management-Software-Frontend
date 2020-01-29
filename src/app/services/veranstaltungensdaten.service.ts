@@ -7,13 +7,15 @@ import { BehaviorSubject } from 'rxjs';
 export class VeranstaltungensdatenService {
 
   private veranstaltungsTyp = new BehaviorSubject<string>('veranstaltungsTyp');
-  private veranstaltungsTypId = new BehaviorSubject<number>(0);
+  private veranstaltungsType = new BehaviorSubject<number>(0);
   private kindername = new BehaviorSubject<string>('kindername');
   private kinderId = new BehaviorSubject<string>('kinderId');
+  private schoolId = new BehaviorSubject<number>(null);
     ausgewählteVeranstaltung = this.veranstaltungsTyp.asObservable();
-    ausgewählteVeranstaltungId = this.veranstaltungsTypId.asObservable();
+    ausgewählteVeranstaltungType = this.veranstaltungsType.asObservable();
     ausgewähltesKind = this.kindername.asObservable();
     ausgewählteID = this.kinderId.asObservable();
+    ausgewählteSchulId = this.schoolId.asObservable();
 
   constructor() { }
 
@@ -21,14 +23,21 @@ export class VeranstaltungensdatenService {
     this.veranstaltungsTyp.next(veranstaltung);
 }
 
-changeVeranstaltungId(veranstaltungId: number) {
-  this.veranstaltungsTypId.next(veranstaltungId);
+changeVeranstaltungType(veranstaltungType: number) {
+  this.veranstaltungsType.next(veranstaltungType);
 }
 
 changeKind(kindername: string) {
   this.kindername.next(kindername);
 }
+
+changeChildSchoolId(schoolId: number) {
+  this.schoolId.next(schoolId);
+}
+
 changeKindId(kinderId: string) {
   this.kinderId.next(kinderId);
 }
+
+
 }

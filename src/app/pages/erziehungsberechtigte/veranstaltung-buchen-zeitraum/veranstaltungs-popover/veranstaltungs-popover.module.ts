@@ -13,6 +13,7 @@ import { VeranstaltungsPopoverPage } from './veranstaltungs-popover.page';
     FormsModule,
     IonicModule,
   ],
+  entryComponents: [VeranstaltungsPopoverPage],
   declarations: [VeranstaltungsPopoverPage]
 })
 export class VeranstaltungsPopoverPageModule {}

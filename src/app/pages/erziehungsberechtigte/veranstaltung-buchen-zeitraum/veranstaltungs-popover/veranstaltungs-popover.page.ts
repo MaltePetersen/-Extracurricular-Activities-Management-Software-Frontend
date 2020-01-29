@@ -11,19 +11,25 @@ export class VeranstaltungsPopoverPage implements OnInit {
   //TODO: Muss endweder Teil von SharedModule oder von dem relevanten PageModul.
   @Input("endzeit") endzeit;
   //endzeit = null;
-  bemerkung = null;
+  bemerkung = "keine";
+  endzeit2;
 
   constructor(private popoverController: PopoverController) { }
 
   ngOnInit() {
     
-    //this.endzeit = endzeit;
+    this.endzeit2 = this.endzeit;
   }
 
   async closePopover(){
+    console.log("ENDZEIT NEU = " +this.endzeit2)
     const bemerkung: string = this.bemerkung;
-    const endzeit: string = this.endzeit;
+    const endzeit: string = this.endzeit2;
     await this.popoverController.dismiss(endzeit, bemerkung);
   }
-  
+
+  // Hier muss ich die Werte noch Null setzen von Endzeit und Bemerkung!!!
+  async abort(){
+    await this.popoverController.dismiss();
+}
 }
