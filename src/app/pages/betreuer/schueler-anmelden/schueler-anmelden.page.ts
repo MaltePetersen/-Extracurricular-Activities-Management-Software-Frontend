@@ -7,7 +7,7 @@ import { AnwesenheitPopoverComponent } from './anwesenheit-popover/anwesenheit-p
 import { EmployeeControllerService } from 'src/app/api/services';
 import { AfterSchoolCare, AfterSchoolCareDTO, SchoolDTO, AttendanceDTO, SimpleUserDTO } from 'src/app/api/models';
 import moment from 'moment';
-import { PupilModel } from 'src/app/models/pupil-model';
+import { PupilModel } from 'src/app/models/pupilModel';
 
 @Component({
   selector: 'app-schueler-anmelden',
@@ -24,9 +24,9 @@ export class SchuelerAnmeldenPage implements OnInit {
   selectedClass:string;
   search:string;
   care:AfterSchoolCareDTO;
-  betreuungsende:string = '';
+  endOfCare:string = '';
   
-  constructor(private alertController: AlertController, public router : Router, public popoverController : PopoverController, private employeeController:EmployeeControllerService) { 
+  constructor(private alertController:AlertController, public router:Router, public popoverController:PopoverController, private employeeController:EmployeeControllerService) { 
   }
 
   ngOnInit() {
@@ -37,7 +37,7 @@ export class SchuelerAnmeldenPage implements OnInit {
   loadPupils(){
     this.pupils = [];
     this.getAfterSchoolCare(this.listId).then((response) =>{
-      this.betreuungsende = response.endTime;
+      this.endOfCare = response.endTime;
       response.attendances.forEach((attendance)=>{
         let school = this.getSchool(attendance.child.childSchool).then((school)=>{
           this.pupils.push(this.mapToPupil(attendance, school.name));
@@ -89,7 +89,7 @@ export class SchuelerAnmeldenPage implements OnInit {
     }
   }
 
-  updateAnwesend(id:number){
+  updatePresent(id:number){
     let currentDateTime = moment().format('YYYY-MM-DD[T]HH:mm:ss');
     const update = {
       "arrivalTime" : currentDateTime,
@@ -103,7 +103,7 @@ export class SchuelerAnmeldenPage implements OnInit {
     });
   }
 
-  updateGegangen(id:number){
+  updateLeft(id:number){
     let currentDateTime = moment().format('YYYY-MM-DD[T]HH:mm:ss');
     const update = {
       "leaveTime" : currentDateTime,
@@ -139,6 +139,27 @@ export class SchuelerAnmeldenPage implements OnInit {
     this.selectedClass = "Alle";
   }
 
+  async presentAlertLock(){
+    const alert = await this.alertController.create({
+      header: "Anwesenheitsliste sperren",
+      message: "Soll die Anwesenheitsliste wirklich gesperrt werden?",
+      buttons: [
+        {
+          text: 'Abbrechen',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Ok',
+          handler: () => {
+            console.log("sperren");
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
   async presentAlertDetails(model:PupilModel){
     const alert = await this.alertController.create({
       header: model.name,
@@ -149,7 +170,7 @@ export class SchuelerAnmeldenPage implements OnInit {
   }
 
   async presentAlertStatus(model:PupilModel){
-    const alertAnwesend = await this.alertController.create({
+    const alertPresent = await this.alertController.create({
       header: model.name,
       message: "Bestätigen Sie die Anwesenheit des Schülers",
       buttons: [
@@ -161,12 +182,12 @@ export class SchuelerAnmeldenPage implements OnInit {
         {
           text: 'Ok',
           handler: () => {
-            this.updateAnwesend(model.id);
+            this.updatePresent(model.id);
           }
         }
       ]
     });
-    const alertGegangen = await this.alertController.create({
+    const alertLeft = await this.alertController.create({
       header: model.name,
       message: "Bestätigen Sie, dass der Schüler gegangen ist",
       buttons: [
@@ -178,15 +199,15 @@ export class SchuelerAnmeldenPage implements OnInit {
         {
           text: 'Ok',
           handler: () => {
-            this.updateGegangen(model.id);
+            this.updateLeft(model.id);
           }
         }
       ]
     });
     if(model.status == 1 || model.status == 2){
-      await alertAnwesend.present();
+      await alertPresent.present();
     } else if(model.status == 3){
-      await alertGegangen.present();
+      await alertLeft.present();
     }
   }
 

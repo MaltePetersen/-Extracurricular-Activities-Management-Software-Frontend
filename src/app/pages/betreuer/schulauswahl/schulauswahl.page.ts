@@ -31,7 +31,4 @@ export class SchulauswahlPage implements OnInit {
   getSchools() {
     this.employeeController.getSchoolsUsingGET().subscribe((schools)=> this.schools = schools);
   }
-
-  
-
 }

@@ -7,24 +7,24 @@
     </ion-label>
   </div>
   <div class="schichten-container">
-    <ion-item *ngFor="let schicht of schichten" lines="none" class="schichten-item" (click)="openList(schicht.id);">
+    <ion-item *ngFor="let care of afterSchoolCares" lines="none" class="schichten-item" (click)="openList(care.id);">
       <div class="schichten-content-container">
         <ion-label class="tag-label">
-          {{schicht.day}}
+          {{care.day}}
         </ion-label>
         <ion-row class="data-row">
           <ion-label class="data-label">
-            Titel: {{schicht.name}}
+            Titel: {{care.name}}
           </ion-label>
         </ion-row>
         <ion-row class="data-row">
           <ion-label class="data-label">
-            Datum: {{schicht.startTime | amDateFormat:'DD.MM.YYYY'}}
+            Datum: {{care.startTime | amDateFormat:'DD.MM.YYYY'}}
           </ion-label>
         </ion-row>
         <ion-row class="data-row">
           <ion-label class="data-label">
-            Uhrzeit: {{schicht.startTime | amDateFormat:'HH:mm'}}
+            Uhrzeit: {{care.startTime | amDateFormat:'HH:mm'}}
           </ion-label>
         </ion-row>
       </div>
@@ -33,5 +33,5 @@
 </ion-content>
 
 <ion-footer>
-  <ion-input readonly [(ngModel)]="datum" [liIonic4Datepicker]="datePickerDefaultSettings" (ionChange)="dateChange($event)"></ion-input>
+  <ion-input readonly [(ngModel)]="calendarDate" [liIonic4Datepicker]="datePickerDefaultSettings" (ionChange)="dateChange($event)"></ion-input>
 </ion-footer>

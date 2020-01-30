@@ -14,18 +14,18 @@
         <ion-icon slot="end" name="arrow-up" *ngIf="item.open"></ion-icon>
         <ion-label class="item-name-label">{{item.name}}</ion-label>
       </ion-item>
-      <div *ngIf="item.schichten && item.open" class="schicht-container">
-        <ion-item *ngFor="let schicht of item.schichten" lines="none" class="schichten-item" (click)="presentAlert(schicht)">
+      <div *ngIf="item.afterSchoolCares && item.open" class="schicht-container">
+        <ion-item *ngFor="let care of item.afterSchoolCares" lines="none" class="schichten-item" (click)="presentAlert(care)">
           <div class="schichten-content-container">
             <ion-label>
-              {{schicht.schule}}
+              {{care.school}}
             </ion-label>
             <ion-label>
-              {{schicht.name}}
+              {{care.name}}
             </ion-label>
             <ion-row>
               <ion-label>
-                {{schicht.datum | amDateFormat:'DD.MM.YYYY'}} {{schicht.uhrzeit | amDateFormat:'HH:mm'}}
+                {{care.date | amDateFormat:'DD.MM.YYYY'}} {{care.time | amDateFormat:'HH:mm'}}
               </ion-label>
             </ion-row>
           </div>
@@ -36,5 +36,5 @@
 </ion-content>
 
 <ion-footer>
-  <ion-input readonly [(ngModel)]="datum" [liIonic4Datepicker]="datePickerDefaultSettings" (ionChange)="dateChange($event)"></ion-input>
+  <ion-input readonly [(ngModel)]="calendarDate" [liIonic4Datepicker]="datePickerDefaultSettings" (ionChange)="dateChange($event)"></ion-input>
 </ion-footer>

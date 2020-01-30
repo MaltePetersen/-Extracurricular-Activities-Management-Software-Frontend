@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { EmployeeControllerService } from 'src/app/api/services';
 import {  AfterSchoolCareDTO } from 'src/app/api/models';
-import { MeineSchichtModel } from 'src/app/models/meine-schicht-model';
+import { MyCareModel } from 'src/app/models/myCareModel';
 import moment from "moment"; 
 
 
@@ -13,11 +13,11 @@ import moment from "moment";
 })
 export class MeineSchichtenPage implements OnInit {
 
-  schichten:MeineSchichtModel[] = [];
+  afterSchoolCares:MyCareModel[] = [];
   schoolId:number;
   startDate:any;
   endDate:any;
-  datum:any = moment().format('DD.MM.YYYY [Kalenderwoche:] WW');
+  calendarDate:any = moment().format('DD.MM.YYYY [Kalenderwoche:] WW');
   datePickerDefaultSettings:any = {
     setLabel: 'Auswählen',
     todayLabel: 'Heute',
@@ -41,22 +41,21 @@ export class MeineSchichtenPage implements OnInit {
   }
 
   getAfterSchoolCares(){
-    this.schichten = [];
+    this.afterSchoolCares = [];
     let params = {
       school:this.schoolId,
       startDate:this.startDate.format('YYYY-MM-DD[T]HH:mm:ss'),
       endDate:this.endDate.format('YYYY-MM-DD[T]HH:mm:ss')
     }
     this.employeeController.getAfterSchoolCaresUsingGET(params).toPromise().then(response => {
-      console.log(response)
       response.forEach((value)=>{
-        this.schichten.push(this.mapToModel(value));
+        this.afterSchoolCares.push(this.mapToModel(value));
       });
     });
   }
 
-  mapToModel(care:AfterSchoolCareDTO) : MeineSchichtModel{
-    let model = new MeineSchichtModel(care.id, care.name, care.startTime, this.getDayOfWeek(care.startTime));
+  mapToModel(care:AfterSchoolCareDTO) : MyCareModel{
+    let model = new MyCareModel(care.id, care.name, care.startTime, this.getDayOfWeek(care.startTime));
     return model;
   }
 
@@ -75,7 +74,7 @@ export class MeineSchichtenPage implements OnInit {
   }
 
   dateChange(){
-    let selectedDate = moment(this.datum,('DD.MM.YYYY'));
+    let selectedDate = moment(this.calendarDate,('DD.MM.YYYY'));
     this.startDate = moment(selectedDate).startOf('isoWeek');
     this.endDate = moment(selectedDate).endOf('isoWeek');
     this.getAfterSchoolCares();

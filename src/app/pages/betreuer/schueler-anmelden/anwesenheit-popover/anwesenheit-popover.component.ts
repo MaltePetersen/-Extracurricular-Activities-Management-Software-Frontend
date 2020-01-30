@@ -22,7 +22,7 @@ export class AnwesenheitPopoverComponent implements OnInit {
     this.isPresent = this.navParams.get('isPresent');
   }
 
-  zuruecksetzen(){
+  reset(){
     let update = {};
     if(this.isPresent){
       update = {
