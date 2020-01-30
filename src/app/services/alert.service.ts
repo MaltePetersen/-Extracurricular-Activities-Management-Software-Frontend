@@ -16,4 +16,22 @@ export class AlertService {
     });
     toast.present();
   }
+  async presentToastFailure(message: any) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 3000,
+      position: 'top',
+      color: 'danger'
+    });
+    toast.present();
+  }
+  async presentToastSuccess(message: any) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 3000,
+      position: 'top',
+      color: 'success'
+    });
+    toast.present();
+  }
 }

@@ -11,7 +11,7 @@ export class VeranstaltungsPopoverPage implements OnInit {
   //TODO: Muss endweder Teil von SharedModule oder von dem relevanten PageModul.
   @Input("endzeit") endzeit;
   //endzeit = null;
-  bemerkung = "keine";
+  bemerkung;
   endzeit2;
 
   constructor(private popoverController: PopoverController) { }
@@ -30,6 +30,6 @@ export class VeranstaltungsPopoverPage implements OnInit {
 
   // Hier muss ich die Werte noch Null setzen von Endzeit und Bemerkung!!!
   async abort(){
-    await this.popoverController.dismiss();
+    await this.popoverController.dismiss(null, null);
 }
 }

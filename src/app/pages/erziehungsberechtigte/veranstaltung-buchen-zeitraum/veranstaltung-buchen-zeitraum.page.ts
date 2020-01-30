@@ -37,8 +37,8 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
     todayLabel: 'Heute',
     closeLabel: 'Abbrechen',
     titleLabel: 'Wähle ein Datum',
-    monthsList: ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sept", "Okt", "Nov", "Dez"],
-    weeksList: ["S", "M", "D", "M", "D", "F", "S"],
+    monthsList: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sept', 'Okt', 'Nov', 'Dez'],
+    weeksList: ['S', 'M', 'D', 'M', 'D', 'F', 'S'],
     dateFormat: 'DD.MM.YYYY [Kalenderwoche:] WW',
     clearButton : false,
     momentLocale: 'de'
@@ -47,7 +47,7 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
   schichten:VeranstaltungBuchenModel[] = [];
   selectedDate:Date;
   hideDate:boolean = false;
-  hideDateButton:string = "Datum auswählen";
+  hideDateButton:string = 'Datum auswählen';
 
 
   constructor(public router : Router, private alertService: AlertService, private popoverController: PopoverController, private alertController: AlertController, private veranstaltungsDaten: VeranstaltungensdatenService, private parentController:ParentControllerService) {
@@ -56,8 +56,8 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
   ngOnInit() {
     this.veranstaltungsDaten.ausgewählteSchulId.subscribe(schoolId => this.schoolId = schoolId)
     this.veranstaltungsDaten.ausgewählteVeranstaltungType.subscribe(veranstaltungType => this.after_school_care_type = veranstaltungType);
-    console.log("veranstaltungsnummer: " +this.after_school_care_type)
-    console.log("schulid vom kind : " +this.schoolId)
+    console.log('veranstaltungsnummer: ' +this.after_school_care_type)
+    console.log('schulid vom kind : ' +this.schoolId)
     this.dateChange();
   }
 
@@ -123,26 +123,17 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
           }
         });
         
-            await popover.present()
+          await popover.present()
     
-            popover.onDidDismiss().then((dataReturned) => {
-              console.log("dataReturned")
-              console.log(dataReturned)
-              console.log(dataReturned.data)
-              console.log(dataReturned.role)
-          if (dataReturned !== null) {
+          popover.onDidDismiss().then((dataReturned) => {
+              if (dataReturned.data !== null || dataReturned.role !== null) {
              this.endzeit = dataReturned.data;
              this.bemerkung = dataReturned.role;
-             this.alertService.presentToast('Die Veranstaltung wurde erfolgreich angelegt.');
-                    this.router.navigateByUrl('parent/veranstaltung-buchen')
+             this.alertService.presentToastSuccess('Die Veranstaltung wurde erfolgreich angelegt.');
+             this.router.navigateByUrl('parent/veranstaltung-buchen')
             //  this.presentAlert(model);
           } else {
-
-            // es wird null zurückgegeben, also warum passiert dies nicht?
-            // Die Farbe vom Toast muss rot werden
-            // Die Button müssen nebeneinander sein, nicht übereinander.
-
-            this.alertService.presentToast('Die Veranstaltung wurde nicht gebucht.');
+            this.alertService.presentToastFailure('Die Veranstaltung wurde nicht gebucht.');
             this.router.navigateByUrl('parent/veranstaltung-buchen')
           }
         });
@@ -157,9 +148,9 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
   toggleDate(){
     this.hideDate = !this.hideDate;
     if(this.hideDate){
-      this.hideDateButton = "Auswahl minimieren"
+      this.hideDateButton = 'Auswahl minimieren'
     }else {
-      this.hideDateButton = "Datum auswählen"
+      this.hideDateButton = 'Datum auswählen'
     }
   }
 

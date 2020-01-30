@@ -7,12 +7,12 @@
       <ion-label >Bemerkungen</ion-label>
     </ion-item>
     <ion-textarea class="bemerkungseingabe" [(ngModel)]="bemerkung"></ion-textarea>
-    <div class="column"> 
-    <ion-item button color="primary" (click)="abort()">
+    <div>
+    <ion-item button class="floated" color="primary" (click)="abort()">
       Abbrechen
     </ion-item>
-  <ion-item button color="primary" (click)="closePopover()">
+  <ion-item button class="floated" color="primary" (click)="closePopover()">
     Speichern
   </ion-item>
-    </div>
+</div>
 </ion-list>
