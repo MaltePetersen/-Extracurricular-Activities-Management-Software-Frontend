@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AlertService } from 'src/app/services/alert.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { ParentControllerService } from 'src/app/api/services';
 
 @Component({
   selector: 'app-kind-bearbeiten',
@@ -13,54 +14,101 @@ import { environment } from 'src/environments/environment';
 })
 export class KindBearbeitenPage implements OnInit {
 
-  kinderdaten: any;
-  username: string;
-  fullname: string;
-  schoolClass: string;
+  username:string;
+  fullname:string;
+  schoolClass:string;
+  previousUserName:string;
 
 
-  constructor(private childData: KinderdatenService, public http: HttpClient, private alertController: AlertController,  private router: Router,private alertService: AlertService) { }
+  constructor(private alertController: AlertController,  private router: Router,private alertService: AlertService ,private parentController:ParentControllerService) { }
 
   ngOnInit() {
-    this.childData.currentChildData.subscribe(kinderdaten => this.fullname = kinderdaten.fullname);
-    this.childData.currentChildData.subscribe(kinderdaten => this.schoolClass = kinderdaten.schoolClass);
-    this.childData.currentChildData.subscribe(kinderdaten => this.username = kinderdaten.username);
+    this.username = this.router.getCurrentNavigation().extras.state.username;
+    this.fullname = this.router.getCurrentNavigation().extras.state.fullname;
+    this.schoolClass = this.router.getCurrentNavigation().extras.state.schoolClass;
+    this.previousUserName = this.router.getCurrentNavigation().extras.state.username;
   }
 
-  async saveChanges(){
+  saveChanges(){
+    const update = {
+      "fullname":this.fullname,
+      "schoolClass":this.schoolClass
+    };
+    const patch = {
+      "update":update,
+      "username":this.previousUserName
+    };
+    console.log(patch);
+    this.parentController.updateChildUsingPATCH(patch).toPromise().then((response)=>{
+      console.log(response);
+      this.presentSaveSuccess();
+    }).catch((error)=>{
+      console.log(error);
+      this.presentSaveFailure();
+    });
+  }
+
+  async presentSaveSuccess(){
     const alert = await this.alertController.create({
       header: "Speichern erfolgreich",
       message: "Die Änderungen wurden erfolgreich übernommen.",
-      buttons: [{text: 'OK',
-                handler: ()=> {
-                  this.router.navigateByUrl('parent/kind-uebersicht');
-                },
-              }]
+      buttons: [
+      {
+        text: 'OK',
+        handler: ()=> {
+          this.router.navigateByUrl('parent/kind-uebersicht');
+        },
+      }]
     });
     await alert.present();
+  }
 
+  async presentSaveFailure(){
+    const alert = await this.alertController.create({
+      header: "Speichern abgebrochen",
+      message: "Die Änderungen konnten nicht übernommen werden",
+      buttons: [
+      {
+        text: 'OK',
+        handler: ()=> {
+        },
+      }]
+    });
+    await alert.present();
   }
 
   abort(){
     this.router.navigateByUrl('parent/kind-uebersicht');
   }
 
+  deleteChild():Promise<string>{
+    const params = {
+      username:this.previousUserName
+    }
+    return this.parentController.deleteChildUsingDELETE(params).toPromise();
+  }
+
   async deleteAccount(){
     const alert = await this.alertController.create({
       header: "Löschen",
       message: "Wolle Sie den Account wirklich löschen? Dieser Vorgang kann nicht rückgängig gemacht werden.",
-      buttons: [{text: 'OK',
-      handler: ()=> {
-        this.alertService.presentToast('Der Account wurde gelöscht');
-        this.router.navigateByUrl('parent/kind-uebersicht');
-      }
-    },
-      {text: 'Abbrechen',
-      handler: ()=> {
-        this.router.navigateByUrl('parent/kind-uebersicht');
-      }
-    }]
-});
+      buttons: [
+      {
+        text: 'OK',
+        handler: ()=> {
+          this.deleteChild().then((response)=>{
+            this.alertService.presentToast('Der Account wurde gelöscht');
+            this.router.navigateByUrl('parent/kind-uebersicht');
+          });
+        }
+      },
+      {
+        text: 'Abbrechen',
+        handler: ()=> {
+          
+        }
+      }]
+    });
     await alert.present();
   }
 
@@ -68,14 +116,14 @@ export class KindBearbeitenPage implements OnInit {
     const alert = await this.alertController.create({
       header: "Passwort ändern erfolgreich",
       message: "Das Passwort wurde erfolgreich geändert.",
-      buttons: [{text: 'OK',
-      handler: ()=> {
-        this.router.navigateByUrl('parent/kind-uebersicht');
-      },
-    }]
-});
+      buttons: [
+        {
+          text: 'OK',
+          handler: ()=> {
+          this.router.navigateByUrl('parent/kind-uebersicht');
+        },
+      }]
+    });
     await alert.present();
   }
-
-
 }

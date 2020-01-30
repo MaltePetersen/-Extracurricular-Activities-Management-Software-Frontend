@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { VeranstaltungensdatenService } from 'src/app/services/veranstaltungensdaten.service';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { KinderdatenService } from 'src/app/services/kinderdaten.service';
 import { Children } from 'src/app/models/children';
+import { ParentControllerService } from 'src/app/api/services';
+import { UserDTO, SimpleUserDTO } from 'src/app/api/models';
+import { ChildModel } from 'src/app/models/childModel';
 
 @Component({
   selector: 'app-kind-uebersicht',
@@ -13,40 +16,45 @@ import { Children } from 'src/app/models/children';
 })
 export class KindUebersichtPage implements OnInit {
 
-  veranstaltung: string;
-  kindername: string;
-  kinderid: string; 
-  veranstaltungen:any;
-  kinder: any;
-  kinderdaten: any;
+  children:SimpleUserDTO[];
 
-  constructor(private childData: KinderdatenService, public http: HttpClient, private router: Router, private veranstaltungsDaten: VeranstaltungensdatenService ) {
-      this.datenZuweisen();
-    }
+  constructor(private router: Router, private parentController:ParentControllerService) {
+  }
 
   getChildren() {
-      this.http.get<Children[]>(`${environment.apiUrl}/api/parent/children`).subscribe(async (a) => {
-        console.log("Kinder werden abgefragt")
-        console.log(a);
-        this.kinder = await a;
-      });
+    const params = {
+    };
+
+    this.parentController.getChildsUsingGET(params).toPromise().then((children)=>{
+      this.children = children;
+      //children.forEach((child)=>{
+        //this.parentController.getSchoolUsingGET(child.school).toPromise().then((school)=>{
+        //  this.mapToChildModel(child, school.name);
+        //}).catch((error)=>{
+        //  this.mapToChildModel(child, "Keine Schule gefunden");
+        //})
+      //});
+      console.table(children);
+    });
   }
 
-  async datenZuweisen(){
-    await this.getChildren();
+  mapToChildModel(child:SimpleUserDTO, schoolName:string){
+    this.children.push(new ChildModel(child.fullname, child.schoolClass, schoolName, child.username));
   }
 
-  changeChildData(choosenChild: any){
-    this.childData.changeChildData(choosenChild);
-    this.router.navigateByUrl('parent/kind-bearbeiten');
-
-  }
-  ionViewWillEnter(){
-    this.datenZuweisen();
+  changeChildData(chosenChild:UserDTO){
+    let navigationExtras: NavigationExtras = {
+      state: {
+        username:chosenChild.username,
+        fullname:chosenChild.fullname,
+        schoolClass:chosenChild.schoolClass
+      }
+    };
+    this.router.navigateByUrl('parent/kind-bearbeiten', navigationExtras);
   }
 
   ngOnInit() {
-    this.childData.currentChildData.subscribe(kinderdaten => this.kinderdaten = kinderdaten);
+    this.getChildren();
   }
 
   navToKindHinzu() {

@@ -78,7 +78,6 @@ export class KindHinzufuegenPage implements OnInit {
   }
 
   createChild() {
-
     const postData = {
       "address": null,
       "email": null,
@@ -128,7 +127,7 @@ const postDataBackend = {
 
 
   abort() {
-    this.router.navigateByUrl('/kind-uebersicht');
+    this.router.navigateByUrl('parent/kind-uebersicht');
   }
 
   validation_messages = {
