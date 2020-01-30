@@ -63,7 +63,8 @@ export class AlleSchichtenPage implements OnInit {
     let params = {
       school:this.schoolId,
       startDate:this.startDate.format('YYYY-MM-DD[T]HH:mm:ss'),
-      endDate:this.endDate.format('YYYY-MM-DD[T]HH:mm:ss')
+      endDate:this.endDate.format('YYYY-MM-DD[T]HH:mm:ss'),
+      schowOnlyOwn:false
     }
     this.employeeController.getAfterSchoolCaresUsingGET(params).toPromise().then(response => {
       response.forEach((care)=>{

@@ -39,6 +39,16 @@
         </ion-row>
         <ion-row class="zeile1">
           <ion-label no-wrap>
+            Ankunftszeit: {{pupil.latestArrivalTime | amDateFormat:'HH:mm'}}
+          </ion-label>  
+        </ion-row>
+        <ion-row class="zeile1">
+          <ion-label no-wrap>
+            Schüler darf gehen ab: {{pupil.predefinedLeaveTime | amDateFormat:'HH:mm'}}
+          </ion-label>  
+        </ion-row>
+        <ion-row class="zeile1">
+          <ion-label no-wrap>
             Info: {{pupil.note}}
           </ion-label>  
         </ion-row>

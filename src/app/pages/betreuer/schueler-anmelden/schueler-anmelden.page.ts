@@ -60,7 +60,7 @@ export class SchuelerAnmeldenPage implements OnInit {
   }
 
   mapToPupil(attendance:AttendanceDTO, schoolName:string):PupilModel{
-    return new PupilModel(attendance.id, attendance.child.fullname, schoolName, attendance.child.schoolClass, (attendance.note == null) ? '' : attendance.note, attendance.status);
+    return new PupilModel(attendance.id, attendance.child.fullname, schoolName, attendance.child.schoolClass, (attendance.note == null) ? '' : attendance.note, attendance.status, attendance.latestArrivalTime, attendance.predefinedLeaveTime, attendance.allowedToLeaveAfterFinishedHomework);
   }
 
   getAfterSchoolCare(id:number) : Promise<AfterSchoolCareDTO>{
