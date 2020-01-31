@@ -30,7 +30,7 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
   schoolId:number;
   startDate:any;
   endDate:any
-  datum:any = moment().locale('de').format('DD.MM.YYYY [Kalenderwoche:] WW');
+  datum:any = moment().locale('de').format('[Kalenderwoche:] WW');
   datePickerDefaultSettings:any = {
     setLabel: 'Auswählen',
     todayLabel: 'Heute',
@@ -127,10 +127,7 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
           await popover.present()
           popover.onDidDismiss().then((dataReturned) => {
               if (dataReturned.data !== null || dataReturned.role !== null) {
-            //  this.endzeit = dataReturned.data;
-            //  this.bemerkung = dataReturned.role;
              this.bookCare(dataReturned.data, dataReturned.role)
-            //  this.presentAlert(model);
           } else {
             this.alertService.presentToastFailure('Die Veranstaltung wurde nicht gebucht.');
             this.router.navigateByUrl('parent/veranstaltung-buchen')
@@ -146,7 +143,7 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
         const attendanceDTO = <AttendanceInputDTO> {
             "allowedToLeaveAfterFinishedHomework": true,
             "childUsername": "string",
-            "latestArrivalTime": "2020-01-30T14:23:08.531",
+            "latestArrivalTime": "2020-01-30T14:23:08",
             "note": bemerkung,
             "predefinedLeaveTime": endzeit
           }
@@ -158,11 +155,11 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
     
         this.parentController.addAttendanceUsingPOST(params).toPromise().then((response)=>{
           console.log(response);
-          this.alertService.presentToastSuccess('Die Veranstaltung wurde erfolgreich angelegt');
+          this.alertService.presentToastSuccess('Buchung erfolgreich');
           this.router.navigateByUrl('parent/veranstaltung-buchen')
         }).catch((error)=>{
           console.log(error);
-          this.alertService.presentToastFailure("Es gab einen Fehler beim Buchen");
+          this.alertService.presentToastFailure("Buchung fehlgeschlagen");
           this.router.navigateByUrl('parent/veranstaltung-buchen')
         });
       }
