@@ -20,7 +20,7 @@ import { AlertService } from 'src/app/services/alert.service';
   styleUrls: ['./veranstaltung-buchen-zeitraum.page.scss'],
 })
 export class VeranstaltungBuchenZeitraumPage implements OnInit {
-
+  careId: number;
   endzeit: any;
   bemerkung: any;
   veranstaltungenBuchen: any;
@@ -52,10 +52,12 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
   }
 
   ngOnInit() {
-    this.veranstaltungsDaten.ausgewählteSchulId.subscribe(schoolId => this.schoolId = schoolId)
+    this.veranstaltungsDaten.ausgewählteSchulId.subscribe(schoolId => this.schoolId = schoolId);
     this.veranstaltungsDaten.ausgewählteVeranstaltungType.subscribe(veranstaltungType => this.after_school_care_type = veranstaltungType);
+    this.veranstaltungsDaten.ausgewählteVeranstaltungsTypID.subscribe(careId => this.careId = careId);
     console.log('veranstaltungsnummer: ' +this.after_school_care_type)
     console.log('schulid vom kind : ' +this.schoolId)
+    console.log('ID vom Care : ' +this.careId)
     this.dateChange();
   }
 
@@ -120,15 +122,12 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
             veranstaltung: model.name,
           }
         });
-        
           await popover.present()
-    
           popover.onDidDismiss().then((dataReturned) => {
               if (dataReturned.data !== null || dataReturned.role !== null) {
              this.endzeit = dataReturned.data;
              this.bemerkung = dataReturned.role;
-             this.alertService.presentToastSuccess('Die Veranstaltung wurde erfolgreich angelegt.');
-             this.router.navigateByUrl('parent/veranstaltung-buchen')
+             this.bookCare(dataReturned.data, dataReturned.role)
             //  this.presentAlert(model);
           } else {
             this.alertService.presentToastFailure('Die Veranstaltung wurde nicht gebucht.');
@@ -136,6 +135,32 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
           }
         });
         // return await modal.present();
+      }
+
+      bookCare(endzeit, bemerkung) {
+        console.log("BOOK CARE HAT BEGONNEN")
+        const attendanceDTO = {
+            "allowedToLeaveAfterFinishedHomework": true,
+            "childUsername": "string",
+            "latestArrivalTime": "2020-01-30T14:23:08.531",
+            "note": "$bemerkung",
+            "predefinedLeaveTime": "${endzeit}"
+          }
+        
+        const params = {
+          "afterSchoolCareId":this.careId,
+          "attendanceInputDTO":attendanceDTO
+        }
+    
+        this.parentController.addAttendanceUsingPOST(params).toPromise().then((response)=>{
+          console.log(response);
+          this.alertService.presentToastSuccess('Die Veranstaltung wurde erfolgreich angelegt');
+          // this.router.navigateByUrl('parent/veranstaltung-buchen')
+
+        }).catch((error)=>{
+          console.log(error);
+          this.alertService.presentToastFailure("Es gab einen Fehler beim Buchen");
+        });
       }
 
   dateSelected($event){

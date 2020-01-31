@@ -18,7 +18,7 @@ export class ErziehungsberechtigteDashboardPage implements OnInit {
   veranstaltung: string;
   veranstaltungen:AfterSchoolCareDTO[];
 
-  constructor( private veranstaltungsDaten: VeranstaltungensdatenService, public http: HttpClient, private parentController: ParentControllerService) {
+  constructor(private veranstaltungsDaten: VeranstaltungensdatenService, public http: HttpClient, private parentController: ParentControllerService) {
     this.getVeranstaltungen();
   }
 
