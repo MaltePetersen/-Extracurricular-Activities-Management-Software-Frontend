@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GebuchteVeranstaltungen } from 'src/app/models/gebuchteVeranstalungen';
 import { NavController, AlertController, PopoverController} from '@ionic/angular';
-import { AlleSchichtModel } from 'src/app/models/alle-schicht-model';
 import {  HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { GebuchterZeitraum } from 'src/app/models/gebuchterZeitraum';
@@ -11,7 +10,6 @@ import { environment } from 'src/environments/environment';
 import moment from 'moment';
 import { ParentControllerService } from 'src/app/api/services';
 import { AfterSchoolCareDTO, SchoolDTO } from 'src/app/api/models';
-import { DayModel } from 'src/app/models/day-model';
 import { ParentDayModel } from 'src/app/models/parent-day-model';
 import { VeranstaltungBuchenModel } from 'src/app/models/veranstaltungen-buchen-model';
 import { AlertService } from 'src/app/services/alert.service';

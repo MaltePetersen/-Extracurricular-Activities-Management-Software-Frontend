@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { SchichtModel } from 'src/app/models/schicht-model';
+import { AfterSchoolCaresModel } from 'src/app/models/afterSchoolCaresModel';
 import Moment from "moment"; 
 import { extendMoment } from "moment-range";
 import { EmployeeControllerService } from 'src/app/api/services';
 import { AfterSchoolCareDTO } from 'src/app/api/models';
-import { MeineSchichtModel } from 'src/app/models/meine-schicht-model';
+import { MyCareModel } from 'src/app/models/myCareModel';
 
 const moment = extendMoment(Moment as any);
 
@@ -15,10 +15,10 @@ const moment = extendMoment(Moment as any);
 })
 export class AbrechnungPage implements OnInit {
 
-  schichten:any;
+  afterSchoolCares:any;
   startDate:any;
   endDate:any;
-  datum:any = moment().locale('de').format('DD.MM.YYYY [Monat:] MMMM');
+  calendarDate:any = moment().locale('de').format('DD.MM.YYYY [Monat:] MMMM');
   datePickerDefaultSettings:any = {
     setLabel: 'Auswählen',
     todayLabel: 'Heute',
@@ -39,7 +39,7 @@ export class AbrechnungPage implements OnInit {
   }
 
   getAfterschoolCare(){
-    this.schichten = [];
+    this.afterSchoolCares = [];
     let params = {
       startDate:this.startDate.format('YYYY-MM-DD[T]HH:mm:ss'),
       endDate:this.endDate.format('YYYY-MM-DD[T]HH:mm:ss')
@@ -47,7 +47,7 @@ export class AbrechnungPage implements OnInit {
     this.employeeController.getAfterSchoolCaresUsingGET(params).toPromise().then((response)=>{
       response.forEach((care)=>{
         this.employeeController.getSchoolUsingGET(care.participatingSchool).toPromise().then((school)=>{
-          this.schichten.push(this.mapToModel(care, school.name));
+          this.afterSchoolCares.push(this.mapToModel(care, school.name));
         });
       });
     });
@@ -58,12 +58,12 @@ export class AbrechnungPage implements OnInit {
     return isNaN(dayOfWeek) ? null : ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'][dayOfWeek];
   }
 
-  mapToModel(care:AfterSchoolCareDTO, schoolName:string):SchichtModel{
-    return new SchichtModel(care.id, schoolName, care.startTime, care.startTime, this.getDayOfWeek(care.startTime));
+  mapToModel(care:AfterSchoolCareDTO, schoolName:string):AfterSchoolCaresModel{
+    return new AfterSchoolCaresModel(care.id, schoolName, care.startTime, care.startTime, this.getDayOfWeek(care.startTime));
   }
 
   dateChange(){
-    let selectedDate = moment(this.datum,('DD.MM.YYYY'));
+    let selectedDate = moment(this.calendarDate,('DD.MM.YYYY'));
     this.startDate = moment(selectedDate).startOf('month');
     this.endDate = moment(selectedDate).endOf('month');
     this.getAfterschoolCare();

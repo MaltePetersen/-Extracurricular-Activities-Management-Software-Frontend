@@ -6,7 +6,7 @@
       Anwesenheitsliste
     </ion-label>
     <ion-label class="betreuungsende-label">
-      Betreuungsende: {{betreuungsende | amDateFormat:'HH:mm'}}
+      Betreuungsende: {{endOfCare | amDateFormat:'HH:mm'}}
     </ion-label>
     <ion-input placeholder="Suchen" class="schueler-suchen" [(ngModel)]="search" (ionChange)="searchChanged()"></ion-input>
     <ion-row nowrap class="klasse-row">
@@ -37,7 +37,22 @@
             Klasse: {{pupil.schoolClass}}
           </ion-label>
         </ion-row>
-        <ion-row class="zeile1">
+        <ion-row class="zeile1" *ngIf="pupil.latestArrivalTime">
+          <ion-label no-wrap>
+            Ankunftszeit: {{pupil.latestArrivalTime | amDateFormat:'HH:mm'}}
+          </ion-label>  
+        </ion-row>
+        <ion-row class="zeile1" *ngIf="pupil.predefinedLeaveTime">
+          <ion-label no-wrap>
+            Schüler darf gehen ab: {{pupil.predefinedLeaveTime | amDateFormat:'HH:mm'}}
+          </ion-label>  
+        </ion-row>
+        <ion-row class="zeile1" *ngIf="pupil.allowedToLeaveAfterFinishedHomework">
+          <ion-label>
+            Darf nach Hausaufgaben gehen
+          </ion-label>  
+        </ion-row>
+        <ion-row class="zeile1" *ngIf="pupil.note">
           <ion-label no-wrap>
             Info: {{pupil.note}}
           </ion-label>  
@@ -46,3 +61,9 @@
     </ion-item>
   </div>
 </ion-content>
+
+<ion-footer>
+  <ion-button class="sperren-button" (click)="presentAlertLock()">
+    Anwesenheitsliste sperren
+  </ion-button>
+</ion-footer>

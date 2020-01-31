@@ -7,14 +7,14 @@
     </ion-label>
   </div>
   <div class="abrechnung-container">
-    <ion-item *ngFor="let schicht of schichten" lines="none" class="abrechnung-item">
+    <ion-item *ngFor="let care of afterSchoolCares" lines="none" class="abrechnung-item">
       <div class="abrechnung-content-container">
         <ion-label class="datum-zeit-label">
-          {{schicht.datum | amDateFormat:'DD.MM.YYYY'}}, {{schicht.uhrzeit | amDateFormat:'HH:mm'}}
+          {{care.date | amDateFormat:'DD.MM.YYYY'}}, {{care.time | amDateFormat:'HH:mm'}}
         </ion-label>
         <ion-row class="data-row">
           <ion-label class="data-label">
-            Schule: {{schicht.schule}}
+            Schule: {{care.school}}
           </ion-label>
         </ion-row>
       </div>
@@ -23,5 +23,5 @@
 </ion-content>
 
 <ion-footer>
-  <ion-input readonly [(ngModel)]="datum" [liIonic4Datepicker]="datePickerDefaultSettings" (ionChange)="dateChange($event)"></ion-input>
+  <ion-input readonly [(ngModel)]="calendarDate" [liIonic4Datepicker]="datePickerDefaultSettings" (ionChange)="dateChange($event)"></ion-input>
 </ion-footer>

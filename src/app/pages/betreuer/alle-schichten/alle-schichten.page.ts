@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, AlertController } from '@ionic/angular';
-import { alleSchichtenmodel } from 'src/app/models/alle-Schichten-model';
-import { AlleSchichtModel } from 'src/app/models/alle-schicht-model';
+import { AllCaresModel } from 'src/app/models/allCaresModel';
+import { AllCareModel } from 'src/app/models/allCareModel';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { EmployeeControllerService } from 'src/app/api/services';
 import { AfterSchoolCareDTO, SchoolDTO, AfterSchoolCare } from 'src/app/api/models';
 import Moment from "moment"; 
 import { extendMoment } from "moment-range";
-import { DayModel } from 'src/app/models/day-model';
+import { DayModel } from 'src/app/models/dayModel';
 
 const moment = extendMoment(Moment as any);
 
@@ -22,7 +22,7 @@ export class AlleSchichtenPage implements OnInit {
   schoolId:number;
   startDate:any;
   endDate:any
-  datum:any = moment().locale('de').format('DD.MM.YYYY [Kalenderwoche:] WW');
+  calendarDate:any = moment().locale('de').format('DD.MM.YYYY [Kalenderwoche:] WW');
   datePickerDefaultSettings:any = {
     setLabel: 'Auswählen',
     todayLabel: 'Heute',
@@ -35,7 +35,7 @@ export class AlleSchichtenPage implements OnInit {
     momentLocale: 'de'
   };
   days: any = [];
-  schichten:AlleSchichtModel[] = [];
+  afterSchoolCares:AllCareModel[] = [];
   selectedDate:Date;
   hideDate:boolean = false;
   hideDateButton:string = "Datum auswählen";
@@ -48,8 +48,8 @@ export class AlleSchichtenPage implements OnInit {
     this.dateChange();
   }
 
-  mapToModel(care:AfterSchoolCareDTO, schoolName:string):AlleSchichtModel{
-    return new AlleSchichtModel(care.id, care.name, schoolName, care.startTime, care.startTime, this.getDayOfWeek(care.startTime), care.owner);
+  mapToModel(care:AfterSchoolCareDTO, schoolName:string):AllCareModel{
+    return new AllCareModel(care.id, care.name, schoolName, care.startTime, care.startTime, this.getDayOfWeek(care.startTime), care.owner);
   }
 
   getDayOfWeek(date) {
@@ -63,18 +63,19 @@ export class AlleSchichtenPage implements OnInit {
     let params = {
       school:this.schoolId,
       startDate:this.startDate.format('YYYY-MM-DD[T]HH:mm:ss'),
-      endDate:this.endDate.format('YYYY-MM-DD[T]HH:mm:ss')
+      endDate:this.endDate.format('YYYY-MM-DD[T]HH:mm:ss'),
+      schowOnlyOwn:false
     }
     this.employeeController.getAfterSchoolCaresUsingGET(params).toPromise().then(response => {
       response.forEach((care)=>{
         this.employeeController.getSchoolUsingGET(care.participatingSchool).toPromise().then((school)=>{
-          this.checkEintrag(care, school.name);
+          this.checkEntry(care, school.name);
         });
       });
     });
   }
 
-  checkEintrag(care:AfterSchoolCareDTO, schoolName:string){
+  checkEntry(care:AfterSchoolCareDTO, schoolName:string){
     let weekDay = this.getDayOfWeek(care.startTime);
     let found:boolean = false;
     let foundDay;
@@ -103,18 +104,13 @@ export class AlleSchichtenPage implements OnInit {
     this.days[i].children[j].open = !this.days[i].children.open[j];
   }
 
-  async presentAlert(model:AlleSchichtModel){
+  async presentAlert(model:AllCareModel){
     const alert = await this.alertController.create({
-      header: model.schule,
-      message: model.day + ", den " + moment(model.datum).format('DD.MM.YYYY') + "<br>" + model.owner.fullname,
+      header: model.school,
+      message: model.day + ", den " + moment(model.date).format('DD.MM.YYYY') + "<br>" + model.owner.fullname,
       buttons: ['OK']
     });
     await alert.present();
-  }
-
-  dateSelected($event){
-    this.selectedDate = new Date($event);
-    console.log(this.selectedDate);
   }
 
   toggleDate(){
@@ -127,7 +123,7 @@ export class AlleSchichtenPage implements OnInit {
   }
 
   dateChange(){
-    let selectedDate = moment(this.datum,('DD.MM.YYYY'));
+    let selectedDate = moment(this.calendarDate,('DD.MM.YYYY'));
     this.startDate = moment(selectedDate).startOf('isoWeek');
     this.endDate = moment(selectedDate).endOf('isoWeek');
     this.getAfterSchoolCares();

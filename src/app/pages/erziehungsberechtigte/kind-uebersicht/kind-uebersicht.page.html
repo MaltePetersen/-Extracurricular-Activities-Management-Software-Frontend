@@ -8,21 +8,21 @@
     </div>
     <div class="schichten-container">
 
-      <ion-item *ngFor="let k of kinder" lines="none" class="schichten-item" (click)="changeChildData({school: k.school, fullname: k.fullname, schoolClass: k.schoolClass})">
+      <ion-item *ngFor="let child of children" lines="none" class="schichten-item" (click)="changeChildData(child)">
         <div class="schichten-content-container">
 
         <ion-row class="data-row">
         <ion-label class="tag-label">
-          {{k.fullname}}
+          {{child.fullname}}
         </ion-label>
         </ion-row>
           <ion-row class="data-row">
               <ion-label class="data-label">
-                Klasse: {{k.schoolClass}}
+                Klasse: {{child.schoolClass}}
               </ion-label>
             
           <ion-label style="position: absolute; right: 0;">
-            Schule: {{k.school}}
+            Schule: {{child.school}}
           </ion-label>
         </ion-row>
       </div>

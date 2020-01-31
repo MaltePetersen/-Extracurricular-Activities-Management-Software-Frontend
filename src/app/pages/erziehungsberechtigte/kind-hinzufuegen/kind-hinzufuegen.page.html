@@ -1,18 +1,17 @@
 <app-header></app-header>
    
 <ion-content class="appBackground">
-
-    <form
-      [formGroup]="validations_form"
-      (ngSubmit)="onSubmit(validations_form.value)"
-    >
-      <ion-card>
-        <ion-card-header>
-          <ion-card-subtitle>Registrierung</ion-card-subtitle>
-          <ion-card-title>Kind anlegen</ion-card-title>
-        </ion-card-header>
-  
-        <ion-card-content>
+  <form [formGroup]="validations_form" (ngSubmit)="onSubmit(validations_form.value)">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle>
+          Registrierung
+        </ion-card-subtitle>
+        <ion-card-title>
+          Kind anlegen
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
 
           <!--AUSKOMMENTIERT; DA DERZEIT NOCH KEIN KINDERACCOUNT IMPLEMENTIERT WIRD-->
 
@@ -88,38 +87,36 @@
                     </div>
                   </ng-container>
                 </div> -->
-        
-                <ion-item>
-                  <ion-label position="floating" color="primary">Vorname</ion-label>
-                  <ion-input type="text" formControlName="name"></ion-input>
-                </ion-item>
-                <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validation_messages.name">
-                    <div
-                      class="error-message"
-                      *ngIf="validations_form.get('name').hasError(validation.type) && (validations_form.get('name').dirty || validations_form.get('name').touched)"
-                    >
-                      <ion-icon name="information-circle-outline"></ion-icon> {{
-                      validation.message }}
-                    </div>
-                  </ng-container>
-                </div>
-                <ion-item>
-                  <ion-label position="floating" color="primary">Nachname</ion-label>
-                  <ion-input type="text" formControlName="lname" ></ion-input>
-                </ion-item>
-                <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validation_messages.name">
-                    <div
-                      class="error-message"
-                      *ngIf="validations_form.get('lname').hasError(validation.type) && (validations_form.get('lname').dirty || validations_form.get('lname').touched)"
-                    >
-                      <ion-icon name="information-circle-outline"></ion-icon> {{
-                      validation.message }}
-                    </div>
-                  </ng-container>
-                </div>
-
+          <ion-item>
+            <ion-label position="floating" color="primary">
+              Vorname
+            </ion-label>
+            <ion-input type="text" formControlName="name">
+            </ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.name">
+              <div class="error-message" *ngIf="validations_form.get('name').hasError(validation.type) && (validations_form.get('name').dirty || validations_form.get('name').touched)">
+                <ion-icon name="information-circle-outline"></ion-icon>
+                {{validation.message }}
+              </div>
+            </ng-container>
+          </div>
+          <ion-item>
+            <ion-label position="floating" color="primary">
+              Nachname
+            </ion-label>
+            <ion-input type="text" formControlName="lname">
+            </ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.name">
+              <div class="error-message" *ngIf="validations_form.get('lname').hasError(validation.type) && (validations_form.get('lname').dirty || validations_form.get('lname').touched)">
+                <ion-icon name="information-circle-outline"></ion-icon>
+                {{validation.message }}
+              </div>
+            </ng-container>
+          </div>
                 <!-- <div formGroupName="country_phone">
                 <ion-item>
                   <ion-label position="floating" color="primary"
@@ -145,53 +142,46 @@
                 </div>
                 </div> -->
 
-                <ion-item>
-                    <ion-label position="floating" color="primary">Schule</ion-label>
-                    <ion-select formControlName="school" ok-text="Okay" cancel-text="Abbrechen">
-                    <ion-select-option *ngFor="let s of schools" value="{{s.id}}">{{s.name}}</ion-select-option>
-                  </ion-select>
+          <ion-item>
+            <ion-label position="floating" color="primary">
+              Schule
+            </ion-label>
+            <ion-select formControlName="school" ok-text="Okay" cancel-text="Abbrechen">
+              <ion-select-option *ngFor="let s of schools" value="{{s.id}}">{{s.name}}</ion-select-option>
+            </ion-select>
                     <!-- <ion-input type="text" formControlName="school"></ion-input> -->
-                  </ion-item>
-                  <div class="validation-errors">
-                    <ng-container *ngFor="let validation of validation_messages.school">
-                      <div
-                        class="error-message"
-                        *ngIf="validations_form.get('school').hasError(validation.type) && (validations_form.get('school').dirty || validations_form.get('school').touched)"
-                      >
-                        <ion-icon name="information-circle-outline"></ion-icon> {{
-                        validation.message }}
-                      </div>
-                    </ng-container>
-                  </div>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.school">
+              <div class="error-message" *ngIf="validations_form.get('school').hasError(validation.type) && (validations_form.get('school').dirty || validations_form.get('school').touched)">
+                <ion-icon name="information-circle-outline"></ion-icon>
+                {{validation.message }}
+              </div>
+            </ng-container>
+          </div>
 
-                <ion-item>
-                    <ion-label position="floating" color="primary">Klasse</ion-label>
-                    <ion-input type="text" formControlName="schoolClass" ></ion-input>
-                  </ion-item>
-                  <div class="validation-errors">
-                    <ng-container
-                      *ngFor="let validation of validation_messages.schoolClass"
-                    >
-                      <div
-                        class="error-message"
-                        *ngIf="validations_form.get('schoolClass').hasError(validation.type) && (validations_form.get('schoolClass').dirty || validations_form.get('schoolClass').touched)"
-                      >
-                        <ion-icon name="information-circle-outline"></ion-icon> {{
-                        validation.message }}
-                      </div>
-                    </ng-container>
-                  </div>
-                </ion-card-content>
-              </ion-card>
-      
-  <ion-button
-  color="primary"
-  expand="full"
-  type="submit"
-  [disabled]="validations_form.valid"
-  (click)="createChild()"
-  >Account anlegen</ion-button
->
-<ion-button expand="block" color="medium" (click)="abort()">Abbrechen</ion-button>
-</form>
+          <ion-item>
+            <ion-label position="floating" color="primary">
+              Klasse
+            </ion-label>
+            <ion-input type="text" formControlName="schoolClass" >
+            </ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.schoolClass">
+              <div class="error-message" *ngIf="validations_form.get('schoolClass').hasError(validation.type) && (validations_form.get('schoolClass').dirty || validations_form.get('schoolClass').touched)">
+                <ion-icon name="information-circle-outline"></ion-icon>
+                {{validation.message }}
+              </div>
+            </ng-container>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    <ion-button color="primary" expand="full" type="submit" [disabled]="validations_form.valid" (click)="createChild()">
+      Account anlegen
+    </ion-button>
+    <ion-button expand="block" color="medium" (click)="abort()">
+      Abbrechen
+    </ion-button>
+  </form>
 </ion-content>
