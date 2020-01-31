@@ -22,7 +22,6 @@ export class VeranstaltungBuchenPage implements OnInit {
   children: any;
   veranstaltung: string;
   kindername = null; 
-  kinderid: string; 
   veranstaltungen:any;
   private datum:any;
 
@@ -34,7 +33,6 @@ export class VeranstaltungBuchenPage implements OnInit {
   ngOnInit() {
     this.veranstaltungsDaten.ausgewählteVeranstaltung.subscribe(veranstaltung => this.veranstaltung = veranstaltung);
     this.veranstaltungsDaten.ausgewähltesKind.subscribe(kindername => this.kindername = kindername);
-    this.veranstaltungsDaten.ausgewählteID.subscribe(kinderid => this.kinderid = kinderid);
   }
 
   getChildren() {

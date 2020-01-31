@@ -22,7 +22,7 @@ import { AlertService } from 'src/app/services/alert.service';
   styleUrls: ['./veranstaltung-buchen-zeitraum.page.scss'],
 })
 export class VeranstaltungBuchenZeitraumPage implements OnInit {
-
+ 
   endzeit: any;
   bemerkung: any;
   veranstaltungenBuchen: any;
@@ -122,9 +122,7 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
             veranstaltung: model.name,
           }
         });
-        
           await popover.present()
-    
           popover.onDidDismiss().then((dataReturned) => {
               if (dataReturned.data !== null || dataReturned.role !== null) {
              this.endzeit = dataReturned.data;

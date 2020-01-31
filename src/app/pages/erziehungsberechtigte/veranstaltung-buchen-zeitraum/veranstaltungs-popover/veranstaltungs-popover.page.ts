@@ -1,5 +1,6 @@
 import { PopoverController } from '@ionic/angular';
 import { Component, OnInit, Input } from '@angular/core';
+import moment from 'moment';
 
 
 @Component({
@@ -13,6 +14,7 @@ export class VeranstaltungsPopoverPage implements OnInit {
   //endzeit = null;
   bemerkung;
   endzeit2;
+  datum = null;
 
   constructor(private popoverController: PopoverController) { }
 
@@ -22,9 +24,10 @@ export class VeranstaltungsPopoverPage implements OnInit {
   }
 
   async closePopover(){
-    console.log("ENDZEIT NEU = " +this.endzeit2)
+    let newDate = this.endzeit.split("T");
+    this.datum = (`${newDate[1]}T${this.endzeit2}:00`);
     const bemerkung: string = this.bemerkung;
-    const endzeit: string = this.endzeit2;
+    const endzeit: string = this.datum;
     await this.popoverController.dismiss(endzeit, bemerkung);
   }
 

@@ -18,7 +18,7 @@ export class ErziehungsberechtigteDashboardPage implements OnInit {
   veranstaltung: string;
   veranstaltungen:any;
 
-  constructor( private veranstaltungsDaten: VeranstaltungensdatenService, public http: HttpClient, private parentController: ParentControllerService) {
+  constructor(private veranstaltungsDaten: VeranstaltungensdatenService, public http: HttpClient, private parentController: ParentControllerService) {
     this.getVeranstaltungen();
   }
 
@@ -28,6 +28,14 @@ export class ErziehungsberechtigteDashboardPage implements OnInit {
   }
 
   getVeranstaltungen() {
+    const params = {};
+
+    // this.parentController.getBookedAfterSchoolCaresUsingGET(params).toPromise().then(response => {
+    //   console.table(response)
+    //   // response.forEach((care)=>{
+    //   //     this.checkEintrag(care);
+    //   //   });
+    //   });
     this.http.get<school[]>(`${environment.apiUrl}/api/parent/booked_after_school_cares`).subscribe((a) => {
       this.veranstaltungen = a;
       console.table(a);
