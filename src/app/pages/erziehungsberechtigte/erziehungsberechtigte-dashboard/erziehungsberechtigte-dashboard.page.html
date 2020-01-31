@@ -1,36 +1,35 @@
 <app-header></app-header>
 
 <ion-content>
-                <div class="flex-container">
-                  <ion-label  class="veranstaltung-label">
-                   Deine gebuchten Veranstaltungen
-                  </ion-label>
-                </div>
-                <div class="veranstaltung-container">
-                  <ion-item *ngFor="let veranstaltung of veranstaltungen" lines="none" class="veranstaltung-item" (click)="chooseOffer(veranstaltung.name)">
-                    <div class="veranstaltung-content-container">
-                      <ion-row>
-                        <ion-label class="day-label">
-                          {{veranstaltung.startTime | amLocale:'de' | amDateFormat:'dddd'}}
-                        </ion-label>
-                      </ion-row>
-                      <ion-row class="name-row">
-                        <ion-label>
-                          {{veranstaltung.name}}
-                        </ion-label>
-                      </ion-row>
-                      <ion-row class="date-time-row">
-                        <ion-label class="date-label">
-                          {{veranstaltung.startTime | amDateFormat:'DD.MM.YYYY'}}
-                        </ion-label>
-                        <ion-label class="time-label">
-                          {{veranstaltung.startTime | amDateFormat:'HH:mm'}} - {{veranstaltung.endTime | amDateFormat:'HH:mm'}}
-                        </ion-label>
-                      </ion-row>
-                      
-                    </div>
-                  </ion-item>
-                </div>         
+  <div class="flex-container">
+    <ion-label  class="veranstaltung-label">
+      Deine gebuchten Veranstaltungen
+    </ion-label>
+  </div>
+  <div class="veranstaltung-container">
+    <ion-item *ngFor="let veranstaltung of veranstaltungen" lines="none" class="veranstaltung-item" (click)="chooseOffer(veranstaltung.name)">
+      <div class="veranstaltung-content-container">
+        <ion-row>
+          <ion-label class="day-label">
+            {{veranstaltung.startTime | amLocale:'de' | amDateFormat:'dddd'}}
+          </ion-label>
+        </ion-row>
+        <ion-row class="name-row">
+          <ion-label>
+            {{veranstaltung.name}}
+          </ion-label>
+        </ion-row>
+        <ion-row class="date-time-row">
+          <ion-label class="date-label">
+            {{veranstaltung.startTime | amDateFormat:'DD.MM.YYYY'}}
+          </ion-label>
+          <ion-label class="time-label">
+            {{veranstaltung.startTime | amDateFormat:'HH:mm'}} - {{veranstaltung.endTime | amDateFormat:'HH:mm'}}
+          </ion-label>
+        </ion-row>                
+      </div>
+    </ion-item>
+  </div>         
 </ion-content>
 
 

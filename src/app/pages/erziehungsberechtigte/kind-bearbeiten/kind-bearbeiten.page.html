@@ -1,40 +1,39 @@
 <app-header></app-header>
 
 <ion-content class="appBackground; ion-padding">
-
-        <ion-card>
-         <ion-card-header>
-          Kinderverwaltung
-         </ion-card-header>
-     
-     
-         <ion-card-content>
-     
-         
+  <ion-card>
+    <ion-card-header>
+      Kinderverwaltung
+    </ion-card-header>   
+    <ion-card-content> 
              <!--<ion-item>
                  <ion-label position="stacked">Nutzername</ion-label>
                  <ion-input [(ngModel)]="username"></ion-input>
              </ion-item> -->
-           
-             <ion-item>
-               <ion-label position="stacked">Name</ion-label>
-               <ion-input [(ngModel)]="fullname"></ion-input>
-             </ion-item>
-     
-             <ion-item>
-                 <ion-label position="stacked">Klasse</ion-label>
-                 <ion-input ngModel [(ngModel)]="schoolClass"></ion-input>
-              </ion-item>
-
-
-
-     
-          </ion-card-content>
-       </ion-card> 
-
-       <ion-button type="submit" expand="block" (click)="deleteAccount()" color="danger">Account löschen</ion-button>
-       <!-- <ion-button type="submit" expand="block" (click)="changePassword()" color="primary">Passwort zurücksetzen</ion-button>-->
-       <ion-button type="submit" expand="block" (click)="saveChanges()" color="primary">Änderungen speichern</ion-button> 
-       <ion-button type="submit" expand="block" (click)="abort()" color="medium">Abbrechen</ion-button>
-
-     </ion-content>
+      <ion-item>
+        <ion-label position="stacked">
+          Name
+        </ion-label>
+        <ion-input [(ngModel)]="fullname">
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">
+          Klasse
+        </ion-label>
+        <ion-input ngModel [(ngModel)]="schoolClass">
+        </ion-input>
+      </ion-item>
+    </ion-card-content>
+  </ion-card> 
+  <ion-button type="submit" expand="block" (click)="deleteAccount()" color="danger">
+    Account löschen
+  </ion-button>
+  <!-- <ion-button type="submit" expand="block" (click)="changePassword()" color="primary">Passwort zurücksetzen</ion-button>-->
+  <ion-button type="submit" expand="block" (click)="saveChanges()" color="primary">
+    Änderungen speichern
+  </ion-button> 
+  <ion-button type="submit" expand="block" (click)="abort()" color="medium">
+    Abbrechen
+  </ion-button>
+</ion-content>

@@ -4,15 +4,18 @@
   </ion-item>
   <ion-input class="betreuungseingabe"  [ngModel]="endzeit | date:'HH:mm'" (ngModelChange)="endzeit2=$event" name="endzeit" type="text" ></ion-input>
   <ion-item>
-      <ion-label >Bemerkungen</ion-label>
-    </ion-item>
-    <ion-textarea class="bemerkungseingabe" [(ngModel)]="bemerkung"></ion-textarea>
-    <div>
+    <ion-label>
+      Bemerkungen
+    </ion-label>
+  </ion-item>
+  <ion-textarea class="bemerkungseingabe" [(ngModel)]="bemerkung">
+  </ion-textarea>
+  <div>
     <ion-item button class="floated" color="primary" (click)="abort()">
       Abbrechen
     </ion-item>
-  <ion-item button class="floated" color="primary" (click)="closePopover()">
-    Speichern
-  </ion-item>
-</div>
+    <ion-item button class="floated" color="primary" (click)="closePopover()">
+      Speichern
+    </ion-item>
+  </div>
 </ion-list>

@@ -1,32 +1,28 @@
 <app-header></app-header>
 
 <ion-content>
-
-              <ion-item> 
-                <ion-label>Kind auswählen</ion-label>
-                <ion-select ok-text="OK" cancel-text="Abbrechen" (ionChange)="chooseChild($event)">
-                  <ion-select-option *ngFor="let kind of children" value="{{kind.fullname}}:{{kind.school}}">{{kind.fullname}}</ion-select-option>
-                </ion-select>
-              </ion-item>
-
-            
-                <div class="flex-container">
-                  <ion-label  class="veranstaltung-label">
-                   Buche deine Veranstaltungen
-                  </ion-label>
-                </div>
-                <div class="veranstaltung-container">
-                  <ion-item *ngFor="let v of veranstaltungen" lines="none" class="veranstaltung-item" (click)="chooseOffer(v.name, v.type, v.id)">
-                    <div class="veranstaltung-content-container">
-                      <ion-label class="tag-label">
-                        {{v.name}}
-                      </ion-label>
-                    </div>
-                  </ion-item>
-                </div>         
-              
-
-
+  <ion-item> 
+    <ion-label>
+      Kind auswählen
+    </ion-label>
+    <ion-select ok-text="OK" cancel-text="Abbrechen" (ionChange)="chooseChild($event)">
+      <ion-select-option *ngFor="let kind of children" value="{{kind.fullname}}:{{kind.school}}">{{kind.fullname}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <div class="flex-container">
+    <ion-label  class="veranstaltung-label">
+      Buche deine Veranstaltungen
+    </ion-label>
+  </div>
+  <div class="veranstaltung-container">
+    <ion-item *ngFor="let v of veranstaltungen" lines="none" class="veranstaltung-item" (click)="chooseOffer(v.name, v.type, v.id)">
+      <div class="veranstaltung-content-container">
+        <ion-label class="tag-label">
+          {{v.name}}
+        </ion-label>
+      </div>
+    </ion-item>
+  </div>         
 </ion-content>
 
 
