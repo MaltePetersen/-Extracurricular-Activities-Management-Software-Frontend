@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { ErziehungsberechtigteDashboardPage } from './erziehungsberechtigte-dashboard.page';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { MomentModule } from 'ngx-moment';
 
 const routes: Routes = [
   {
@@ -22,6 +23,7 @@ const routes: Routes = [
     SharedModule,
     FormsModule,
     IonicModule,
+    MomentModule,
     RouterModule.forChild(routes),
     NgxDatatableModule,
   ],

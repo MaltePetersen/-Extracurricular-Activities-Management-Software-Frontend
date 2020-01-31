@@ -3,7 +3,7 @@ import { VeranstaltungensdatenService } from 'src/app/services/veranstaltungensd
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { ParentControllerService } from 'src/app/api/services';
-import { UserDTO } from 'src/app/api/models';
+import { UserDTO, AfterSchoolCareDTO } from 'src/app/api/models';
 
 class IUserDTO implements UserDTO{
   
@@ -16,7 +16,7 @@ class IUserDTO implements UserDTO{
 })
 export class ErziehungsberechtigteDashboardPage implements OnInit {
   veranstaltung: string;
-  veranstaltungen:any;
+  veranstaltungen:AfterSchoolCareDTO[];
 
   constructor(private veranstaltungsDaten: VeranstaltungensdatenService, public http: HttpClient, private parentController: ParentControllerService) {
     this.getVeranstaltungen();

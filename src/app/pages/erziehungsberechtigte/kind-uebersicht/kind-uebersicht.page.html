@@ -1,41 +1,40 @@
 <app-header></app-header>
 
 <ion-content>
-    <div class="flex-container">
-      <ion-label class="schichten-label">
-        Meine Kinder
-      </ion-label>
-    </div>
-    <div class="schichten-container">
-
-      <ion-item *ngFor="let child of children" lines="none" class="schichten-item" (click)="changeChildData(child)">
-        <div class="schichten-content-container">
-
+  <div class="flex-container">
+    <ion-label class="schichten-label">
+      Meine Kinder
+    </ion-label>
+  </div>
+  <div class="schichten-container">
+    <ion-item *ngFor="let child of children" lines="none" class="schichten-item" (click)="changeChildData(child)">
+      <div class="schichten-content-container">
         <ion-row class="data-row">
-        <ion-label class="tag-label">
-          {{child.fullname}}
-        </ion-label>
+          <ion-label class="name-label">
+            {{child.fullname}}
+          </ion-label>
         </ion-row>
-          <ion-row class="data-row">
-              <ion-label class="data-label">
-                Klasse: {{child.schoolClass}}
-              </ion-label>
-            
-          <ion-label style="position: absolute; right: 0;">
+        <ion-row class="school-class-row">
+          <ion-label class="school-label">
             Schule: {{child.school}}
           </ion-label>
         </ion-row>
+        <ion-row class="school-class-row">
+          <ion-label class="class-label">
+            Klasse: {{child.schoolClass}}
+          </ion-label> 
+        </ion-row>
       </div>
-      </ion-item>
-
-
-    </div>
-  </ion-content>
+    </ion-item>
+  </div>
+</ion-content>
   
-  <ion-footer>
-      <ion-toolbar>
-        <ion-label>
-            <ion-button class="home-button" expand="block" (click)="navToKindHinzu()">Kind hinzufügen</ion-button>
-        </ion-label>
-      </ion-toolbar>
-    </ion-footer>
+<ion-footer>
+  <ion-toolbar>
+    <ion-label>
+      <ion-button class="home-button" expand="block" (click)="navToKindHinzu()">
+        Kind hinzufügen
+      </ion-button>
+    </ion-label>
+  </ion-toolbar>
+</ion-footer>
