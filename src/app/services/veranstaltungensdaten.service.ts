@@ -8,14 +8,17 @@ export class VeranstaltungensdatenService {
 
   private veranstaltungsTyp = new BehaviorSubject<string>('veranstaltungsTyp');
   private veranstaltungsType = new BehaviorSubject<number>(0);
+  private veranstaltungsTypID = new BehaviorSubject<number>(0);
   private kindername = new BehaviorSubject<string>('kindername');
   private kinderId = new BehaviorSubject<string>('kinderId');
   private schoolId = new BehaviorSubject<number>(null);
     ausgewählteVeranstaltung = this.veranstaltungsTyp.asObservable();
     ausgewählteVeranstaltungType = this.veranstaltungsType.asObservable();
+    ausgewählteVeranstaltungsTypID = this.veranstaltungsTypID.asObservable();
     ausgewähltesKind = this.kindername.asObservable();
     ausgewählteID = this.kinderId.asObservable();
     ausgewählteSchulId = this.schoolId.asObservable();
+
 
   constructor() { }
 
@@ -25,6 +28,10 @@ export class VeranstaltungensdatenService {
 
 changeVeranstaltungType(veranstaltungType: number) {
   this.veranstaltungsType.next(veranstaltungType);
+}
+
+changeveranstaltungsTypID(veranstaltungsTypID: number) {
+  this.veranstaltungsTypID.next(veranstaltungsTypID);
 }
 
 changeKind(kindername: string) {

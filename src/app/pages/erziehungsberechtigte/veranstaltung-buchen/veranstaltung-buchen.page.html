@@ -16,7 +16,7 @@
                   </ion-label>
                 </div>
                 <div class="veranstaltung-container">
-                  <ion-item *ngFor="let v of veranstaltungen" lines="none" class="veranstaltung-item" (click)="chooseOffer(v.name, v.type)">
+                  <ion-item *ngFor="let v of veranstaltungen" lines="none" class="veranstaltung-item" (click)="chooseOffer(v.name, v.type, v.id)">
                     <div class="veranstaltung-content-container">
                       <ion-label class="tag-label">
                         {{v.name}}
