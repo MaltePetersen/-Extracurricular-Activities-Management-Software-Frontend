@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/services/alert.service';
+import { ParentControllerService } from 'src/app/api/services';
 
 @Component({
   selector: 'app-account',
@@ -10,7 +11,7 @@ import { AlertService } from 'src/app/services/alert.service';
 })
 export class AccountPage implements OnInit {
 
-  constructor(private alertController: AlertController,  private router: Router,private alertService: AlertService) { }
+  constructor(private alertController: AlertController,  private router: Router,private alertService: AlertService, private parentController:ParentControllerService) { }
 
   username: string;
   fname: string;
@@ -18,6 +19,9 @@ export class AccountPage implements OnInit {
   ngOnInit() {
     this.username ="Peter";
     this.fname ="Klaus-Dieter";
+  }
+
+  getAccount(){
   }
 
   async saveChanges(){
