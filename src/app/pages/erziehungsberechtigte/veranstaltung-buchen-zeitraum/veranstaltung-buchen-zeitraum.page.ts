@@ -9,7 +9,7 @@ import { VeranstaltungsPopoverPage } from 'src/app/pages/erziehungsberechtigte/v
 import { environment } from 'src/environments/environment';
 import moment from 'moment';
 import { ParentControllerService } from 'src/app/api/services';
-import { AfterSchoolCareDTO, SchoolDTO } from 'src/app/api/models';
+import { AfterSchoolCareDTO, SchoolDTO, AttendanceInputDTO } from 'src/app/api/models';
 import { ParentDayModel } from 'src/app/models/parent-day-model';
 import { VeranstaltungBuchenModel } from 'src/app/models/veranstaltungen-buchen-model';
 import { AlertService } from 'src/app/services/alert.service';
@@ -25,6 +25,7 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
   bemerkung: any;
   veranstaltungenBuchen: any;
   veranstaltungType: number;
+  veranstaltungName:string;
   after_school_care_type: number;
   schoolId:number;
   startDate:any;
@@ -55,6 +56,7 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
     this.veranstaltungsDaten.ausgewählteSchulId.subscribe(schoolId => this.schoolId = schoolId);
     this.veranstaltungsDaten.ausgewählteVeranstaltungType.subscribe(veranstaltungType => this.after_school_care_type = veranstaltungType);
     this.veranstaltungsDaten.ausgewählteVeranstaltungsTypID.subscribe(careId => this.careId = careId);
+    this.veranstaltungsDaten.ausgewählteVeranstaltung.subscribe(name => this.veranstaltungName = name)
     console.log('veranstaltungsnummer: ' +this.after_school_care_type)
     console.log('schulid vom kind : ' +this.schoolId)
     console.log('ID vom Care : ' +this.careId)
@@ -125,8 +127,8 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
           await popover.present()
           popover.onDidDismiss().then((dataReturned) => {
               if (dataReturned.data !== null || dataReturned.role !== null) {
-             this.endzeit = dataReturned.data;
-             this.bemerkung = dataReturned.role;
+            //  this.endzeit = dataReturned.data;
+            //  this.bemerkung = dataReturned.role;
              this.bookCare(dataReturned.data, dataReturned.role)
             //  this.presentAlert(model);
           } else {
@@ -139,12 +141,14 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
 
       bookCare(endzeit, bemerkung) {
         console.log("BOOK CARE HAT BEGONNEN")
-        const attendanceDTO = {
+        console.log("Endzeit: " +endzeit)
+
+        const attendanceDTO = <AttendanceInputDTO> {
             "allowedToLeaveAfterFinishedHomework": true,
             "childUsername": "string",
             "latestArrivalTime": "2020-01-30T14:23:08.531",
-            "note": "$bemerkung",
-            "predefinedLeaveTime": "${endzeit}"
+            "note": bemerkung,
+            "predefinedLeaveTime": endzeit
           }
         
         const params = {
@@ -155,11 +159,11 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
         this.parentController.addAttendanceUsingPOST(params).toPromise().then((response)=>{
           console.log(response);
           this.alertService.presentToastSuccess('Die Veranstaltung wurde erfolgreich angelegt');
-          // this.router.navigateByUrl('parent/veranstaltung-buchen')
-
+          this.router.navigateByUrl('parent/veranstaltung-buchen')
         }).catch((error)=>{
           console.log(error);
           this.alertService.presentToastFailure("Es gab einen Fehler beim Buchen");
+          this.router.navigateByUrl('parent/veranstaltung-buchen')
         });
       }
 
