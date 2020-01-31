@@ -97,8 +97,11 @@ export class KindBearbeitenPage implements OnInit {
         text: 'OK',
         handler: ()=> {
           this.deleteChild().then((response)=>{
-            this.alertService.presentToast('Der Account wurde gelöscht');
+            console.log(response);
+            this.alertService.presentToastSuccess('Der Account wurde gelöscht');
             this.router.navigateByUrl('parent/kind-uebersicht');
+          }).catch((error)=>{
+            console.log(error);
           });
         }
       },

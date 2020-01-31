@@ -8,7 +8,8 @@ import { HttpClient } from '@angular/common/http';
 import { CountryPhone } from 'src/app/models/country-phone.model';
 import { PhoneValidator } from 'src/app/pages/erziehungsberechtigte/registrierung/phone.validator';
 import { KindUebersichtPage } from '../kind-uebersicht/kind-uebersicht.page';
-import { id } from '@swimlane/ngx-datatable';
+import { ParentControllerService } from 'src/app/api/services';
+import { SchoolDTO, ChildDTO } from 'src/app/api/models';
 
 @Component({
   selector: 'app-kind-hinzufuegen',
@@ -17,15 +18,13 @@ import { id } from '@swimlane/ngx-datatable';
 })
 export class KindHinzufuegenPage implements OnInit {
 
-  postId: any;
   validations_form: FormGroup;
   matching_passwords_group: FormGroup;
   country_phone_group: FormGroup;
   countries: Array<CountryPhone>;
-  schools: any;
-  responseData: any;
+  schools: SchoolDTO[];
 
-  constructor(public http: HttpClient, private router: Router,  private alertService: AlertService, public formBuilder: FormBuilder) { }
+  constructor(public http: HttpClient, private router: Router,  private alertService: AlertService, public formBuilder: FormBuilder, private parentController:ParentControllerService) { }
 
   ngOnInit() {
   this.getSchools();
@@ -71,36 +70,39 @@ export class KindHinzufuegenPage implements OnInit {
   }
 
   getSchools() {
-    this.http.get<school[]>(`${environment.apiUrl}/api/parent/schools`).subscribe((a) => {
-      this.schools = a;
-      console.log(a);
+    this.parentController.getSchoolsUsingGET1().toPromise().then((schools)=>{
+      this.schools = schools;
+    }).catch((error)=>{
+      console.log(error);
     });
   }
 
   createChild() {
-    const postData = {
-      "address": null,
-      "email": null,
-      "fullname": this.validations_form.get('name').value + ' ' + this.validations_form.get('lname').value,
-      "iban": null,
-      "password": null,
-      "phoneNumber": null,
-      "schoolClass": this.validations_form.get('schoolClass').value,
-      "schoolCoordinator": true,
-      "subject": null,
-      "userType": "ROLE_CHILD",
-      "username": null
-};
+    let fullname = this.validations_form.get('name').value + ' ' + this.validations_form.get('lname').value;
+    let schoolClass = this.validations_form.get('schoolClass').value;
+    let userType = "CHILD";
+    let school = this.validations_form.get('school').value;
+    const childDTO = <ChildDTO> {
+      "email":null,
+      "fullname":fullname,
+      "password":null,school,
+      "schoolClass":schoolClass,
+      "userType":userType,
+      "username":null
+    }
+    const params = {
+      "childDTO":childDTO
+    }
 
-
-const postDataBackend = {
-  "userType": "CHILD",
-  "fullname": this.validations_form.get('name').value + ' ' + this.validations_form.get('lname').value,
-  "schoolClass": this.validations_form.get('schoolClass').value,
-  "school": this.validations_form.get('school').value
-};
-
-
+    this.parentController.createChildUsingPOST(params).toPromise().then((response)=>{
+      console.log(response);
+      this.alertService.presentToastSuccess("Kind erfolgreich erzeugt");
+      this.router.navigateByUrl('parent/kind-uebersicht');
+    }).catch((error)=>{
+      console.log(error);
+      this.alertService.presentToastFailure("Fehler beim Erzeugen");
+    });
+/*
     console.log("POST");
     // tslint:disable-next-line: max-line-length
     this.http.post(`${environment.apiUrl}/api/parent/child`, postDataBackend,
@@ -119,12 +121,8 @@ const postDataBackend = {
             this.router.navigateByUrl('parent/kind-uebersicht');
           },
     });
-
+*/
   }
-
-  
-
-
 
   abort() {
     this.router.navigateByUrl('parent/kind-uebersicht');

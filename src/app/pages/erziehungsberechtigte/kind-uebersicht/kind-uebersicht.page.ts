@@ -22,6 +22,8 @@ export class KindUebersichtPage implements OnInit {
   }
 
   getChildren() {
+    this.children = [];
+
     const params = {
     };
 
@@ -34,7 +36,6 @@ export class KindUebersichtPage implements OnInit {
         //  this.mapToChildModel(child, "Keine Schule gefunden");
         //})
       //});
-      console.table(children);
     });
   }
 
@@ -51,6 +52,10 @@ export class KindUebersichtPage implements OnInit {
       }
     };
     this.router.navigateByUrl('parent/kind-bearbeiten', navigationExtras);
+  }
+
+  ionViewWillEnter(){
+    this.getChildren();
   }
 
   ngOnInit() {

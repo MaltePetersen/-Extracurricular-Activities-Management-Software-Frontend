@@ -24,13 +24,17 @@ export class ErziehungsberechtigteDashboardPage implements OnInit {
 
   ngOnInit() {
     this.veranstaltungsDaten.ausgewählteVeranstaltung.subscribe(veranstaltung => this.veranstaltung = veranstaltung);
-    //this.parentController.createChildUsingPOST(new IUserDTO).subscribe(()=>console.log("worked"));
   }
 
   getVeranstaltungen() {
-    this.http.get<school[]>(`${environment.apiUrl}/api/parent/booked_after_school_cares`).subscribe((a) => {
-      this.veranstaltungen = a;
-      console.table(a);
+    const params = {
+
+    };
+    this.parentController.getBookedAfterSchoolCaresUsingGET(params).toPromise().then((cares)=>{
+      this.veranstaltungen = cares;
+      console.table(this.veranstaltungen);
+    }).catch((error)=>{
+      console.log(error);
     });
   }
 

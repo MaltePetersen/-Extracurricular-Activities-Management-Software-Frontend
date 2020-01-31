@@ -161,9 +161,13 @@ export class SchuelerAnmeldenPage implements OnInit {
   }
 
   async presentAlertDetails(model:PupilModel){
+    let message = "Schule: " + model.school + "<br/>" + "Klasse: " + model.schoolClass + "<br/>"
+    if(model.note != null && model.note != ''){
+      message = message + "Info: " + model.note
+    }
     const alert = await this.alertController.create({
       header: model.name,
-      message: "Schule: " + model.school + "<br/>" + "Klasse: " + model.schoolClass + "<br/>" + "Info: " + model.note,
+      message: message,
       buttons: ['OK']
     });
     await alert.present();
