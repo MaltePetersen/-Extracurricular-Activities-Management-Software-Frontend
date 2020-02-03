@@ -33,6 +33,7 @@ class ParentControllerService extends __BaseService {
   static readonly deleteChildUsingDELETEPath = '/api/parent/child/{username}';
   static readonly updateChildUsingPATCHPath = '/api/parent/child/{username}';
   static readonly getChildsUsingGETPath = '/api/parent/children';
+  static readonly getSchoolUsingGET1Path = '/api/parent/school/{id}';
   static readonly getSchoolsUsingGET1Path = '/api/parent/schools';
 
   constructor(
@@ -912,6 +913,42 @@ class ParentControllerService extends __BaseService {
   getChildsUsingGET(params: ParentControllerService.GetChildsUsingGETParams): __Observable<Array<UserDTO>> {
     return this.getChildsUsingGETResponse(params).pipe(
       __map(_r => _r.body as Array<UserDTO>)
+    );
+  }
+
+  /**
+   * @param id id
+   * @return OK
+   */
+  getSchoolUsingGET1Response(id: number): __Observable<__StrictHttpResponse<SchoolDTO>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/parent/school/${id}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<SchoolDTO>;
+      })
+    );
+  }
+  /**
+   * @param id id
+   * @return OK
+   */
+  getSchoolUsingGET1(id: number): __Observable<SchoolDTO> {
+    return this.getSchoolUsingGET1Response(id).pipe(
+      __map(_r => _r.body as SchoolDTO)
     );
   }
 

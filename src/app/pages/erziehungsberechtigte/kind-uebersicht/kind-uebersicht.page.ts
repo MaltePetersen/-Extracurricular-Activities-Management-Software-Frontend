@@ -28,14 +28,14 @@ export class KindUebersichtPage implements OnInit {
     };
 
     this.parentController.getChildsUsingGET(params).toPromise().then((children)=>{
-      this.children = children;
-      //children.forEach((child)=>{
-        //this.parentController.getSchoolUsingGET(child.school).toPromise().then((school)=>{
-        //  this.mapToChildModel(child, school.name);
-        //}).catch((error)=>{
-        //  this.mapToChildModel(child, "Keine Schule gefunden");
-        //})
-      //});
+      children.forEach((child)=>{
+        this.parentController.getSchoolUsingGET1(child.school).toPromise().then((school)=>{
+          this.mapToChildModel(child, school.name);
+        }).catch((error)=>{
+          console.log(error);
+          this.mapToChildModel(child, "Keine Schule gefunden");
+        })
+      });
     });
   }
 
@@ -59,10 +59,9 @@ export class KindUebersichtPage implements OnInit {
   }
 
   ngOnInit() {
-    this.getChildren();
   }
 
-  navToKindHinzu() {
+  addChild() {
     this.router.navigateByUrl('parent/kind-hinzufuegen');
   }
 

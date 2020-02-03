@@ -16,52 +16,16 @@ import { AfterSchoolCareDTO } from '../models/after-school-care-dto';
   providedIn: 'root',
 })
 class SchoolCoordinatorControllerService extends __BaseService {
-  static readonly addAWorkingGroupUsingPOSTPath = '/api/sc/add';
   static readonly getWorkingGroupByIdUsingGETPath = '/api/sc/ag';
+  static readonly addAWorkingGroupUsingPOSTPath = '/api/sc/ag';
+  static readonly removeWorkingGroupUsingDELETEPath = '/api/sc/ag';
   static readonly getMyWorkingGroupUsingGETPath = '/api/sc/ags';
-  static readonly removeWorkingGroupUsingGETPath = '/api/sc/delete';
 
   constructor(
     config: __Configuration,
     http: HttpClient
   ) {
     super(config, http);
-  }
-
-  /**
-   * @param afterSchoolCareDTO afterSchoolCareDTO
-   * @return OK
-   */
-  addAWorkingGroupUsingPOSTResponse(afterSchoolCareDTO: AfterSchoolCareDTO): __Observable<__StrictHttpResponse<AfterSchoolCareDTO>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-    __body = afterSchoolCareDTO;
-    let req = new HttpRequest<any>(
-      'POST',
-      this.rootUrl + `/api/sc/add`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<AfterSchoolCareDTO>;
-      })
-    );
-  }
-  /**
-   * @param afterSchoolCareDTO afterSchoolCareDTO
-   * @return OK
-   */
-  addAWorkingGroupUsingPOST(afterSchoolCareDTO: AfterSchoolCareDTO): __Observable<AfterSchoolCareDTO> {
-    return this.addAWorkingGroupUsingPOSTResponse(afterSchoolCareDTO).pipe(
-      __map(_r => _r.body as AfterSchoolCareDTO)
-    );
   }
 
   /**
@@ -132,6 +96,109 @@ class SchoolCoordinatorControllerService extends __BaseService {
   }
 
   /**
+   * @param afterSchoolCareDTO afterSchoolCareDTO
+   * @return OK
+   */
+  addAWorkingGroupUsingPOSTResponse(afterSchoolCareDTO: AfterSchoolCareDTO): __Observable<__StrictHttpResponse<AfterSchoolCareDTO>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = afterSchoolCareDTO;
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/api/sc/ag`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<AfterSchoolCareDTO>;
+      })
+    );
+  }
+  /**
+   * @param afterSchoolCareDTO afterSchoolCareDTO
+   * @return OK
+   */
+  addAWorkingGroupUsingPOST(afterSchoolCareDTO: AfterSchoolCareDTO): __Observable<AfterSchoolCareDTO> {
+    return this.addAWorkingGroupUsingPOSTResponse(afterSchoolCareDTO).pipe(
+      __map(_r => _r.body as AfterSchoolCareDTO)
+    );
+  }
+
+  /**
+   * @param params The `SchoolCoordinatorControllerService.RemoveWorkingGroupUsingDELETEParams` containing the following parameters:
+   *
+   * - `id`: id
+   *
+   * - `principal`:
+   *
+   * - `details`:
+   *
+   * - `credentials`:
+   *
+   * - `authorities[0].authority`:
+   *
+   * - `authenticated`:
+   *
+   * @return OK
+   */
+  removeWorkingGroupUsingDELETEResponse(params: SchoolCoordinatorControllerService.RemoveWorkingGroupUsingDELETEParams): __Observable<__StrictHttpResponse<string>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    if (params.principal != null) __params = __params.set('principal', params.principal.toString());
+    if (params.details != null) __params = __params.set('details', params.details.toString());
+    if (params.credentials != null) __params = __params.set('credentials', params.credentials.toString());
+    if (params.authorities0Authority != null) __params = __params.set('authorities[0].authority', params.authorities0Authority.toString());
+    if (params.authenticated != null) __params = __params.set('authenticated', params.authenticated.toString());
+    let req = new HttpRequest<any>(
+      'DELETE',
+      this.rootUrl + `/api/sc/ag`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'text'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<string>;
+      })
+    );
+  }
+  /**
+   * @param params The `SchoolCoordinatorControllerService.RemoveWorkingGroupUsingDELETEParams` containing the following parameters:
+   *
+   * - `id`: id
+   *
+   * - `principal`:
+   *
+   * - `details`:
+   *
+   * - `credentials`:
+   *
+   * - `authorities[0].authority`:
+   *
+   * - `authenticated`:
+   *
+   * @return OK
+   */
+  removeWorkingGroupUsingDELETE(params: SchoolCoordinatorControllerService.RemoveWorkingGroupUsingDELETEParams): __Observable<string> {
+    return this.removeWorkingGroupUsingDELETEResponse(params).pipe(
+      __map(_r => _r.body as string)
+    );
+  }
+
+  /**
    * @param params The `SchoolCoordinatorControllerService.GetMyWorkingGroupUsingGETParams` containing the following parameters:
    *
    * - `principal`:
@@ -192,73 +259,6 @@ class SchoolCoordinatorControllerService extends __BaseService {
       __map(_r => _r.body as Array<AfterSchoolCareDTO>)
     );
   }
-
-  /**
-   * @param params The `SchoolCoordinatorControllerService.RemoveWorkingGroupUsingGETParams` containing the following parameters:
-   *
-   * - `id`: id
-   *
-   * - `principal`:
-   *
-   * - `details`:
-   *
-   * - `credentials`:
-   *
-   * - `authorities[0].authority`:
-   *
-   * - `authenticated`:
-   *
-   * @return OK
-   */
-  removeWorkingGroupUsingGETResponse(params: SchoolCoordinatorControllerService.RemoveWorkingGroupUsingGETParams): __Observable<__StrictHttpResponse<string>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-    if (params.principal != null) __params = __params.set('principal', params.principal.toString());
-    if (params.details != null) __params = __params.set('details', params.details.toString());
-    if (params.credentials != null) __params = __params.set('credentials', params.credentials.toString());
-    if (params.authorities0Authority != null) __params = __params.set('authorities[0].authority', params.authorities0Authority.toString());
-    if (params.authenticated != null) __params = __params.set('authenticated', params.authenticated.toString());
-    let req = new HttpRequest<any>(
-      'GET',
-      this.rootUrl + `/api/sc/delete`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'text'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<string>;
-      })
-    );
-  }
-  /**
-   * @param params The `SchoolCoordinatorControllerService.RemoveWorkingGroupUsingGETParams` containing the following parameters:
-   *
-   * - `id`: id
-   *
-   * - `principal`:
-   *
-   * - `details`:
-   *
-   * - `credentials`:
-   *
-   * - `authorities[0].authority`:
-   *
-   * - `authenticated`:
-   *
-   * @return OK
-   */
-  removeWorkingGroupUsingGET(params: SchoolCoordinatorControllerService.RemoveWorkingGroupUsingGETParams): __Observable<string> {
-    return this.removeWorkingGroupUsingGETResponse(params).pipe(
-      __map(_r => _r.body as string)
-    );
-  }
 }
 
 module SchoolCoordinatorControllerService {
@@ -280,9 +280,14 @@ module SchoolCoordinatorControllerService {
   }
 
   /**
-   * Parameters for getMyWorkingGroupUsingGET
+   * Parameters for removeWorkingGroupUsingDELETE
    */
-  export interface GetMyWorkingGroupUsingGETParams {
+  export interface RemoveWorkingGroupUsingDELETEParams {
+
+    /**
+     * id
+     */
+    id: number;
     principal?: {};
     details?: {};
     credentials?: {};
@@ -291,14 +296,9 @@ module SchoolCoordinatorControllerService {
   }
 
   /**
-   * Parameters for removeWorkingGroupUsingGET
+   * Parameters for getMyWorkingGroupUsingGET
    */
-  export interface RemoveWorkingGroupUsingGETParams {
-
-    /**
-     * id
-     */
-    id: number;
+  export interface GetMyWorkingGroupUsingGETParams {
     principal?: {};
     details?: {};
     credentials?: {};

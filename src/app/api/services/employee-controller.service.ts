@@ -26,6 +26,7 @@ class EmployeeControllerService extends __BaseService {
   static readonly createAfterSchoolCareUsingPOSTPath = '/api/employee/after_school_cares';
   static readonly getAfterSchoolCareUsingGETPath = '/api/employee/after_school_cares/{id}';
   static readonly deleteAfterSchoolCareUsingDELETEPath = '/api/employee/after_school_cares/{id}';
+  static readonly closeAfterSchoolCareUsingPATCHPath = '/api/employee/after_school_cares/{id}/close';
   static readonly updateAttendanceUsingPATCHPath = '/api/employee/attendance/{id}';
   static readonly createInvoiceUsingPOSTPath = '/api/employee/invoice';
   static readonly getInvoicesUsingGETPath = '/api/employee/invoice/{id}';
@@ -235,6 +236,42 @@ class EmployeeControllerService extends __BaseService {
   deleteAfterSchoolCareUsingDELETE(id: number): __Observable<null> {
     return this.deleteAfterSchoolCareUsingDELETEResponse(id).pipe(
       __map(_r => _r.body as null)
+    );
+  }
+
+  /**
+   * @param id id
+   * @return OK
+   */
+  closeAfterSchoolCareUsingPATCHResponse(id: number): __Observable<__StrictHttpResponse<ResponseEntity>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'PATCH',
+      this.rootUrl + `/api/employee/after_school_cares/${id}/close`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<ResponseEntity>;
+      })
+    );
+  }
+  /**
+   * @param id id
+   * @return OK
+   */
+  closeAfterSchoolCareUsingPATCH(id: number): __Observable<ResponseEntity> {
+    return this.closeAfterSchoolCareUsingPATCHResponse(id).pipe(
+      __map(_r => _r.body as ResponseEntity)
     );
   }
 

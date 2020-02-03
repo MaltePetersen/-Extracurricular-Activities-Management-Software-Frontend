@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavParams, PopoverController } from '@ionic/angular';
 import { EmployeeControllerService } from 'src/app/api/services';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-anwesenheit-popover',
@@ -13,7 +14,7 @@ export class AnwesenheitPopoverComponent implements OnInit {
   private isPresent:boolean;
   private homePage:any;
   
-  constructor(private navParams: NavParams, private employeeController:EmployeeControllerService, private viewController:PopoverController) {
+  constructor(private navParams: NavParams, private employeeController:EmployeeControllerService, private viewController:PopoverController, private alerService:AlertService) {
   }
 
   ngOnInit() {
@@ -41,8 +42,10 @@ export class AnwesenheitPopoverComponent implements OnInit {
 
     this.employeeController.updateAttendanceUsingPATCH(patch).toPromise().then((response)=>{
       this.homePage.updatePupil(response, this.id);
+      this.alerService.presentToastSuccess("Status zurückgesetzt");
     }).catch((error)=>{
       console.log(error);
+      this.alerService.presentToastFailure("Status konnte nicht zurückgesetzt werden");
     });
     this.viewController.dismiss();
   }

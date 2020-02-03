@@ -102,6 +102,7 @@ export class KindBearbeitenPage implements OnInit {
             this.router.navigateByUrl('parent/kind-uebersicht');
           }).catch((error)=>{
             console.log(error);
+            this.alertService.presentToastFailure("Der Account konnte nicht gelöscht werden");
           });
         }
       },

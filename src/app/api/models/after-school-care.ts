@@ -4,6 +4,7 @@ import { User } from './user';
 import { School } from './school';
 export interface AfterSchoolCare {
   attendances?: Array<Attendance>;
+  closed?: boolean;
   endTime?: string;
   id?: number;
   name?: string;
