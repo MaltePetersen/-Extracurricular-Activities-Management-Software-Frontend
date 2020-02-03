@@ -8,11 +8,22 @@
   </div>
   <div class="veranstaltung-container">
     <ion-item *ngFor="let care of afterSchoolCares" lines="none" class="veranstaltung-item" (click)="chooseOffer(care.name)">
-      <div class="veranstaltung-content-container">
-          <ion-row>
+      <div class="veranstaltung-content-container" >
+          <ion-row class="dayrow">
+            <span class="button-organization
+              ">
           <ion-label class="day-label">
             {{care.startTime | amLocale:'de' | amDateFormat:'dddd'}}
           </ion-label>
+        </span>
+          <span >
+          <ion-button (click)="$event.stopPropagation();" class="detail-button">
+            Details
+          </ion-button>
+          <ion-button (click)="presentPopover();$event.stopPropagation();">
+            <ion-icon slot="icon-only" name="md-more"></ion-icon>
+          </ion-button>
+        </span>
         </ion-row>
         <ion-row>
           <ion-label class="day-label">

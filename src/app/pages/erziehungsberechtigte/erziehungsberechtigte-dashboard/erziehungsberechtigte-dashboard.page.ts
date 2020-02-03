@@ -31,7 +31,7 @@ export class ErziehungsberechtigteDashboardPage implements OnInit {
     this.afterSchoolCares = [];
     const params = { };
     this.parentController.getBookedAfterSchoolCaresUsingGET(params).toPromise().then((cares)=>{
-      this.veranstaltungen = cares;
+      // this.veranstaltungen = cares;
       cares.forEach((response)=>{
         for (let i = 0; i < response.attendances.length; i++) {
         this.afterSchoolCares.push({"startTime":response.startTime, "name": response.name, "endTime": response.endTime, "childName":response.attendances[i].child.fullname});

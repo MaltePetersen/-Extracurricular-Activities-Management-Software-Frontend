@@ -30,10 +30,11 @@ ion-item{
     width: 100%;
 }
 .veranstaltung-content-container{
+
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: left;
     justify-content: flex-end;
 }
 .tag-label{
@@ -52,6 +53,7 @@ ion-item{
 }
 .day-label{
     font-weight: bold;
+    
 }
 .name-row{
     margin-top: 0.5em;
@@ -64,4 +66,15 @@ ion-item{
 }
 .time-label{
 
+}
+.dayrow{
+    width: 100%; 
+    display:flex;
+    justify-content:center;
+}
+.button-organization{
+    flex:1;
+    display: flex;
+    justify-content: left;
+    // transform: translateX(65px);
 }
