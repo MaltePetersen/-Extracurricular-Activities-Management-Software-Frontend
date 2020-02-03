@@ -8,6 +8,7 @@ import { EmployeeControllerService } from 'src/app/api/services';
 import { AfterSchoolCare, AfterSchoolCareDTO, SchoolDTO, AttendanceDTO, SimpleUserDTO } from 'src/app/api/models';
 import moment from 'moment';
 import { PupilModel } from 'src/app/models/pupilModel';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-schueler-anmelden',
@@ -26,7 +27,7 @@ export class SchuelerAnmeldenPage implements OnInit {
   care:AfterSchoolCareDTO;
   endOfCare:string = '';
   
-  constructor(private alertController:AlertController, public router:Router, public popoverController:PopoverController, private employeeController:EmployeeControllerService) { 
+  constructor(private alertController:AlertController, public router:Router, public popoverController:PopoverController, private employeeController:EmployeeControllerService, private alertService: AlertService) { 
   }
 
   ngOnInit() {
@@ -100,6 +101,10 @@ export class SchuelerAnmeldenPage implements OnInit {
     };
     this.employeeController.updateAttendanceUsingPATCH(patch).toPromise().then(response => {
       this.updatePupil(response, id);
+      this.alertService.presentToastSuccess("Status erfolgreich geändert");
+    }).catch((error)=>{
+      console.log(error);
+      this.alertService.presentToastFailure("Änderung fehlgeschlagen");
     });
   }
 
@@ -114,6 +119,10 @@ export class SchuelerAnmeldenPage implements OnInit {
     };
     this.employeeController.updateAttendanceUsingPATCH(patch).toPromise().then(response => {
       this.updatePupil(response, id);
+      this.alertService.presentToastSuccess("Status erfolgreich geändert");
+    }).catch((error)=>{
+      console.log(error);
+      this.alertService.presentToastFailure("Änderung fehlgeschlagen");
     });
   }
 
@@ -139,25 +148,14 @@ export class SchuelerAnmeldenPage implements OnInit {
     this.selectedClass = "Alle";
   }
 
-  async presentAlertLock(){
-    const alert = await this.alertController.create({
-      header: "Anwesenheitsliste sperren",
-      message: "Soll die Anwesenheitsliste wirklich gesperrt werden?",
-      buttons: [
-        {
-          text: 'Abbrechen',
-          handler: () => {
-          }
-        },
-        {
-          text: 'Ok',
-          handler: () => {
-            console.log("sperren");
-          }
-        }
-      ]
+  lockAfterSchoolCare(){
+    this.employeeController.closeAfterSchoolCareUsingPATCH(this.listId).toPromise().then((response)=>{
+      console.log(response);
+      this.alertService.presentToastSuccess("Veranstaltung erfolgreich gesperrt");
+    }).catch((error)=>{
+      console.log(error);
+      this.alertService.presentToastFailure("Veranstaltung konnte nicht gesperrt werden");
     });
-    await alert.present();
   }
 
   async presentAlertDetails(model:PupilModel){
@@ -213,6 +211,27 @@ export class SchuelerAnmeldenPage implements OnInit {
     } else if(model.status == 3){
       await alertLeft.present();
     }
+  }
+
+  async presentAlertLock(){
+    const alert = await this.alertController.create({
+      header: "Veranstaltung sperren",
+      message: "Wollen Sie die Veranstaltung wirklich sperren?",
+      buttons: [
+        {
+          text: 'Abbrechen',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Ok',
+          handler: () => {
+            this.lockAfterSchoolCare();
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
   async presentPopover(ev: any, id:string, status:number) {

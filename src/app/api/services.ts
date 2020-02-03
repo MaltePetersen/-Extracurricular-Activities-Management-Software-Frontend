@@ -1,5 +1,5 @@
-export { EmployeeControllerService } from './services/employee-controller.service';
 export { ManagementControllerService } from './services/management-controller.service';
+export { EmployeeControllerService } from './services/employee-controller.service';
 export { ParentControllerService } from './services/parent-controller.service';
 export { SchoolCoordinatorControllerService } from './services/school-coordinator-controller.service';
 export { BasicErrorControllerService } from './services/basic-error-controller.service';

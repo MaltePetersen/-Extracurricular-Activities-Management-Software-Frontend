@@ -27,32 +27,37 @@ export class KindHinzufuegenPage implements OnInit {
   constructor(public http: HttpClient, private router: Router,  private alertService: AlertService, public formBuilder: FormBuilder, private parentController:ParentControllerService) { }
 
   ngOnInit() {
-  this.getSchools();
+    this.getSchools();
     this.countries = [
       new CountryPhone('DE', 'Germany'),
     ];
 
-    this.matching_passwords_group = new FormGroup({
-      password: new FormControl('', Validators.compose([
-        Validators.minLength(5),
-        Validators.required,
-        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
-      ])),
-      confirm_password: new FormControl('', Validators.required)
-    }, (formGroup: FormGroup) => {
+    this.matching_passwords_group = new FormGroup(
+      {
+        password: new FormControl('', Validators.compose(
+          [
+            Validators.minLength(5),
+            Validators.required,
+            Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
+          ])),
+        confirm_password: new FormControl('', Validators.required)
+      }, (formGroup: FormGroup) => {
       return PasswordValidator.areEqual(formGroup);
     });
     let country = new FormControl(this.countries[0], Validators.required);
-    let phone = new FormControl('', Validators.compose([
-    Validators.required,
-    PhoneValidator.validCountryPhone(country)
+    let phone = new FormControl('', Validators.compose(
+      [
+        Validators.required,
+        PhoneValidator.validCountryPhone(country)
       ]));
-      this.country_phone_group = new FormGroup({
+      this.country_phone_group = new FormGroup(
+      {
         country: country,
         phone: phone
       });
 
-    this.validations_form = this.formBuilder.group({
+    this.validations_form = this.formBuilder.group(
+      {
       // username: new FormControl('', Validators.compose([
       //   UsernameValidator.validUsername,
       //   Validators.maxLength(25),
@@ -61,12 +66,12 @@ export class KindHinzufuegenPage implements OnInit {
       //   Validators.required
       // ])),
       // matching_passwords: this.matching_passwords_group,
-      name: new FormControl('', Validators.required),
-      lname: new FormControl('', Validators.required),
-      country_phone: this.country_phone_group,
-      school: new FormControl('', Validators.required),
-      schoolClass: new FormControl('', Validators.required)
-    });
+        name: new FormControl('', Validators.required),
+        lname: new FormControl('', Validators.required),
+        country_phone: this.country_phone_group,
+        school: new FormControl('', Validators.required),
+        schoolClass: new FormControl('', Validators.required)
+      });
   }
 
   getSchools() {
@@ -96,32 +101,12 @@ export class KindHinzufuegenPage implements OnInit {
 
     this.parentController.createChildUsingPOST(params).toPromise().then((response)=>{
       console.log(response);
-      this.alertService.presentToastSuccess("Kind erfolgreich erzeugt");
+      this.alertService.presentToastSuccess("Kind erfolgreich angelegt");
       this.router.navigateByUrl('parent/kind-uebersicht');
     }).catch((error)=>{
       console.log(error);
-      this.alertService.presentToastFailure("Fehler beim Erzeugen");
+      this.alertService.presentToastFailure("Fehler beim Anlegen");
     });
-/*
-    console.log("POST");
-    // tslint:disable-next-line: max-line-length
-    this.http.post(`${environment.apiUrl}/api/parent/child`, postDataBackend,
-        {
-        headers: {
-          'content-type': 'application/JSON',
-        }
-      },
-    ).subscribe({
-      // tslint:disable-next-line: max-line-length
-      next: () => {this.alertService.presentToast(this.validations_form.get('name').value + ' ' + this.validations_form.get('lname').value +' wurde erfolgreich angelegt.');
-                    this.router.navigateByUrl('parent/kind-uebersicht')},
-      error: error => {
-            console.log(error);
-            this.alertService.presentToast('Es gab einen Fehler bei der Erstellung');
-            this.router.navigateByUrl('parent/kind-uebersicht');
-          },
-    });
-*/
   }
 
   abort() {

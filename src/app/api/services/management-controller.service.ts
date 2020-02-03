@@ -7,6 +7,8 @@ import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-respo
 import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
+import { AfterSchoolCareDTO } from '../models/after-school-care-dto';
+import { AttendanceDTO } from '../models/attendance-dto';
 import { UserDTO } from '../models/user-dto';
 
 /**
@@ -16,14 +18,18 @@ import { UserDTO } from '../models/user-dto';
   providedIn: 'root',
 })
 class ManagementControllerService extends __BaseService {
-  static readonly getAttendanceListByIdUsingGETPath = '/api/management/attendanceList/{id}';
-  static readonly deleteAttendanceListByIdUsingDELETEPath = '/api/management/attendanceList/{id}';
-  static readonly patchAttendanceListByIdUsingPATCHPath = '/api/management/attendanceList/{id}';
-  static readonly getAllAttendanceListsUsingGETPath = '/api/management/attendanceLists';
-  static readonly allNotEnabledUserUsingGETPath = '/api/management/not_enabled_users';
-  static readonly getNumberOfParticipantsUsingGETPath = '/api/management/number_of_participants';
-  static readonly registerUsingPOSTPath = '/api/management/register';
-  static readonly getAllUsersUsingGETPath = '/api/management/users';
+  static readonly getAllAfterSchoolCareServicesUsingGETPath = '/afterSchoolCare';
+  static readonly geAfterSchoolCareByIdUsingGETPath = '/afterSchoolCare/{id}';
+  static readonly deleteAfterSchoolCareUsingDELETE1Path = '/afterSchoolCare/{id}';
+  static readonly patchAfterSchoolCareUsingPATCHPath = '/afterSchoolCare/{id}';
+  static readonly getAttendanceListByIdUsingGETPath = '/attendanceList/{id}';
+  static readonly deleteAttendanceListByIdUsingDELETEPath = '/attendanceList/{id}';
+  static readonly patchAttendanceListByIdUsingPATCHPath = '/attendanceList/{id}';
+  static readonly getAllAttendanceListsUsingGETPath = '/attendanceLists';
+  static readonly allNotEnabledUserUsingGETPath = '/not_enabled_users';
+  static readonly getNumberOfParticipantsUsingGETPath = '/number_of_participants';
+  static readonly registerUsingPOSTPath = '/register';
+  static readonly getAllUsersUsingGETPath = '/users';
 
   constructor(
     config: __Configuration,
@@ -33,17 +39,15 @@ class ManagementControllerService extends __BaseService {
   }
 
   /**
-   * @param id id
    * @return OK
    */
-  getAttendanceListByIdUsingGETResponse(id: number): __Observable<__StrictHttpResponse<{}>> {
+  getAllAfterSchoolCareServicesUsingGETResponse(): __Observable<__StrictHttpResponse<Array<AfterSchoolCareDTO>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/management/attendanceList/${id}`,
+      this.rootUrl + `/afterSchoolCare`,
       __body,
       {
         headers: __headers,
@@ -54,7 +58,42 @@ class ManagementControllerService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<Array<AfterSchoolCareDTO>>;
+      })
+    );
+  }
+  /**
+   * @return OK
+   */
+  getAllAfterSchoolCareServicesUsingGET(): __Observable<Array<AfterSchoolCareDTO>> {
+    return this.getAllAfterSchoolCareServicesUsingGETResponse().pipe(
+      __map(_r => _r.body as Array<AfterSchoolCareDTO>)
+    );
+  }
+
+  /**
+   * @param id id
+   * @return OK
+   */
+  geAfterSchoolCareByIdUsingGETResponse(id: number): __Observable<__StrictHttpResponse<AfterSchoolCareDTO>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/afterSchoolCare/${id}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<AfterSchoolCareDTO>;
       })
     );
   }
@@ -62,30 +101,77 @@ class ManagementControllerService extends __BaseService {
    * @param id id
    * @return OK
    */
-  getAttendanceListByIdUsingGET(id: number): __Observable<{}> {
-    return this.getAttendanceListByIdUsingGETResponse(id).pipe(
-      __map(_r => _r.body as {})
+  geAfterSchoolCareByIdUsingGET(id: number): __Observable<AfterSchoolCareDTO> {
+    return this.geAfterSchoolCareByIdUsingGETResponse(id).pipe(
+      __map(_r => _r.body as AfterSchoolCareDTO)
     );
   }
 
   /**
-   * @param params The `ManagementControllerService.DeleteAttendanceListByIdUsingDELETEParams` containing the following parameters:
-   *
-   * - `newAttendanceList`: newAttendanceList
+   * @param params The `ManagementControllerService.DeleteAfterSchoolCareUsingDELETE1Params` containing the following parameters:
    *
    * - `id`: id
    *
+   * - `afterSchoolCareDTO`: afterSchoolCareDTO
+   *
    * @return OK
    */
-  deleteAttendanceListByIdUsingDELETEResponse(params: ManagementControllerService.DeleteAttendanceListByIdUsingDELETEParams): __Observable<__StrictHttpResponse<{}>> {
+  deleteAfterSchoolCareUsingDELETE1Response(params: ManagementControllerService.DeleteAfterSchoolCareUsingDELETE1Params): __Observable<__StrictHttpResponse<string>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    __body = params.newAttendanceList;
 
+    __body = params.afterSchoolCareDTO;
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/api/management/attendanceList/${params.id}`,
+      this.rootUrl + `/afterSchoolCare/${params.id}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'text'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<string>;
+      })
+    );
+  }
+  /**
+   * @param params The `ManagementControllerService.DeleteAfterSchoolCareUsingDELETE1Params` containing the following parameters:
+   *
+   * - `id`: id
+   *
+   * - `afterSchoolCareDTO`: afterSchoolCareDTO
+   *
+   * @return OK
+   */
+  deleteAfterSchoolCareUsingDELETE1(params: ManagementControllerService.DeleteAfterSchoolCareUsingDELETE1Params): __Observable<string> {
+    return this.deleteAfterSchoolCareUsingDELETE1Response(params).pipe(
+      __map(_r => _r.body as string)
+    );
+  }
+
+  /**
+   * @param params The `ManagementControllerService.PatchAfterSchoolCareUsingPATCHParams` containing the following parameters:
+   *
+   * - `id`: id
+   *
+   * - `afterSchoolCareDTO`: afterSchoolCareDTO
+   *
+   * @return OK
+   */
+  patchAfterSchoolCareUsingPATCHResponse(params: ManagementControllerService.PatchAfterSchoolCareUsingPATCHParams): __Observable<__StrictHttpResponse<AfterSchoolCareDTO>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    __body = params.afterSchoolCareDTO;
+    let req = new HttpRequest<any>(
+      'PATCH',
+      this.rootUrl + `/afterSchoolCare/${params.id}`,
       __body,
       {
         headers: __headers,
@@ -96,43 +182,126 @@ class ManagementControllerService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<AfterSchoolCareDTO>;
+      })
+    );
+  }
+  /**
+   * @param params The `ManagementControllerService.PatchAfterSchoolCareUsingPATCHParams` containing the following parameters:
+   *
+   * - `id`: id
+   *
+   * - `afterSchoolCareDTO`: afterSchoolCareDTO
+   *
+   * @return OK
+   */
+  patchAfterSchoolCareUsingPATCH(params: ManagementControllerService.PatchAfterSchoolCareUsingPATCHParams): __Observable<AfterSchoolCareDTO> {
+    return this.patchAfterSchoolCareUsingPATCHResponse(params).pipe(
+      __map(_r => _r.body as AfterSchoolCareDTO)
+    );
+  }
+
+  /**
+   * @param id id
+   * @return OK
+   */
+  getAttendanceListByIdUsingGETResponse(id: number): __Observable<__StrictHttpResponse<AttendanceDTO>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/attendanceList/${id}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<AttendanceDTO>;
+      })
+    );
+  }
+  /**
+   * @param id id
+   * @return OK
+   */
+  getAttendanceListByIdUsingGET(id: number): __Observable<AttendanceDTO> {
+    return this.getAttendanceListByIdUsingGETResponse(id).pipe(
+      __map(_r => _r.body as AttendanceDTO)
+    );
+  }
+
+  /**
+   * @param params The `ManagementControllerService.DeleteAttendanceListByIdUsingDELETEParams` containing the following parameters:
+   *
+   * - `id`: id
+   *
+   * - `newAttendanceList`: newAttendanceList
+   *
+   * @return OK
+   */
+  deleteAttendanceListByIdUsingDELETEResponse(params: ManagementControllerService.DeleteAttendanceListByIdUsingDELETEParams): __Observable<__StrictHttpResponse<string>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    __body = params.newAttendanceList;
+    let req = new HttpRequest<any>(
+      'DELETE',
+      this.rootUrl + `/attendanceList/${params.id}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'text'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<string>;
       })
     );
   }
   /**
    * @param params The `ManagementControllerService.DeleteAttendanceListByIdUsingDELETEParams` containing the following parameters:
    *
-   * - `newAttendanceList`: newAttendanceList
-   *
    * - `id`: id
+   *
+   * - `newAttendanceList`: newAttendanceList
    *
    * @return OK
    */
-  deleteAttendanceListByIdUsingDELETE(params: ManagementControllerService.DeleteAttendanceListByIdUsingDELETEParams): __Observable<{}> {
+  deleteAttendanceListByIdUsingDELETE(params: ManagementControllerService.DeleteAttendanceListByIdUsingDELETEParams): __Observable<string> {
     return this.deleteAttendanceListByIdUsingDELETEResponse(params).pipe(
-      __map(_r => _r.body as {})
+      __map(_r => _r.body as string)
     );
   }
 
   /**
    * @param params The `ManagementControllerService.PatchAttendanceListByIdUsingPATCHParams` containing the following parameters:
    *
-   * - `newAttendanceList`: newAttendanceList
-   *
    * - `id`: id
+   *
+   * - `attendanceDTO`: attendanceDTO
    *
    * @return OK
    */
-  patchAttendanceListByIdUsingPATCHResponse(params: ManagementControllerService.PatchAttendanceListByIdUsingPATCHParams): __Observable<__StrictHttpResponse<{}>> {
+  patchAttendanceListByIdUsingPATCHResponse(params: ManagementControllerService.PatchAttendanceListByIdUsingPATCHParams): __Observable<__StrictHttpResponse<AttendanceDTO>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    __body = params.newAttendanceList;
 
+    __body = params.attendanceDTO;
     let req = new HttpRequest<any>(
       'PATCH',
-      this.rootUrl + `/api/management/attendanceList/${params.id}`,
+      this.rootUrl + `/attendanceList/${params.id}`,
       __body,
       {
         headers: __headers,
@@ -143,35 +312,35 @@ class ManagementControllerService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<AttendanceDTO>;
       })
     );
   }
   /**
    * @param params The `ManagementControllerService.PatchAttendanceListByIdUsingPATCHParams` containing the following parameters:
    *
-   * - `newAttendanceList`: newAttendanceList
-   *
    * - `id`: id
+   *
+   * - `attendanceDTO`: attendanceDTO
    *
    * @return OK
    */
-  patchAttendanceListByIdUsingPATCH(params: ManagementControllerService.PatchAttendanceListByIdUsingPATCHParams): __Observable<{}> {
+  patchAttendanceListByIdUsingPATCH(params: ManagementControllerService.PatchAttendanceListByIdUsingPATCHParams): __Observable<AttendanceDTO> {
     return this.patchAttendanceListByIdUsingPATCHResponse(params).pipe(
-      __map(_r => _r.body as {})
+      __map(_r => _r.body as AttendanceDTO)
     );
   }
 
   /**
    * @return OK
    */
-  getAllAttendanceListsUsingGETResponse(): __Observable<__StrictHttpResponse<Array<{}>>> {
+  getAllAttendanceListsUsingGETResponse(): __Observable<__StrictHttpResponse<Array<AttendanceDTO>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/management/attendanceLists`,
+      this.rootUrl + `/attendanceLists`,
       __body,
       {
         headers: __headers,
@@ -182,16 +351,16 @@ class ManagementControllerService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<Array<{}>>;
+        return _r as __StrictHttpResponse<Array<AttendanceDTO>>;
       })
     );
   }
   /**
    * @return OK
    */
-  getAllAttendanceListsUsingGET(): __Observable<Array<{}>> {
+  getAllAttendanceListsUsingGET(): __Observable<Array<AttendanceDTO>> {
     return this.getAllAttendanceListsUsingGETResponse().pipe(
-      __map(_r => _r.body as Array<{}>)
+      __map(_r => _r.body as Array<AttendanceDTO>)
     );
   }
 
@@ -204,7 +373,7 @@ class ManagementControllerService extends __BaseService {
     let __body: any = null;
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/management/not_enabled_users`,
+      this.rootUrl + `/not_enabled_users`,
       __body,
       {
         headers: __headers,
@@ -237,7 +406,7 @@ class ManagementControllerService extends __BaseService {
     let __body: any = null;
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/management/number_of_participants`,
+      this.rootUrl + `/number_of_participants`,
       __body,
       {
         headers: __headers,
@@ -398,7 +567,7 @@ class ManagementControllerService extends __BaseService {
     (params.allErrors0Arguments || []).forEach(val => {if (val != null) __params = __params.append('allErrors[0].arguments', val.toString())});
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/api/management/register`,
+      this.rootUrl + `/register`,
       __body,
       {
         headers: __headers,
@@ -509,15 +678,17 @@ class ManagementControllerService extends __BaseService {
   }
 
   /**
+   * @param type type
    * @return OK
    */
-  getAllUsersUsingGETResponse(): __Observable<__StrictHttpResponse<Array<UserDTO>>> {
+  getAllUsersUsingGETResponse(type?: number): __Observable<__StrictHttpResponse<Array<UserDTO>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
+    if (type != null) __params = __params.set('type', type.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/management/users`,
+      this.rootUrl + `/users`,
       __body,
       {
         headers: __headers,
@@ -533,10 +704,11 @@ class ManagementControllerService extends __BaseService {
     );
   }
   /**
+   * @param type type
    * @return OK
    */
-  getAllUsersUsingGET(): __Observable<Array<UserDTO>> {
-    return this.getAllUsersUsingGETResponse().pipe(
+  getAllUsersUsingGET(type?: number): __Observable<Array<UserDTO>> {
+    return this.getAllUsersUsingGETResponse(type).pipe(
       __map(_r => _r.body as Array<UserDTO>)
     );
   }
@@ -545,19 +717,51 @@ class ManagementControllerService extends __BaseService {
 module ManagementControllerService {
 
   /**
-   * Parameters for deleteAttendanceListByIdUsingDELETE
+   * Parameters for deleteAfterSchoolCareUsingDELETE1
    */
-  export interface DeleteAttendanceListByIdUsingDELETEParams {
-
-    /**
-     * newAttendanceList
-     */
-    newAttendanceList: {};
+  export interface DeleteAfterSchoolCareUsingDELETE1Params {
 
     /**
      * id
      */
     id: number;
+
+    /**
+     * afterSchoolCareDTO
+     */
+    afterSchoolCareDTO?: AfterSchoolCareDTO;
+  }
+
+  /**
+   * Parameters for patchAfterSchoolCareUsingPATCH
+   */
+  export interface PatchAfterSchoolCareUsingPATCHParams {
+
+    /**
+     * id
+     */
+    id: number;
+
+    /**
+     * afterSchoolCareDTO
+     */
+    afterSchoolCareDTO: AfterSchoolCareDTO;
+  }
+
+  /**
+   * Parameters for deleteAttendanceListByIdUsingDELETE
+   */
+  export interface DeleteAttendanceListByIdUsingDELETEParams {
+
+    /**
+     * id
+     */
+    id: number;
+
+    /**
+     * newAttendanceList
+     */
+    newAttendanceList?: AttendanceDTO;
   }
 
   /**
@@ -566,14 +770,14 @@ module ManagementControllerService {
   export interface PatchAttendanceListByIdUsingPATCHParams {
 
     /**
-     * newAttendanceList
-     */
-    newAttendanceList: {};
-
-    /**
      * id
      */
     id: number;
+
+    /**
+     * attendanceDTO
+     */
+    attendanceDTO: AttendanceDTO;
   }
 
   /**
