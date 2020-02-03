@@ -6,6 +6,8 @@ import { UsernameValidator } from 'src/app/pages/erziehungsberechtigte/registrie
 import { PasswordValidator } from 'src/app/pages/erziehungsberechtigte/registrierung/password.validator';
 import { PhoneValidator } from 'src/app/pages/erziehungsberechtigte/registrierung/phone.validator';
 import { CountryPhone } from 'src/app/models/country-phone.model';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -23,9 +25,10 @@ export class RegistrierungPage implements OnInit {
   responseData: any;
   userData = { 'username': '', 'password': '', 'name': '', 'email': '' };
 
-  constructor(public formBuilder: FormBuilder, private router: Router, private alertService: AlertService) { }
+  constructor(public formBuilder: FormBuilder, private router: Router, private alertService: AlertService, private http: HttpClient) { }
 
   ngOnInit() {
+   // this.onSubmit();
     this.countries = [
       new CountryPhone('DE', 'Germany'),
     ];
@@ -137,8 +140,23 @@ export class RegistrierungPage implements OnInit {
     ],
   };
 
-  onSubmit(values) {
-    console.log(values);
+  onSubmit() {
+   let  env =  environment
+    this.http.post(`${env.apiUrl}/user/register`,
+    {
+      "userType":"PARENT","username": "REST_PARENT",
+      "password": "password",
+      "email": "malte.petersen11@gmail.com",
+      "fullname": "Rest_Test",
+      "schoolClass":"7a",
+      "phoneNumber":"13141",
+      "subject":"Geschichte",
+      "iban":"23465732456",
+      "address":"Hans-Detlev-Prien Str. 8", 
+      "isSchoolCoordinator" : false
+    }
+      
+    ).subscribe(() => console.log('done')); 
   }
 
   // register(form: NgForm) {
