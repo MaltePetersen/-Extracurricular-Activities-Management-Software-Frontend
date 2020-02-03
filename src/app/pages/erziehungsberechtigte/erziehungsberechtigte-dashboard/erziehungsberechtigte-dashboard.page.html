@@ -7,24 +7,29 @@
     </ion-label>
   </div>
   <div class="veranstaltung-container">
-    <ion-item *ngFor="let veranstaltung of veranstaltungen" lines="none" class="veranstaltung-item" (click)="chooseOffer(veranstaltung.name)">
+    <ion-item *ngFor="let care of afterSchoolCares" lines="none" class="veranstaltung-item" (click)="chooseOffer(care.name)">
       <div class="veranstaltung-content-container">
+          <ion-row>
+          <ion-label class="day-label">
+            {{care.startTime | amLocale:'de' | amDateFormat:'dddd'}}
+          </ion-label>
+        </ion-row>
         <ion-row>
           <ion-label class="day-label">
-            {{veranstaltung.startTime | amLocale:'de' | amDateFormat:'dddd'}}
+            {{care.childName}}
           </ion-label>
         </ion-row>
         <ion-row class="name-row">
           <ion-label>
-            {{veranstaltung.name}}
+            {{care.name}}
           </ion-label>
         </ion-row>
         <ion-row class="date-time-row">
           <ion-label class="date-label">
-            {{veranstaltung.startTime | amDateFormat:'DD.MM.YYYY'}}
+            {{care.startTime | amDateFormat:'DD.MM.YYYY'}}
           </ion-label>
           <ion-label class="time-label">
-            {{veranstaltung.startTime | amDateFormat:'HH:mm'}} - {{veranstaltung.endTime | amDateFormat:'HH:mm'}}
+            {{care.startTime | amDateFormat:'HH:mm'}} - {{care.endTime | amDateFormat:'HH:mm'}}
           </ion-label>
         </ion-row>                
       </div>
