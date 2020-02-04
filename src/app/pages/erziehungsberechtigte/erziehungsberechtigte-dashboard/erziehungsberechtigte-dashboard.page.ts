@@ -86,14 +86,30 @@ export class ErziehungsberechtigteDashboardPage implements OnInit {
     });
   }
 
-  deleteAttendance(id) {
-    this.parentController.deleteAttendanceUsingDELETE(id).toPromise().then((res)=>{
-      this.getVeranstaltungen();
-      this.alertService.presentToastSuccess('Ihr Kind wurde abgemeldet');
-    }).catch((error)=>{
-      this.alertService.presentToastFailure('Es ist ein Fehler aufgetreten');
-      console.log(error);
+  async deleteAttendance(id) {
+    const alert = await this.alertController.create({
+      header: "Warnung,",
+      message: "Wollen Sie ihr Kind wirklich abmelden?",
+      buttons: [{text: 'Ja',
+                role: 'confirm',
+                handler: () => {
+                  this.parentController.deleteAttendanceUsingDELETE(id).toPromise().then(()=>{
+                    this.getVeranstaltungen();
+                    this.alertService.presentToastSuccess('Ihr Kind wurde abgemeldet');
+                  }).catch((error)=>{
+                    this.alertService.presentToastFailure('Es ist ein Fehler aufgetreten');
+                    console.log(error);
+                  });
+                }
+                },
+                {text: 'Nein',
+                role: 'cancel',
+                // handler: () => {
+                //   this.router.navigateByUrl('login');
+                // },
+              }]
     });
+    await alert.present();
   }
 
   async chooseOffer(name){
