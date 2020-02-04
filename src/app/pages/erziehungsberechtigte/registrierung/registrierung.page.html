@@ -1,7 +1,7 @@
 <app-header></app-header>
 
 <ion-content class="appBackground">
-  <form [formGroup]="validations_form" (ngSubmit)="onSubmit(validations_form.value)">
+  <form [formGroup]="validations_form" (ngSubmit)="onSubmit()">
     <ion-card>
       <ion-card-header>
         <ion-card-subtitle>
@@ -130,7 +130,7 @@
             </ng-container>
           </div>
         </div>
-        <ion-item>
+        <!-- <ion-item>
           <ion-label position="floating" color="primary">
             Welche Rolle hast du?
           </ion-label>
@@ -142,7 +142,7 @@
               Betreuer
             </ion-select-option>
           </ion-select>
-        </ion-item>
+        </ion-item> -->
       </ion-card-content>
     </ion-card>
 
@@ -247,7 +247,7 @@
 
     <!-- <ion-button type="submit" expand="block" (click)="login()" color="danger">Registrieren</ion-button> -->
 
-    <ion-button color="primary" expand="full" type="submit" [disabled]="!validations_form.valid">
+    <ion-button color="primary" expand="full" type="submit" [disabled]="!validations_form.valid" >
       Registrieren
     </ion-button>
     <p class="ion-text-center">

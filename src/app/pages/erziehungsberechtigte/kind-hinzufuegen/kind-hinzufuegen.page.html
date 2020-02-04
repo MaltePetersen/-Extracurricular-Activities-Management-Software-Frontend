@@ -177,7 +177,7 @@
           </div>
         </ion-card-content>
       </ion-card>
-    <ion-button color="primary" expand="full" type="submit" [disabled]="validations_form.valid" (click)="createChild()">
+    <ion-button color="primary" expand="full" type="submit" [disabled]="!validations_form.valid" (click)="createChild()">
       Account anlegen
     </ion-button>
     <ion-button expand="block" color="medium" (click)="abort()">

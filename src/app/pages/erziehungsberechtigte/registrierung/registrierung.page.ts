@@ -8,6 +8,9 @@ import { PhoneValidator } from 'src/app/pages/erziehungsberechtigte/registrierun
 import { CountryPhone } from 'src/app/models/country-phone.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { UserDTO } from 'src/app/api/models';
+import { UserControllerService } from 'src/app/api/services';
+import { AlertController } from '@ionic/angular';
 
 
 
@@ -25,7 +28,7 @@ export class RegistrierungPage implements OnInit {
   responseData: any;
   userData = { 'username': '', 'password': '', 'name': '', 'email': '' };
 
-  constructor(public formBuilder: FormBuilder, private router: Router, private alertService: AlertService, private http: HttpClient) { }
+  constructor(private alertController: AlertController, private userController:UserControllerService, public formBuilder: FormBuilder, private router: Router, private alertService: AlertService, private http: HttpClient) { }
 
   ngOnInit() {
    // this.onSubmit();
@@ -71,16 +74,16 @@ export class RegistrierungPage implements OnInit {
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])),
       country_phone: this.country_phone_group,
-      rolle: new FormControl('', Validators.required),
-      nameChild: new FormControl('', Validators.required),
-      lastnameChild: new FormControl('', Validators.required),
-      birthday: new FormControl('', Validators.compose([
-        Validators.required,
-        Validators.pattern('^[0-9]{2}[\.]{1}[0-9]{2}[\.]{1}[0-9]{4}$')
-        //Validators.pattern('^(((0[1-9]|[12]\d|3[01])\/(0[13578]|1[02])\/((19|[2-9]\d)\d{2}))|((0[1-9]|[12]\d|30)\/(0[13456789]|1[012])\/((19|[2-9]\d)\d{2}))|((0[1-9]|1\d|2[0-8])\/02\/((19|[2-9]\d)\d{2}))|(29\/02\/((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$')
-      ])),
-      school: new FormControl('', Validators.required),
-      schoolClass: new FormControl('', Validators.required)
+      // rolle: new FormControl('', Validators.required),
+      // nameChild: new FormControl('', Validators.required),
+      // lastnameChild: new FormControl('', Validators.required),
+      // birthday: new FormControl('', Validators.compose([
+      //   Validators.required,
+      //   Validators.pattern('^[0-9]{2}[\.]{1}[0-9]{2}[\.]{1}[0-9]{4}$')
+      //   //Validators.pattern('^(((0[1-9]|[12]\d|3[01])\/(0[13578]|1[02])\/((19|[2-9]\d)\d{2}))|((0[1-9]|[12]\d|30)\/(0[13456789]|1[012])\/((19|[2-9]\d)\d{2}))|((0[1-9]|1\d|2[0-8])\/02\/((19|[2-9]\d)\d{2}))|(29\/02\/((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$')
+      // ])),
+      // school: new FormControl('', Validators.required),
+      // schoolClass: new FormControl('', Validators.required)
     });
   }
 
@@ -141,39 +144,50 @@ export class RegistrierungPage implements OnInit {
   };
 
   onSubmit() {
-   let  env =  environment
-    this.http.post(`${env.apiUrl}/user/register`,
-    {
-      "userType":"PARENT","username": "REST_PARENT",
-      "password": "password",
-      "email": "malte.petersen11@gmail.com",
-      "fullname": "Rest_Test",
-      "schoolClass":"7a",
-      "phoneNumber":"13141",
-      "subject":"Geschichte",
-      "iban":"23465732456",
-      "address":"Hans-Detlev-Prien Str. 8", 
+    let fullname = this.validations_form.get('name').value + ' ' + this.validations_form.get('lastname').value;
+    let username = this.validations_form.get('username').value;
+    let phoneNumber = this.country_phone_group.get('phone').value;
+    let email = this.validations_form.get('email').value;
+    let password = this.matching_passwords_group.get('password').value;
+    const userDTO = <UserDTO> {
+      "userType":"PARENT",
+      "username": username,
+      "password": password,
+      "email": email,
+      "fullname": fullname,
+      "schoolClass":"",
+      "phoneNumber":phoneNumber,
+      "subject":"",
+      "iban":"",
+      "address":"", 
       "isSchoolCoordinator" : false
     }
-      
-    ).subscribe(() => console.log('done')); 
+    const params = {
+      "userDTO": userDTO
+    }
+    this.userController.registrationUsingPOST(params).toPromise().then((response)=>{
+      console.log(response);
+      this.registerFeedback();
+    }).catch((error)=>{
+      console.log(error);
+      this.alertService.presentToastFailure("Registrierung fehlgeschlagen");
+      this.router.navigateByUrl('login');
+    });
   }
 
-  // register(form: NgForm) {
-  //   this.auth.register(form.value.fName, form.value.lName, form.value.email, form.value.password).subscribe(
-  //     data => {
-  //       this.alertService.presentToast(data);
-  //       this.router.navigateByUrl('/login');
-  //     },
-  //     error => {
-  //       console.log(error);
-  //       this.router.navigateByUrl('/login');
-  //     },
-  //     () => {
+  async registerFeedback(){
+    const alert = await this.alertController.create({
+      header: "Registrierung erfolgreich",
+      message: "Sie erhalten in Kürze eine Bestätigungs-E-Mail mit einem persönlichen Link. Nach erfolgreicher Bestätigung können Sie unseren Service nutzen.",
+      buttons: [{text: 'OK',
+                handler: ()=> {
+                  this.router.navigateByUrl('login');
+                },
+              }]
+    });
+    await alert.present();
 
-  //     }
-  //   );
-  // }
+  }
 
   login() {
 
