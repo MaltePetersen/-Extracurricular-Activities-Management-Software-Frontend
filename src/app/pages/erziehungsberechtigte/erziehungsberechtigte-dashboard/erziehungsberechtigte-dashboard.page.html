@@ -17,11 +17,11 @@
           </ion-label>
         </span>
           <span >
-          <ion-button (click)="$event.stopPropagation();" class="detail-button">
-            Details
-          </ion-button>
           <ion-button (click)="presentPopover();$event.stopPropagation();">
-            <ion-icon slot="icon-only" name="md-more"></ion-icon>
+            Ändern
+          </ion-button>
+          <ion-button (click)="deleteAttendance(care.id);$event.stopPropagation();" class="detail-button">
+            Abmelden
           </ion-button>
         </span>
         </ion-row>

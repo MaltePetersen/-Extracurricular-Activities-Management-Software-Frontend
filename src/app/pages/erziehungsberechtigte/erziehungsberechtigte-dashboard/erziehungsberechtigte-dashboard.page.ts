@@ -6,6 +6,7 @@ import { ParentControllerService } from 'src/app/api/services';
 import { UserDTO, AfterSchoolCareDTO } from 'src/app/api/models';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { AlertService } from 'src/app/services/alert.service';
 
 class IUserDTO implements UserDTO{
   
@@ -22,7 +23,7 @@ export class ErziehungsberechtigteDashboardPage implements OnInit {
   veranstaltungen:AfterSchoolCareDTO[];
   children: [];
 
-  constructor(private router: Router, private alertController: AlertController, private veranstaltungsDaten: VeranstaltungensdatenService, public http: HttpClient, private parentController: ParentControllerService) {
+  constructor(private alertService: AlertService, private router: Router, private alertController: AlertController, private veranstaltungsDaten: VeranstaltungensdatenService, public http: HttpClient, private parentController: ParentControllerService) {
     this.getChildren();
     this.getVeranstaltungen();
   }
@@ -74,12 +75,23 @@ export class ErziehungsberechtigteDashboardPage implements OnInit {
       // this.veranstaltungen = cares;
       cares.forEach((response)=>{
         for (let i = 0; i < response.attendances.length; i++) {
-        this.afterSchoolCares.push({"startTime":response.startTime, "name": response.name, "endTime": response.endTime, "childName":response.attendances[i].child.fullname});
+          console.log("ID: "+response.attendances[i].id)
+        this.afterSchoolCares.push({"id":response.attendances[i].id, "startTime":response.startTime, "name": response.name, "endTime": response.endTime, "childName":response.attendances[i].child.fullname});
         console.table(this.afterSchoolCares)
         }
       });
       console.table(this.veranstaltungen);
     }).catch((error)=>{
+      console.log(error);
+    });
+  }
+
+  deleteAttendance(id) {
+    this.parentController.deleteAttendanceUsingDELETE(id).toPromise().then((res)=>{
+      this.getVeranstaltungen();
+      this.alertService.presentToastSuccess('Ihr Kind wurde abgemeldet');
+    }).catch((error)=>{
+      this.alertService.presentToastFailure('Es ist ein Fehler aufgetreten');
       console.log(error);
     });
   }
