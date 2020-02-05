@@ -9,6 +9,7 @@ import { AfterSchoolCare, AfterSchoolCareDTO, SchoolDTO, AttendanceDTO, SimpleUs
 import moment from 'moment';
 import { PupilModel } from 'src/app/models/pupilModel';
 import { AlertService } from 'src/app/services/alert.service';
+import { EmployeeProviderService } from 'src/app/services/employee-provider.service';
 
 @Component({
   selector: 'app-schueler-anmelden',
@@ -27,12 +28,14 @@ export class SchuelerAnmeldenPage implements OnInit {
   care:AfterSchoolCareDTO;
   endOfCare:string = '';
   
-  constructor(private alertController:AlertController, public router:Router, public popoverController:PopoverController, private employeeController:EmployeeControllerService, private alertService: AlertService) { 
+  constructor(private alertController:AlertController, public router:Router, public popoverController:PopoverController, private employeeController:EmployeeControllerService, private alertService: AlertService, private employeeProvider:EmployeeProviderService) { 
   }
 
   ngOnInit() {
-    this.listId = this.router.getCurrentNavigation().extras.state.id;
-    this.loadPupils();
+    this.employeeProvider.getCareId().then((careId)=>{
+      this.listId = careId;
+      this.loadPupils();
+    });
   }
 
   loadPupils(){

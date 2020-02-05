@@ -137,12 +137,24 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
       }
 
       bookCare(attendanceData) {
+        let latestArrivalTime:string;
+        let predefinedLeaveTime:string;
+        if(attendanceData.startzeit == attendanceData.care.startTime){
+          latestArrivalTime = null;
+        } else{
+          latestArrivalTime = attendanceData.startzeit;
+        }
+        if(attendanceData.endzeit == attendanceData.care.endTime){
+          predefinedLeaveTime = null;
+        } else {
+          predefinedLeaveTime = attendanceData.endzeit;
+        }
         const attendanceDTO = <AttendanceInputDTO> {
             "allowedToLeaveAfterFinishedHomework": attendanceData.allowedToLeave,
             "childUsername": this.child.username,
-            "latestArrivalTime": attendanceData.startzeit,
+            "latestArrivalTime": latestArrivalTime,
             "note": attendanceData.bemerkung,
-            "predefinedLeaveTime": attendanceData.endzeit
+            "predefinedLeaveTime": predefinedLeaveTime
           }
         
         const params = {
@@ -151,7 +163,6 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
         }
     
         this.parentController.addAttendanceUsingPOST(params).toPromise().then((response)=>{
-          console.log(response);
           this.alertService.presentToastSuccess('Buchung erfolgreich');
           this.router.navigateByUrl('parent/veranstaltung-buchen')
         }).catch((error)=>{

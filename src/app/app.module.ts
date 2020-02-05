@@ -16,6 +16,7 @@ import { ErrorInterceptor } from './intercepters/ErrorInterceptor';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ApiModule } from './api/api.module';
+import { EmployeeProviderService } from './services/employee-provider.service';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import { ApiModule } from './api/api.module';
   ],
   providers: [
     StatusBar,
-
+    EmployeeProviderService,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },],

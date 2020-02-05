@@ -4,6 +4,7 @@ import { EmployeeControllerService } from 'src/app/api/services';
 import {  AfterSchoolCareDTO } from 'src/app/api/models';
 import { MyCareModel } from 'src/app/models/myCareModel';
 import moment from "moment"; 
+import { EmployeeProviderService } from 'src/app/services/employee-provider.service';
 
 
 @Component({
@@ -30,14 +31,16 @@ export class MeineSchichtenPage implements OnInit {
     momentLocale: 'de'
   };
 
-  constructor( public router : Router, private employeeController:EmployeeControllerService) { 
+  constructor( public router : Router, private employeeController:EmployeeControllerService, private employeeProvider:EmployeeProviderService) { 
   }
 
   ngOnInit() {
-    this.schoolId = this.router.getCurrentNavigation().extras.state.id;
-    moment.locale('de');
-    this.dateChange();
-    this.getAfterSchoolCares();
+    this.employeeProvider.getSchoolId().then((schoolId)=>{
+      this.schoolId = schoolId
+      moment.locale('de');
+      this.dateChange();
+      this.getAfterSchoolCares();
+    });
   }
 
   getAfterSchoolCares(){
@@ -59,13 +62,9 @@ export class MeineSchichtenPage implements OnInit {
     return model;
   }
 
-  openList(listId:string){
-    let navigationExtras: NavigationExtras = {
-      state: {
-        id: listId
-      }
-    };
-    this.router.navigate(['employee/schueler-anmelden'], navigationExtras);
+  openList(careId:number){
+    this.employeeProvider.setCareId(careId);
+    this.router.navigate(['employee/schueler-anmelden']);
   }
 
   getDayOfWeek(date) {
