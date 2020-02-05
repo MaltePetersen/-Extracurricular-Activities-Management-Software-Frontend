@@ -8,6 +8,7 @@ import { Children } from 'src/app/models/children';
 import { ParentControllerService } from 'src/app/api/services';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import moment from "moment"; 
+import { SimpleUserDTO } from 'src/app/api/models';
 
 @Component({
   selector: 'app-veranstaltung-buchen',
@@ -26,36 +27,39 @@ export class VeranstaltungBuchenPage implements OnInit {
   private datum:any;
 
   constructor(private alertController: AlertController, private parentController: ParentControllerService, public router : Router ,public http: HttpClient, private veranstaltungsDaten: VeranstaltungensdatenService) {
-    this.getChildren();
-    this.getVeranstaltungen();
+    
    }
 
   ngOnInit() {
+    this.getChildren();
+    this.getVeranstaltungen();
     this.veranstaltungsDaten.ausgewählteVeranstaltung.subscribe(veranstaltung => this.veranstaltung = veranstaltung);
-    this.veranstaltungsDaten.ausgewähltesKind.subscribe(kindername => this.kindername = kindername);
   }
 
   getChildren() {
-    this.http.get<Children[]>(`${environment.apiUrl}/api/parent/children`).subscribe(async (a) => {
-      this.children = await a;
-      console.table(a)
+    const params = {
+    };
+    this.parentController.getChildsUsingGET(params).toPromise().then((children)=>{
+      this.children = children;
     });
-}
+  }
 
   getVeranstaltungen() {
     let params = {};
-      this.parentController.getAfterSchoolCaresUsingGET1(params).toPromise().then(response => {
-        this.veranstaltungen = response;
-        });
+    this.parentController.getAfterSchoolCaresUsingGET1(params).toPromise().then(response => {
+      this.veranstaltungen = response;
+    });
   }
 
- chooseChild(kindername: any){
-   let schoolId = kindername.target.value.split(":");
-   console.log(schoolId[1])
-    let kinderdaten =  kindername.target.value.toString();
-    console.log("Kindername: " + kindername.target.value.toString())
-    this.veranstaltungsDaten.changeKind(kinderdaten);
-    this.veranstaltungsDaten.changeChildSchoolId(schoolId[1]);
+  childChange(username:string){
+    let child:SimpleUserDTO = this.children.find(child => child.username === username);
+    this.setChildValues(child);
+  }
+
+  setChildValues(selectedChild:SimpleUserDTO){
+    this.veranstaltungsDaten.changeChild(selectedChild);
+    this.veranstaltungsDaten.changeChildSchoolId(selectedChild.childSchool);
+    this.kindername = selectedChild.fullname;
   }
 
 

@@ -1,8 +1,16 @@
 <ion-list class="popover-content-container">
   <ion-item>
+    Betreuung von: 
+  </ion-item>
+  <ion-input class="betreuungseingabe"  [ngModel]="startzeit | amDateFormat:'HH:mm'" name="startzeit" type="text" ></ion-input>
+  <ion-item>
     Betreuung bis: 
   </ion-item>
-  <ion-input class="betreuungseingabe"  [ngModel]="endzeit | date:'HH:mm'" (ngModelChange)="endzeit2=$event" name="endzeit" type="text" ></ion-input>
+  <ion-datetime [ngModel]="endTime" displayFormat="HH:mm" pickerFormat="HH:mm" (ionChange)="endTimeChange($event.target.value)"></ion-datetime>
+  <ion-item>
+    <ion-checkbox slot="start" [(ngModel)]="allowedToLeave"></ion-checkbox>
+    <ion-label>Darf nach den Hausaufgaben gehen</ion-label>
+  </ion-item>
   <ion-item>
     <ion-label>
       Bemerkungen
@@ -14,7 +22,7 @@
     <ion-item button class="floated" color="primary" (click)="abort()">
       Abbrechen
     </ion-item>
-    <ion-item button class="floated" color="primary" (click)="closePopover()">
+    <ion-item button class="floated" color="primary" (click)="saveAttendance()">
       Speichern
     </ion-item>
   </div>

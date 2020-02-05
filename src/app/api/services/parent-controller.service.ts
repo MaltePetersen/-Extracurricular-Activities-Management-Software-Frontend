@@ -9,6 +9,7 @@ import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { AfterSchoolCareDTO } from '../models/after-school-care-dto';
 import { AttendanceInputDTO } from '../models/attendance-input-dto';
+import { ResponseEntity } from '../models/response-entity';
 import { ChildDTO } from '../models/child-dto';
 import { UserDTO } from '../models/user-dto';
 import { IUserDTO } from '../models/iuser-dto';
@@ -52,7 +53,17 @@ class ParentControllerService extends __BaseService {
    *
    * - `school`: school
    *
+   * - `principal`:
+   *
    * - `endDate`: endDate
+   *
+   * - `details`:
+   *
+   * - `credentials`:
+   *
+   * - `authorities[0].authority`:
+   *
+   * - `authenticated`:
    *
    * @return OK
    */
@@ -63,7 +74,12 @@ class ParentControllerService extends __BaseService {
     if (params.type != null) __params = __params.set('type', params.type.toString());
     if (params.startDate != null) __params = __params.set('startDate', params.startDate.toString());
     if (params.school != null) __params = __params.set('school', params.school.toString());
+    if (params.principal != null) __params = __params.set('principal', params.principal.toString());
     if (params.endDate != null) __params = __params.set('endDate', params.endDate.toString());
+    if (params.details != null) __params = __params.set('details', params.details.toString());
+    if (params.credentials != null) __params = __params.set('credentials', params.credentials.toString());
+    if (params.authorities0Authority != null) __params = __params.set('authorities[0].authority', params.authorities0Authority.toString());
+    if (params.authenticated != null) __params = __params.set('authenticated', params.authenticated.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/api/parent/after_school_cares`,
@@ -90,7 +106,17 @@ class ParentControllerService extends __BaseService {
    *
    * - `school`: school
    *
+   * - `principal`:
+   *
    * - `endDate`: endDate
+   *
+   * - `details`:
+   *
+   * - `credentials`:
+   *
+   * - `authorities[0].authority`:
+   *
+   * - `authenticated`:
    *
    * @return OK
    */
@@ -181,17 +207,35 @@ class ParentControllerService extends __BaseService {
   }
 
   /**
-   * @param id id
+   * @param params The `ParentControllerService.GetAfterSchoolCareUsingGET1Params` containing the following parameters:
+   *
+   * - `id`: id
+   *
+   * - `principal`:
+   *
+   * - `details`:
+   *
+   * - `credentials`:
+   *
+   * - `authorities[0].authority`:
+   *
+   * - `authenticated`:
+   *
    * @return OK
    */
-  getAfterSchoolCareUsingGET1Response(id: number): __Observable<__StrictHttpResponse<AfterSchoolCareDTO>> {
+  getAfterSchoolCareUsingGET1Response(params: ParentControllerService.GetAfterSchoolCareUsingGET1Params): __Observable<__StrictHttpResponse<AfterSchoolCareDTO>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
+    if (params.principal != null) __params = __params.set('principal', params.principal.toString());
+    if (params.details != null) __params = __params.set('details', params.details.toString());
+    if (params.credentials != null) __params = __params.set('credentials', params.credentials.toString());
+    if (params.authorities0Authority != null) __params = __params.set('authorities[0].authority', params.authorities0Authority.toString());
+    if (params.authenticated != null) __params = __params.set('authenticated', params.authenticated.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/parent/after_school_cares/${id}`,
+      this.rootUrl + `/api/parent/after_school_cares/${params.id}`,
       __body,
       {
         headers: __headers,
@@ -207,11 +251,24 @@ class ParentControllerService extends __BaseService {
     );
   }
   /**
-   * @param id id
+   * @param params The `ParentControllerService.GetAfterSchoolCareUsingGET1Params` containing the following parameters:
+   *
+   * - `id`: id
+   *
+   * - `principal`:
+   *
+   * - `details`:
+   *
+   * - `credentials`:
+   *
+   * - `authorities[0].authority`:
+   *
+   * - `authenticated`:
+   *
    * @return OK
    */
-  getAfterSchoolCareUsingGET1(id: number): __Observable<AfterSchoolCareDTO> {
-    return this.getAfterSchoolCareUsingGET1Response(id).pipe(
+  getAfterSchoolCareUsingGET1(params: ParentControllerService.GetAfterSchoolCareUsingGET1Params): __Observable<AfterSchoolCareDTO> {
+    return this.getAfterSchoolCareUsingGET1Response(params).pipe(
       __map(_r => _r.body as AfterSchoolCareDTO)
     );
   }
@@ -495,7 +552,7 @@ class ParentControllerService extends __BaseService {
    *
    * @return Created
    */
-  createChildUsingPOSTResponse(params: ParentControllerService.CreateChildUsingPOSTParams): __Observable<__StrictHttpResponse<string>> {
+  createChildUsingPOSTResponse(params: ParentControllerService.CreateChildUsingPOSTParams): __Observable<__StrictHttpResponse<ResponseEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -565,13 +622,13 @@ class ParentControllerService extends __BaseService {
       {
         headers: __headers,
         params: __params,
-        responseType: 'text'
+        responseType: 'json'
       });
 
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<string>;
+        return _r as __StrictHttpResponse<ResponseEntity>;
       })
     );
   }
@@ -698,9 +755,9 @@ class ParentControllerService extends __BaseService {
    *
    * @return Created
    */
-  createChildUsingPOST(params: ParentControllerService.CreateChildUsingPOSTParams): __Observable<string> {
+  createChildUsingPOST(params: ParentControllerService.CreateChildUsingPOSTParams): __Observable<ResponseEntity> {
     return this.createChildUsingPOSTResponse(params).pipe(
-      __map(_r => _r.body as string)
+      __map(_r => _r.body as ResponseEntity)
     );
   }
 
@@ -1007,11 +1064,16 @@ module ParentControllerService {
      * school
      */
     school?: number;
+    principal?: {};
 
     /**
      * endDate
      */
     endDate?: string;
+    details?: {};
+    credentials?: {};
+    authorities0Authority?: string;
+    authenticated?: boolean;
   }
 
   /**
@@ -1028,6 +1090,22 @@ module ParentControllerService {
      * afterSchoolCareId
      */
     afterSchoolCareId: number;
+  }
+
+  /**
+   * Parameters for getAfterSchoolCareUsingGET1
+   */
+  export interface GetAfterSchoolCareUsingGET1Params {
+
+    /**
+     * id
+     */
+    id: number;
+    principal?: {};
+    details?: {};
+    credentials?: {};
+    authorities0Authority?: string;
+    authenticated?: boolean;
   }
 
   /**

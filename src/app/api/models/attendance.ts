@@ -6,6 +6,7 @@ export interface Attendance {
   allowedToLeaveAfterFinishedHomework?: boolean;
   arrivalTime?: string;
   child?: User;
+  closed?: boolean;
   id?: number;
   latestArrivalTime?: string;
   leaveTime?: string;

@@ -9,7 +9,7 @@ import { VeranstaltungsPopoverPage } from 'src/app/pages/erziehungsberechtigte/v
 import { environment } from 'src/environments/environment';
 import moment from 'moment';
 import { ParentControllerService } from 'src/app/api/services';
-import { AfterSchoolCareDTO, SchoolDTO, AttendanceInputDTO } from 'src/app/api/models';
+import { AfterSchoolCareDTO, SchoolDTO, AttendanceInputDTO, SimpleUserDTO } from 'src/app/api/models';
 import { ParentDayModel } from 'src/app/models/parent-day-model';
 import { VeranstaltungBuchenModel } from 'src/app/models/veranstaltungen-buchen-model';
 import { AlertService } from 'src/app/services/alert.service';
@@ -20,6 +20,7 @@ import { AlertService } from 'src/app/services/alert.service';
   styleUrls: ['./veranstaltung-buchen-zeitraum.page.scss'],
 })
 export class VeranstaltungBuchenZeitraumPage implements OnInit {
+  child: any;
   careId: number;
   endzeit: any;
   bemerkung: any;
@@ -56,10 +57,8 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
     this.veranstaltungsDaten.ausgewählteSchulId.subscribe(schoolId => this.schoolId = schoolId);
     this.veranstaltungsDaten.ausgewählteVeranstaltungType.subscribe(veranstaltungType => this.after_school_care_type = veranstaltungType);
     this.veranstaltungsDaten.ausgewählteVeranstaltungsTypID.subscribe(careId => this.careId = careId);
-    this.veranstaltungsDaten.ausgewählteVeranstaltung.subscribe(name => this.veranstaltungName = name)
-    console.log('veranstaltungsnummer: ' +this.after_school_care_type)
-    console.log('schulid vom kind : ' +this.schoolId)
-    console.log('ID vom Care : ' +this.careId)
+    this.veranstaltungsDaten.ausgewählteVeranstaltung.subscribe(name => this.veranstaltungName = name);
+    this.veranstaltungsDaten.chosenChild.subscribe(child => this.child = child);
     this.dateChange();
   }
 
@@ -117,17 +116,18 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
   async presentPopover(model:VeranstaltungBuchenModel) {
           const popover = await this.popoverController.create({
           component: VeranstaltungsPopoverPage,
-          // event: model.name,
+          cssClass: "veranstaltung-buchen-popover",
           translucent: true,
           componentProps: {
-            endzeit: model.uhrzeit ,
-            veranstaltung: model.name,
+            veranstaltung: model
           }
         });
-          await popover.present()
-          popover.onDidDismiss().then((dataReturned) => {
-              if (dataReturned.data !== null || dataReturned.role !== null) {
-             this.bookCare(dataReturned.data, dataReturned.role)
+        popover.style.cssText = "--width:'auto'";
+        await popover.present()
+        popover.onDidDismiss().then((dataReturned) => {
+          console.log(dataReturned);
+          if (dataReturned.data !== null || dataReturned.role !== null) {
+            this.bookCare(dataReturned.data)
           } else {
             this.alertService.presentToastFailure('Die Veranstaltung wurde nicht gebucht.');
             this.router.navigateByUrl('parent/veranstaltung-buchen')
@@ -136,16 +136,13 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
         // return await modal.present();
       }
 
-      bookCare(endzeit, bemerkung) {
-        console.log("BOOK CARE HAT BEGONNEN")
-        console.log("Endzeit: " +endzeit)
-
+      bookCare(attendanceData) {
         const attendanceDTO = <AttendanceInputDTO> {
-            "allowedToLeaveAfterFinishedHomework": true,
-            "childUsername": "string",
-            "latestArrivalTime": "2020-01-30T14:23:08",
-            "note": bemerkung,
-            "predefinedLeaveTime": endzeit
+            "allowedToLeaveAfterFinishedHomework": attendanceData.allowedToLeave,
+            "childUsername": this.child.username,
+            "latestArrivalTime": attendanceData.startzeit,
+            "note": attendanceData.bemerkung,
+            "predefinedLeaveTime": attendanceData.endzeit
           }
         
         const params = {
@@ -153,6 +150,7 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
           "attendanceInputDTO":attendanceDTO
         }
     
+        console.log(params);/*
         this.parentController.addAttendanceUsingPOST(params).toPromise().then((response)=>{
           console.log(response);
           this.alertService.presentToastSuccess('Buchung erfolgreich');
@@ -161,7 +159,7 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
           console.log(error);
           this.alertService.presentToastFailure("Buchung fehlgeschlagen");
           this.router.navigateByUrl('parent/veranstaltung-buchen')
-        });
+        });*/
       }
 
   dateSelected($event){

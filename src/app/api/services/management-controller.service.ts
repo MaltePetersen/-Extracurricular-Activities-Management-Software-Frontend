@@ -18,18 +18,19 @@ import { UserDTO } from '../models/user-dto';
   providedIn: 'root',
 })
 class ManagementControllerService extends __BaseService {
-  static readonly getAllAfterSchoolCareServicesUsingGETPath = '/afterSchoolCare';
-  static readonly geAfterSchoolCareByIdUsingGETPath = '/afterSchoolCare/{id}';
-  static readonly deleteAfterSchoolCareUsingDELETE1Path = '/afterSchoolCare/{id}';
-  static readonly patchAfterSchoolCareUsingPATCHPath = '/afterSchoolCare/{id}';
-  static readonly getAttendanceListByIdUsingGETPath = '/attendanceList/{id}';
-  static readonly deleteAttendanceListByIdUsingDELETEPath = '/attendanceList/{id}';
-  static readonly patchAttendanceListByIdUsingPATCHPath = '/attendanceList/{id}';
-  static readonly getAllAttendanceListsUsingGETPath = '/attendanceLists';
-  static readonly allNotEnabledUserUsingGETPath = '/not_enabled_users';
-  static readonly getNumberOfParticipantsUsingGETPath = '/number_of_participants';
-  static readonly registerUsingPOSTPath = '/register';
-  static readonly getAllUsersUsingGETPath = '/users';
+  static readonly getAllAfterSchoolCareServicesUsingGETPath = '/api/management/afterSchoolCare';
+  static readonly geAfterSchoolCareByIdUsingGETPath = '/api/management/afterSchoolCare/{id}';
+  static readonly deleteAfterSchoolCareUsingDELETE1Path = '/api/management/afterSchoolCare/{id}';
+  static readonly patchAfterSchoolCareUsingPATCHPath = '/api/management/afterSchoolCare/{id}';
+  static readonly getAttendanceListByIdUsingGETPath = '/api/management/attendanceList/{id}';
+  static readonly deleteAttendanceListByIdUsingDELETEPath = '/api/management/attendanceList/{id}';
+  static readonly patchAttendanceListByIdUsingPATCHPath = '/api/management/attendanceList/{id}';
+  static readonly getAllAttendanceListsUsingGETPath = '/api/management/attendanceLists';
+  static readonly getAttendanceListUsingGETPath = '/api/management/list';
+  static readonly allNotEnabledUserUsingGETPath = '/api/management/not_enabled_users';
+  static readonly getNumberOfParticipantsUsingGETPath = '/api/management/number_of_participants';
+  static readonly registerUsingPOSTPath = '/api/management/register';
+  static readonly getAllUsersUsingGETPath = '/api/management/users';
 
   constructor(
     config: __Configuration,
@@ -47,7 +48,7 @@ class ManagementControllerService extends __BaseService {
     let __body: any = null;
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/afterSchoolCare`,
+      this.rootUrl + `/api/management/afterSchoolCare`,
       __body,
       {
         headers: __headers,
@@ -82,7 +83,7 @@ class ManagementControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/afterSchoolCare/${id}`,
+      this.rootUrl + `/api/management/afterSchoolCare/${id}`,
       __body,
       {
         headers: __headers,
@@ -124,7 +125,7 @@ class ManagementControllerService extends __BaseService {
     __body = params.afterSchoolCareDTO;
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/afterSchoolCare/${params.id}`,
+      this.rootUrl + `/api/management/afterSchoolCare/${params.id}`,
       __body,
       {
         headers: __headers,
@@ -171,7 +172,7 @@ class ManagementControllerService extends __BaseService {
     __body = params.afterSchoolCareDTO;
     let req = new HttpRequest<any>(
       'PATCH',
-      this.rootUrl + `/afterSchoolCare/${params.id}`,
+      this.rootUrl + `/api/management/afterSchoolCare/${params.id}`,
       __body,
       {
         headers: __headers,
@@ -212,7 +213,7 @@ class ManagementControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/attendanceList/${id}`,
+      this.rootUrl + `/api/management/attendanceList/${id}`,
       __body,
       {
         headers: __headers,
@@ -254,7 +255,7 @@ class ManagementControllerService extends __BaseService {
     __body = params.newAttendanceList;
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/attendanceList/${params.id}`,
+      this.rootUrl + `/api/management/attendanceList/${params.id}`,
       __body,
       {
         headers: __headers,
@@ -301,7 +302,7 @@ class ManagementControllerService extends __BaseService {
     __body = params.attendanceDTO;
     let req = new HttpRequest<any>(
       'PATCH',
-      this.rootUrl + `/attendanceList/${params.id}`,
+      this.rootUrl + `/api/management/attendanceList/${params.id}`,
       __body,
       {
         headers: __headers,
@@ -340,7 +341,7 @@ class ManagementControllerService extends __BaseService {
     let __body: any = null;
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/attendanceLists`,
+      this.rootUrl + `/api/management/attendanceLists`,
       __body,
       {
         headers: __headers,
@@ -367,13 +368,46 @@ class ManagementControllerService extends __BaseService {
   /**
    * @return OK
    */
+  getAttendanceListUsingGETResponse(): __Observable<__StrictHttpResponse<string>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/management/list`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'text'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<string>;
+      })
+    );
+  }
+  /**
+   * @return OK
+   */
+  getAttendanceListUsingGET(): __Observable<string> {
+    return this.getAttendanceListUsingGETResponse().pipe(
+      __map(_r => _r.body as string)
+    );
+  }
+
+  /**
+   * @return OK
+   */
   allNotEnabledUserUsingGETResponse(): __Observable<__StrictHttpResponse<Array<UserDTO>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/not_enabled_users`,
+      this.rootUrl + `/api/management/not_enabled_users`,
       __body,
       {
         headers: __headers,
@@ -406,7 +440,7 @@ class ManagementControllerService extends __BaseService {
     let __body: any = null;
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/number_of_participants`,
+      this.rootUrl + `/api/management/number_of_participants`,
       __body,
       {
         headers: __headers,
@@ -567,7 +601,7 @@ class ManagementControllerService extends __BaseService {
     (params.allErrors0Arguments || []).forEach(val => {if (val != null) __params = __params.append('allErrors[0].arguments', val.toString())});
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/register`,
+      this.rootUrl + `/api/management/register`,
       __body,
       {
         headers: __headers,
@@ -688,7 +722,7 @@ class ManagementControllerService extends __BaseService {
     if (type != null) __params = __params.set('type', type.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/users`,
+      this.rootUrl + `/api/management/users`,
       __body,
       {
         headers: __headers,

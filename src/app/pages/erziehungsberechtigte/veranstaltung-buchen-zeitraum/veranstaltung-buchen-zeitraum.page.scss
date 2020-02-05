@@ -11,8 +11,8 @@
     font-size: large;
 }
 .veranstaltung-container{
-    margin-left: 4em;
-    margin-right: 4em;
+    margin-left: 2em;
+    margin-right: 2em;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -21,7 +21,7 @@
 }
 .veranstaltung-item{
     --border-width: 2px 2px 2px 2px;
-    width: 100%;
+    width: auto;
     margin-top: 1em;
 }
 .veranstaltung-content-container{
@@ -46,4 +46,7 @@
 .item-name-label{
     text-align-last: left;
     font-size: large;
+}
+.day-list{
+    width: -webkit-fill-available;
 }

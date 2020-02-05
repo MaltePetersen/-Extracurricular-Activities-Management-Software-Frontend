@@ -40,7 +40,7 @@ export class SchuelerAnmeldenPage implements OnInit {
     this.getAfterSchoolCare(this.listId).then((response) =>{
       this.endOfCare = response.endTime;
       response.attendances.forEach((attendance)=>{
-        let school = this.getSchool(attendance.child.childSchool).then((school)=>{
+        this.getSchool(attendance.child.childSchool).then((school)=>{
           this.pupils.push(this.mapToPupil(attendance, school.name));
         }).catch((error)=>{
           this.pupils.push(this.mapToPupil(attendance, 'Keine Schule gefunden'));

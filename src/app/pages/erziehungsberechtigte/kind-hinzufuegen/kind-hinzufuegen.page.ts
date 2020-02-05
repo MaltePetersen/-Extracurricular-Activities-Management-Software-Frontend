@@ -90,7 +90,8 @@ export class KindHinzufuegenPage implements OnInit {
     const childDTO = <ChildDTO> {
       "email":null,
       "fullname":fullname,
-      "password":null,school,
+      "password":null,
+      "school":school,
       "schoolClass":schoolClass,
       "userType":userType,
       "username":null

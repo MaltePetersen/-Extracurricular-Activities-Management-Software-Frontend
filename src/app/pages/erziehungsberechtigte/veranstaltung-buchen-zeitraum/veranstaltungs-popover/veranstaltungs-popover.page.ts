@@ -1,6 +1,7 @@
 import { PopoverController } from '@ionic/angular';
 import { Component, OnInit, Input } from '@angular/core';
 import moment from 'moment';
+import { VeranstaltungBuchenModel } from 'src/app/models/veranstaltungen-buchen-model';
 
 
 @Component({
@@ -9,30 +10,33 @@ import moment from 'moment';
   styleUrls: ['./veranstaltungs-popover.page.scss'],
 })
 export class VeranstaltungsPopoverPage implements OnInit {
-  @Input("endzeit") endzeit;
-  //endzeit = null;
-  bemerkung;
-  endzeit2= null;
+  startTime:Date;
+  endTime:Date;
+  veranstaltung:VeranstaltungBuchenModel
+  bemerkung:string;
   datum = null;
+  allowedToLeave:boolean = false;
 
   constructor(private popoverController: PopoverController) { }
 
   ngOnInit() {
   }
 
-  async closePopover(){
-    console.log("endzeit2: "+this.endzeit2)
-    if (this.endzeit2 !== null){
-    let newDate = this.endzeit.split("T");
-    this.datum = (`${newDate[0]}T${this.endzeit2}:00`);
-    } else { this.datum = this.endzeit;
-    }
-    console.log("endzeit2: "+this.endzeit2)
-    console.log("Datum : "+this.datum)
-    const endzeit: string = this.datum;
-    const bemerkung: string = this.bemerkung;
-    console.log("Endzeit Popover" + endzeit)
-    await this.popoverController.dismiss(endzeit, bemerkung);
+  endTimeChange(data){
+    console.log(data);
+  }
+
+  async saveAttendance(){
+    console.log(this.startTime);
+
+    let attendanceData = {
+      "allowedToLeave":this.allowedToLeave,
+      "startzeit":this.startTime,
+      "endzeit":this.endTime,
+      "bemerkung":this.bemerkung,
+      "care":this.veranstaltung
+    };
+    await this.popoverController.dismiss(attendanceData);
   }
 
   // Hier muss ich die Werte noch Null setzen von Endzeit und Bemerkung!!!
