@@ -10,37 +10,43 @@ import { VeranstaltungBuchenModel } from 'src/app/models/veranstaltungen-buchen-
   styleUrls: ['./veranstaltungs-popover.page.scss'],
 })
 export class VeranstaltungsPopoverPage implements OnInit {
-  startTime:Date;
-  endTime:Date;
+  startTime:any;
+  endTime:any;
   veranstaltung:VeranstaltungBuchenModel
   bemerkung:string;
-  datum = null;
+  date:any;
   allowedToLeave:boolean = false;
 
   constructor(private popoverController: PopoverController) { }
 
   ngOnInit() {
+    this.date = moment(this.veranstaltung.startTime).format('YYYY-MM-DDTHH:mmZ');
+    this.startTime = this.date;
+    this.endTime = moment(this.veranstaltung.endTime).format('YYYY-MM-DDTHH:mmZ');
+    console.log(this.date);
+  }
+
+  startTimeChange(data){
+    this.startTime = data;
   }
 
   endTimeChange(data){
-    console.log(data);
+    this.endTime = data;
   }
 
   async saveAttendance(){
-    console.log(this.startTime);
 
     let attendanceData = {
       "allowedToLeave":this.allowedToLeave,
-      "startzeit":this.startTime,
-      "endzeit":this.endTime,
+      "startzeit":moment(this.startTime).format('YYYY-MM-DD[T]HH:mm:ss'),
+      "endzeit":moment(this.endTime).format('YYYY-MM-DD[T]HH:mm:ss'),
       "bemerkung":this.bemerkung,
       "care":this.veranstaltung
     };
     await this.popoverController.dismiss(attendanceData);
   }
 
-  // Hier muss ich die Werte noch Null setzen von Endzeit und Bemerkung!!!
   async abort(){
     await this.popoverController.dismiss(null, null);
-}
+  }
 }

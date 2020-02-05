@@ -2,7 +2,7 @@
   <ion-item>
     Betreuung von: 
   </ion-item>
-  <ion-input class="betreuungseingabe"  [ngModel]="startzeit | amDateFormat:'HH:mm'" name="startzeit" type="text" ></ion-input>
+  <ion-datetime [ngModel]="startTime" displayFormat="HH:mm" pickerFormat="HH:mm" (ionChange)="startTimeChange($event.target.value)"></ion-datetime>
   <ion-item>
     Betreuung bis: 
   </ion-item>

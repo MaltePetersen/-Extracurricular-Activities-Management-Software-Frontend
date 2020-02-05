@@ -28,47 +28,9 @@ export class KindHinzufuegenPage implements OnInit {
 
   ngOnInit() {
     this.getSchools();
-    this.countries = [
-      new CountryPhone('DE', 'Germany'),
-    ];
-
-    this.matching_passwords_group = new FormGroup(
-      {
-        password: new FormControl('', Validators.compose(
-          [
-            Validators.minLength(5),
-            Validators.required,
-            Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
-          ])),
-        confirm_password: new FormControl('', Validators.required)
-      }, (formGroup: FormGroup) => {
-      return PasswordValidator.areEqual(formGroup);
-    });
-    let country = new FormControl(this.countries[0], Validators.required);
-    let phone = new FormControl('', Validators.compose(
-      [
-        Validators.required,
-        PhoneValidator.validCountryPhone(country)
-      ]));
-      this.country_phone_group = new FormGroup(
-      {
-        country: country,
-        phone: phone
-      });
-
-    this.validations_form = this.formBuilder.group(
-      {
-      // username: new FormControl('', Validators.compose([
-      //   UsernameValidator.validUsername,
-      //   Validators.maxLength(25),
-      //   Validators.minLength(5),
-      //   Validators.pattern('^(?=.*[a-zA-Z])||(?=.*[0-9])[a-zA-Z0-9]+$'),
-      //   Validators.required
-      // ])),
-      // matching_passwords: this.matching_passwords_group,
+    this.validations_form = this.formBuilder.group({
         name: new FormControl('', Validators.required),
         lname: new FormControl('', Validators.required),
-        country_phone: this.country_phone_group,
         school: new FormControl('', Validators.required),
         schoolClass: new FormControl('', Validators.required)
       });

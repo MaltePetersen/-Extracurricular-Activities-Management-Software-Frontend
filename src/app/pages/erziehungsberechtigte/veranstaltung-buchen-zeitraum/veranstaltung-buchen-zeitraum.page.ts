@@ -150,7 +150,6 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
           "attendanceInputDTO":attendanceDTO
         }
     
-        console.log(params);/*
         this.parentController.addAttendanceUsingPOST(params).toPromise().then((response)=>{
           console.log(response);
           this.alertService.presentToastSuccess('Buchung erfolgreich');
@@ -159,7 +158,7 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
           console.log(error);
           this.alertService.presentToastFailure("Buchung fehlgeschlagen");
           this.router.navigateByUrl('parent/veranstaltung-buchen')
-        });*/
+        });
       }
 
   dateSelected($event){
