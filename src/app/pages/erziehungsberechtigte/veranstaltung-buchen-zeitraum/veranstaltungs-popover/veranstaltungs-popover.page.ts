@@ -2,6 +2,8 @@ import { PopoverController } from '@ionic/angular';
 import { Component, OnInit, Input } from '@angular/core';
 import moment from 'moment';
 import { VeranstaltungBuchenModel } from 'src/app/models/veranstaltungen-buchen-model';
+import { ParentProviderService } from 'src/app/services/parent-provider.service';
+import { AfterSchoolCareDTO } from 'src/app/api/models';
 
 
 @Component({
@@ -12,18 +14,18 @@ import { VeranstaltungBuchenModel } from 'src/app/models/veranstaltungen-buchen-
 export class VeranstaltungsPopoverPage implements OnInit {
   startTime:any;
   endTime:any;
-  veranstaltung:VeranstaltungBuchenModel
-  bemerkung:string;
+  care:AfterSchoolCareDTO;
+  note:string;
   date:any;
   allowedToLeave:boolean = false;
 
-  constructor(private popoverController: PopoverController) { }
+  constructor(private popoverController: PopoverController, private parentProvider:ParentProviderService) { }
 
   ngOnInit() {
-    this.date = moment(this.veranstaltung.startTime).format('YYYY-MM-DDTHH:mmZ');
+    console.log(this.care);
+    this.date = moment(this.care.startTime).toString();
     this.startTime = this.date;
-    this.endTime = moment(this.veranstaltung.endTime).format('YYYY-MM-DDTHH:mmZ');
-    console.log(this.date);
+    this.endTime = moment(this.care.endTime).toString();
   }
 
   startTimeChange(data){
@@ -35,13 +37,12 @@ export class VeranstaltungsPopoverPage implements OnInit {
   }
 
   async saveAttendance(){
-
     let attendanceData = {
       "allowedToLeave":this.allowedToLeave,
       "startzeit":moment(this.startTime).format('YYYY-MM-DD[T]HH:mm:ss'),
       "endzeit":moment(this.endTime).format('YYYY-MM-DD[T]HH:mm:ss'),
-      "bemerkung":this.bemerkung,
-      "care":this.veranstaltung
+      "note":this.note,
+      "care":this.care
     };
     await this.popoverController.dismiss(attendanceData);
   }

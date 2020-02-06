@@ -17,6 +17,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ApiModule } from './api/api.module';
 import { EmployeeProviderService } from './services/employee-provider.service';
+import { ParentProviderService } from './services/parent-provider.service';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { EmployeeProviderService } from './services/employee-provider.service';
   ],
   providers: [
     StatusBar,
+    ParentProviderService,
     EmployeeProviderService,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },

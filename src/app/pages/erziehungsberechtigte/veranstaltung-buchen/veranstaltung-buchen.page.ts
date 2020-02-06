@@ -8,7 +8,9 @@ import { Children } from 'src/app/models/children';
 import { ParentControllerService } from 'src/app/api/services';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import moment from "moment"; 
-import { SimpleUserDTO } from 'src/app/api/models';
+import { SimpleUserDTO, AfterSchoolCareDTO } from 'src/app/api/models';
+import { ParentProviderService } from 'src/app/services/parent-provider.service';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-veranstaltung-buchen',
@@ -20,13 +22,12 @@ export class VeranstaltungBuchenPage implements OnInit {
   startDate:any;
   endDate:any;
   
-  children: any;
+  children:SimpleUserDTO[];
   veranstaltung: string;
-  kindername = null; 
-  veranstaltungen:any;
-  private datum:any;
+  childName = null; 
+  veranstaltungen:AfterSchoolCareDTO[];
 
-  constructor(private alertController: AlertController, private parentController: ParentControllerService, public router : Router ,public http: HttpClient, private veranstaltungsDaten: VeranstaltungensdatenService) {
+  constructor(private alertController: AlertController, private alertService:AlertService, private parentController: ParentControllerService, public router : Router ,public http: HttpClient, private veranstaltungsDaten: VeranstaltungensdatenService, private parentProvider:ParentProviderService) {
     
    }
 
@@ -53,44 +54,17 @@ export class VeranstaltungBuchenPage implements OnInit {
 
   childChange(username:string){
     let child:SimpleUserDTO = this.children.find(child => child.username === username);
-    this.setChildValues(child);
+    this.childName = child.fullname;
+    this.parentProvider.setSelectedChild(child);
   }
 
-  setChildValues(selectedChild:SimpleUserDTO){
-    this.veranstaltungsDaten.changeChild(selectedChild);
-    this.veranstaltungsDaten.changeChildSchoolId(selectedChild.childSchool);
-    this.kindername = selectedChild.fullname;
-  }
-
-
-
-  async chooseOffer(name, type, id){
-    console.log("Momentamer Name: "+this.kindername);
-    if (this.kindername === "kindername" || this.kindername === null  ) {
-
-       const alert = await this.alertController.create({
-       header: "Fehler",
-       message: "Bitte wähle zuerst das Kind aus!",
-       buttons: ['OK']
-    });
-
-    await alert.present();
-      
+  chooseOffer(name, type, id){
+    if (this.childName === null || this.childName === 'Kindername') {
+      this.alertService.presentToastFailure('Wählen Sie ein Kind!');
     } else {
-    this.veranstaltungsDaten.changeVeranstaltung(name.toString());
-    console.log('Type: ' + type)
-    this.veranstaltungsDaten.changeVeranstaltungType(type);
-    console.log('ID: ' + id)
-    this.veranstaltungsDaten.changeveranstaltungsTypID(id);
-    
-    // const alert = await this.alertController.create({
-    //   header: name,
-    //   buttons: ['OK']
-    //});
-
-    //await alert.present();
-    this.router.navigate(['parent/veranstaltung-buchen-zeitraum']);
+      this.parentProvider.setTypeId(type);
+      this.parentProvider.setTypeName(name);
+      this.router.navigate(['parent/veranstaltung-buchen-zeitraum']);
+    }
   }
-  }
-
 }
