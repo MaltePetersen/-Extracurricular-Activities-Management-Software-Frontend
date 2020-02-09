@@ -13,31 +13,58 @@ export class AccountPage implements OnInit {
 
   constructor(private alertController: AlertController,  private router: Router,private alertService: AlertService, private parentController:ParentControllerService) { }
 
+  editUsername:boolean = false;
+  editName:boolean = false;
+  editPassword:boolean = false;
+  previousUsername:string;
   username: string;
-  fname: string;
+  firstname:string;
+  lastname:string;
 
   ngOnInit() {
-    this.username ="Peter";
-    this.fname ="Klaus-Dieter";
+  }
+
+  ionViewWillEnter(){
+    this.getAccount();
   }
 
   getAccount(){
+    const params = {
+    };
+
+    this.parentController.getParentUsingGET(params).toPromise().then((parent)=>{
+      let parentData = parent as {username:string, fullname:string};
+      this.username = parentData.username;
+      this.previousUsername = parentData.username;
+      this.firstname = parentData.fullname.split(" ")[0];
+      this.lastname = parentData.fullname.split(" ")[1];
+    });
   }
 
   async saveChanges(){
-    console.log(this.username)
-    console.log(this.fname)
-    const alert = await this.alertController.create({
-      header: "Speichern erfolgreich",
-      message: "Die Änderungen wurden erfolgreich übernommen.",
-      buttons: [{text: 'OK',
-                handler: ()=> {
-                  this.router.navigateByUrl('parent/erziehungsberechtigte-dashboard');
-                },
-              }]
+    let fullname = this.firstname + " " + this.lastname;
+    let update;
+    if(this.username === this.previousUsername){
+      update = {
+        fullname:fullname
+      };
+    } else {
+      update = {
+        username:this.username,
+        fullname:fullname
+      };
+    }
+    
+    const params = {
+      update:update
+    }
+    this.parentController.updateParentUsingPATCH(params).toPromise().then((response)=>{
+      this.alertService.presentToastSuccess("Änderungen erfolgreich gespeichert");
+      this.getAccount();
+    }).catch((error)=>{
+      this.alertService.presentToastFailure("Änderungen konnten nicht übernommen werden");
+      console.log(error);
     });
-    await alert.present();
-
   }
 
   abort(){
@@ -54,26 +81,31 @@ export class AccountPage implements OnInit {
         this.router.navigateByUrl('/login');
       }
     },
-      {text: 'Abbrechen',
-      handler: ()=> {
-        this.router.navigateByUrl('parent/erziehungsberechtigte-dashboard');
-      }
-    }]
-});
+      {
+        text: 'Abbrechen',
+        handler: ()=> {
+        }
+      }]
+    });
     await alert.present();
   }
 
-  async changePassword(){
+  async resetPassword(){
     const alert = await this.alertController.create({
-      header: "Passwort ändern erfolgreich",
-      message: "Das Passwort wurde erfolgreich geändert.",
+      header: "Zurücksetzen",
+      message: "Wolle Sie ihr Passwort wirklich zurücksetzen?",
       buttons: [{text: 'OK',
       handler: ()=> {
-        this.router.navigateByUrl('parent/erziehungsberechtigte-dashboard');
-      },
-    }]
-});
+        this.alertService.presentToastSuccess('Ihr Passwort wurde zurückgesetzt!');
+        this.router.navigateByUrl('/login');
+      }
+    },
+      {
+        text: 'Abbrechen',
+        handler: ()=> {
+        }
+      }]
+    });
     await alert.present();
   }
-
 }

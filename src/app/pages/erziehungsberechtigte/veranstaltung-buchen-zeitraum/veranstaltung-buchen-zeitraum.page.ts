@@ -39,9 +39,6 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
   };
   days: any = [];
   schichten:VeranstaltungBuchenModel[] = [];
-  selectedDate:Date;
-  hideDate:boolean = false;
-  hideDateButton:string = 'Datum auswählen';
   selectedChild:SimpleUserDTO;
   typeId:number;
 
@@ -174,20 +171,6 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
       this.alertService.presentToastFailure("Buchung fehlgeschlagen");
       this.router.navigateByUrl('parent/veranstaltung-buchen')
     });
-  }
-
-  dateSelected($event){
-    this.selectedDate = new Date($event);
-    console.log(this.selectedDate);
-  }
-
-  toggleDate(){
-    this.hideDate = !this.hideDate;
-    if(this.hideDate){
-      this.hideDateButton = 'Auswahl minimieren'
-    }else {
-      this.hideDateButton = 'Datum auswählen'
-    }
   }
 
   dateChange(){
