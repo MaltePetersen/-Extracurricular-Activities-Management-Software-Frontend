@@ -10,6 +10,7 @@ import moment from 'moment';
 import { PupilModel } from 'src/app/models/pupilModel';
 import { AlertService } from 'src/app/services/alert.service';
 import { EmployeeProviderService } from 'src/app/services/employee-provider.service';
+import { isNgTemplate } from '@angular/compiler';
 
 @Component({
   selector: 'app-schueler-anmelden',
@@ -27,6 +28,7 @@ export class SchuelerAnmeldenPage implements OnInit {
   search:string;
   care:AfterSchoolCareDTO;
   endOfCare:string = '';
+  isLockable:boolean = false;
   
   constructor(private alertController:AlertController, public router:Router, public popoverController:PopoverController, private employeeController:EmployeeControllerService, private alertService: AlertService, private employeeProvider:EmployeeProviderService) { 
   }
@@ -59,6 +61,11 @@ export class SchuelerAnmeldenPage implements OnInit {
 
   updateFilters(){
     this.filteredPupils = this.pupils;
+    if(this.checkLeft()){
+      this.isLockable = true;
+    } else {
+      this.isLockable = false;
+    }
     this.getClasses();
     this.filteredPupils.sort((a, b)=> a.name.localeCompare(b.name));
   }
@@ -81,6 +88,16 @@ export class SchuelerAnmeldenPage implements OnInit {
 
   selectedClassChanged(){
       this.filterPupils();
+  }
+
+  checkLeft(){
+    let allLeft = true;
+    this.pupils.forEach((pupil)=>{
+      if(pupil.status != 4){
+        allLeft = false
+      }
+    });
+    return allLeft;
   }
 
   filterPupils(){

@@ -63,7 +63,7 @@
 </ion-content>
 
 <ion-footer>
-  <ion-button class="sperren-button" (click)="presentAlertLock()">
+  <ion-button class="sperren-button" (click)="presentAlertLock()" [disabled]="!isLockable">
     Anwesenheitsliste sperren
   </ion-button>
 </ion-footer>
