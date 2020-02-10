@@ -3,13 +3,16 @@ import { VeranstaltungensdatenService } from 'src/app/services/veranstaltungensd
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { ParentControllerService } from 'src/app/api/services';
-import { UserDTO, AfterSchoolCareDTO } from 'src/app/api/models';
-import { AlertController } from '@ionic/angular';
+import { UserDTO, AfterSchoolCareDTO, AttendanceInputDTO, SimpleUserDTO } from 'src/app/api/models';
+import { AlertController, PopoverController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/services/alert.service';
+import { VeranstaltungBuchenModel } from 'src/app/models/veranstaltungen-buchen-model';
+import { VeranstaltungsPopoverPage } from '../veranstaltung-buchen-zeitraum/veranstaltungs-popover/veranstaltungs-popover.page';
+import { VeranstaltungAendernModel } from 'src/app/models/veranstaltung-aendern-model';
 
-class IUserDTO implements UserDTO{
-  
+class IUserDTO implements UserDTO {
+
 }
 
 @Component({
@@ -18,12 +21,14 @@ class IUserDTO implements UserDTO{
   styleUrls: ['./erziehungsberechtigte-dashboard.page.scss'],
 })
 export class ErziehungsberechtigteDashboardPage implements OnInit {
+  careId: number;
   afterSchoolCares: any;
   veranstaltung: string;
-  veranstaltungen:AfterSchoolCareDTO[];
+  veranstaltungen: AfterSchoolCareDTO[];
   children: [];
+  selectedChild: SimpleUserDTO;
 
-  constructor(private alertService: AlertService, private router: Router, private alertController: AlertController, private veranstaltungsDaten: VeranstaltungensdatenService, public http: HttpClient, private parentController: ParentControllerService) {
+  constructor( private popoverController: PopoverController, private alertService: AlertService, private router: Router, private alertController: AlertController, private veranstaltungsDaten: VeranstaltungensdatenService, public http: HttpClient, private parentController: ParentControllerService) {
     this.getChildren();
     this.getVeranstaltungen();
   }
@@ -38,19 +43,19 @@ export class ErziehungsberechtigteDashboardPage implements OnInit {
     const params = {
     };
 
-    this.parentController.getChildsUsingGET(params).toPromise().then((children)=>{
-        if (children.length === 0){
+    this.parentController.getChildsUsingGET(params).toPromise().then((children) => {
+        if (children.length === 0) {
           this.createChildAlert();
         }
-        }).catch((error)=>{
+        }).catch((error) => {
           console.log(error);
         });
   }
 
-  async createChildAlert(){
+  async createChildAlert() {
     const alert = await this.alertController.create({
-      header: "Achtung,",
-      message: "Sie haben noch keine Kinder hinzugefügt, wollen Sie dies jetzt tun?",
+      header: 'Achtung,',
+      message: 'Sie haben noch keine Kinder hinzugefügt, wollen Sie dies jetzt tun?',
       buttons: [{text: 'Ja',
                 role: 'confirm',
                 handler: () => {
@@ -71,32 +76,35 @@ export class ErziehungsberechtigteDashboardPage implements OnInit {
   getVeranstaltungen() {
     this.afterSchoolCares = [];
     const params = { };
-    this.parentController.getBookedAfterSchoolCaresUsingGET(params).toPromise().then((cares)=>{
+    this.parentController.getBookedAfterSchoolCaresUsingGET(params).toPromise().then((cares) => {
       // this.veranstaltungen = cares;
-      cares.forEach((response)=>{
+      cares.forEach((response) => {
+        console.log('RES: '+ response.attendances[0].note);
         for (let i = 0; i < response.attendances.length; i++) {
-          console.log("ID: "+response.attendances[i].id)
-        this.afterSchoolCares.push({"id":response.attendances[i].id, "startTime":response.startTime, "name": response.name, "endTime": response.endTime, "childName":response.attendances[i].child.fullname});
-        console.table(this.afterSchoolCares)
+        this.afterSchoolCares.push({'id': response.attendances[i].id, 'startTime': response.startTime, 'name': response.name, 'endTime': response.endTime,
+         'childName': response.attendances[i].child.fullname, 'latestArrivalTime': response.attendances[i].latestArrivalTime, 'predefinedLeaveTime': response.attendances[i].predefinedLeaveTime,
+        'allowedToLeaveAfterFinishedHomework': response.attendances[i].allowedToLeaveAfterFinishedHomework, 'childUsername': response.attendances[i].child.username,
+        'note': response.attendances[i].note, });
+        console.table(this.afterSchoolCares);
         }
       });
       console.table(this.veranstaltungen);
-    }).catch((error)=>{
+    }).catch((error) => {
       console.log(error);
     });
   }
 
   async deleteAttendance(id) {
     const alert = await this.alertController.create({
-      header: "Warnung,",
-      message: "Wollen Sie ihr Kind wirklich abmelden?",
+      header: 'Warnung,',
+      message: 'Wollen Sie ihr Kind wirklich abmelden?',
       buttons: [{text: 'Ja',
                 role: 'confirm',
                 handler: () => {
-                  this.parentController.deleteAttendanceUsingDELETE(id).toPromise().then(()=>{
+                  this.parentController.deleteAttendanceUsingDELETE(id).toPromise().then(() => {
                     this.getVeranstaltungen();
                     this.alertService.presentToastSuccess('Ihr Kind wurde abgemeldet');
-                  }).catch((error)=>{
+                  }).catch((error) => {
                     this.alertService.presentToastFailure('Es ist ein Fehler aufgetreten');
                     console.log(error);
                   });
@@ -112,7 +120,71 @@ export class ErziehungsberechtigteDashboardPage implements OnInit {
     await alert.present();
   }
 
-  async chooseOffer(name){
+  async changeAttendance(model: VeranstaltungAendernModel) {
+    console.log('MODEL');
+    console.log(model);
+    this.careId = model.id;
+    const popover = await this.popoverController.create({
+      component: VeranstaltungsPopoverPage,
+      cssClass: 'veranstaltung-buchen-popover',
+      translucent: true,
+      componentProps: {
+        care: model
+      }
+    });
+    popover.style.cssText = '--width:\'auto\'';
+    await popover.present();
+    popover.onDidDismiss().then((dataReturned) => {
+      console.log('DATA RETURNED');
+      console.log(dataReturned);
+      if (dataReturned.data) {
+        this.changeCare(dataReturned.data);
+      } else {
+        this.alertService.presentToastFailure('Änderung nicht erfolgreich');
+      }
+    });
+    // return await modal.present();
+  }
+
+  changeCare(changeAttendanceData) {
+    let latestArrivalTime: string;
+    let predefinedLeaveTime: string;
+    if (changeAttendanceData.startzeit == changeAttendanceData.care.startTime) {
+      latestArrivalTime = null;
+    } else {
+      latestArrivalTime = changeAttendanceData.startzeit;
+    }
+    if (changeAttendanceData.endzeit == changeAttendanceData.care.endTime) {
+      predefinedLeaveTime = null;
+    } else {
+      predefinedLeaveTime = changeAttendanceData.endzeit;
+    }
+    const attendanceDTO = {
+      'allowedToLeaveAfterFinishedHomework': changeAttendanceData.allowedToLeave,
+      'childUsername': changeAttendanceData.username,
+      'latestArrivalTime': latestArrivalTime,
+      'note': changeAttendanceData.note,
+      'predefinedLeaveTime': predefinedLeaveTime
+    } as AttendanceInputDTO;
+
+    const params = {
+      'afterSchoolCareId': this.careId,
+      'attendanceInputDTO': attendanceDTO
+    };
+
+    console.log(params);
+
+    // this.parentController.addAttendanceUsingPOST(params).toPromise().then((response) => {
+    //   this.alertService.presentToastSuccess('Änderung erfolgreich');
+    //   this.router.navigateByUrl('parent/veranstaltung-buchen');
+    // }).catch((error) => {
+    //   console.log(error);
+    //   this.alertService.presentToastFailure('Buchung fehlgeschlagen');
+    //   this.router.navigateByUrl('parent/veranstaltung-buchen');
+    // });
+  }
+
+  async chooseOffer(name) {
     this.veranstaltungsDaten.changeVeranstaltung(name.toString());
   }
 

@@ -9,6 +9,7 @@ import { ErziehungsberechtigteDashboardPage } from './erziehungsberechtigte-dash
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MomentModule } from 'ngx-moment';
+import { VeranstaltungsPopoverPageModule } from '../veranstaltung-buchen-zeitraum/veranstaltungs-popover/veranstaltungs-popover.module';
 
 const routes: Routes = [
   {
@@ -24,6 +25,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     MomentModule,
+    VeranstaltungsPopoverPageModule,
     RouterModule.forChild(routes),
     NgxDatatableModule,
   ],
