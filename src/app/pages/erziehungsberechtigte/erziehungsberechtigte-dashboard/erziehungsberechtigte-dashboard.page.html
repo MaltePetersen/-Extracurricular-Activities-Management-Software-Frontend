@@ -7,7 +7,7 @@
     </ion-label>
   </div>
   <div class="veranstaltung-container">
-    <ion-item *ngFor="let care of afterSchoolCares" lines="none" class="veranstaltung-item" (click)="chooseOffer(care.name)">
+    <ion-item *ngFor="let care of afterSchoolCares" lines="none" class="veranstaltung-item" [ngClass]="{'angemeldet-item':care.status == 1, 'ueberfaellig-item':care.status == 2, 'anwesend-item':care.status == 3, 'gegangen-item':care.status == 4.}" (click)="chooseOffer(care.name)">
       <div class="veranstaltung-content-container" >
           <ion-row class="dayrow">
             <span class="button-organization
@@ -41,6 +41,18 @@
           </ion-label>
           <ion-label class="time-label">
             {{care.startTime | amDateFormat:'HH:mm'}} - {{care.endTime | amDateFormat:'HH:mm'}}
+          </ion-label>
+          <ion-label *ngIf="care.status == 1" class="status-label angemeldet-label">
+            Angemeldet
+          </ion-label>
+          <ion-label *ngIf="care.status == 2" class="status-label ueberfaellig-label">
+            Überfällig
+          </ion-label>
+          <ion-label *ngIf="care.status == 3" class="status-label anwesend-label">
+            Anwesend
+          </ion-label>
+          <ion-label *ngIf="care.status == 4" class="status-label gegangen-label">
+            Gegangen
           </ion-label>
         </ion-row>                
       </div>

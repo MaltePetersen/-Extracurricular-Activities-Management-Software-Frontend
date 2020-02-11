@@ -38,28 +38,21 @@
     align-items: center;
     justify-content: flex-end;
 }
-.schueler-item-anwesend{
+.schueler-item{
     margin-top: 1em;
     width: 100%;
     --border-width: 2px 2px 2px 2px;
+}
+.anwesend-item{
     --border-color: green;
 }
-.schueler-item-angemeldet{
-    margin-top: 1em;
-    width: 100%;
-    --border-width: 2px 2px 2px 2px;
+.angemeldet-item{
     --border-color: grey;
 }
-.schueler-item-nach-Hause-gegangen{
-    margin-top: 1em;
-    width: 100%;
-    --border-width: 2px 2px 2px 2px;
+.gegangen-item{
     --border-color: black;
 }
-.schueler-item-ueberfaellig{
-    margin-top: 1em;
-    width: 100%;
-    --border-width: 2px 2px 2px 2px;
+.ueberfaellig-item{
     --border-color: red;
 }
 .schueler-content-container{
@@ -93,4 +86,19 @@
 }
 .sperren-button{
     width: -webkit-fill-available;
+}
+.status-label{
+    margin-left: auto;
+}
+.angemeldet-label{
+    color: grey;
+}
+.ueberfaellig-label{
+    color: red;
+}
+.anwesend-label{
+    color: green;
+}
+.gegangen-label{
+    color: black;
 }

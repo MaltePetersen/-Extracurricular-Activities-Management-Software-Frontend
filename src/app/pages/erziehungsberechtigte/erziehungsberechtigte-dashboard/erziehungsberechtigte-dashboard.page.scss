@@ -25,10 +25,6 @@ ion-item{
     align-items: center;
     justify-content: flex-end;
 }
-.veranstaltung-item{
-    margin-top: 1em;
-    width: 100%;
-}
 .veranstaltung-content-container{
 
     width: 100%;
@@ -53,7 +49,6 @@ ion-item{
 }
 .day-label{
     font-weight: bold;
-    
 }
 .name-row{
     margin-top: 0.5em;
@@ -77,4 +72,36 @@ ion-item{
     display: flex;
     justify-content: left;
     // transform: translateX(65px);
+}
+.veranstaltung-item{
+    margin-top: 1em;
+    width: 100%;
+    --border-width: 2px 2px 2px 2px;
+}
+.anwesend-item{
+    --border-color: green;
+}
+.angemeldet-item{
+    --border-color: grey;
+}
+.gegangen-item{
+    --border-color: black;
+}
+.ueberfaellig-item{
+    --border-color: red;
+}
+.status-label{
+    margin-left: auto;
+}
+.angemeldet-label{
+    color: grey;
+}
+.ueberfaellig-label{
+    color: red;
+}
+.anwesend-label{
+    color: green;
+}
+.gegangen-label{
+    color: black;
 }

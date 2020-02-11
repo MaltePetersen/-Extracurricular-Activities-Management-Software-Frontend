@@ -80,6 +80,7 @@ export class ErziehungsberechtigteDashboardPage implements OnInit {
           this.afterSchoolCares.push(new VeranstaltungAendernModel(attendance.id, response.name, response.startTime, response.endTime, attendance.latestArrivalTime, attendance.predefinedLeaveTime, attendance.allowedToLeaveAfterFinishedHomework, attendance.note, attendance.child.fullname, attendance.child.username, attendance.status));
         });
       });
+      console.log(this.afterSchoolCares);
     }).catch((error) => {
       console.log(error);
     });

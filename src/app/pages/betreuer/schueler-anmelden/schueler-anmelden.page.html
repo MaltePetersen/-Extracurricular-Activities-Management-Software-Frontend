@@ -19,7 +19,7 @@
     </ion-row>
   </div>
   <div class="schueler-container">
-    <ion-item *ngFor="let pupil of filteredPupils" lines="none" [ngClass]="{'schueler-item-angemeldet':pupil.status == 1, 'schueler-item-ueberfaellig':pupil.status == 2, 'schueler-item-anwesend':pupil.status == 3, 'schueler-item-nach-Hause-gegangen':pupil.status == 4.}" (click)="presentAlertStatus(pupil)">
+    <ion-item *ngFor="let pupil of filteredPupils" lines="none" class="schueler-item" [ngClass]="{'angemeldet-item':pupil.status == 1, 'ueberfaellig-item':pupil.status == 2, 'anwesend-item':pupil.status == 3, 'gegangen-item':pupil.status == 4.}" (click)="presentAlertStatus(pupil)">
       <div class="schueler-content-container">
         <ion-row class="header-zeile">
           <ion-label class="schueler-name-label">
@@ -56,6 +56,20 @@
           <ion-label no-wrap>
             Info: {{pupil.note}}
           </ion-label>  
+        </ion-row>
+        <ion-row class="zeile1">
+          <ion-label *ngIf="pupil.status == 1" class="status-label angemeldet-label">
+            Angemeldet
+          </ion-label>
+          <ion-label *ngIf="pupil.status == 2" class="status-label ueberfaellig-label">
+            Überfällig
+          </ion-label>
+          <ion-label *ngIf="pupil.status == 3" class="status-label anwesend-label">
+            Anwesend
+          </ion-label>
+          <ion-label *ngIf="pupil.status == 4" class="status-label gegangen-label">
+            Gegangen
+          </ion-label>
         </ion-row>
       </div>
     </ion-item>
