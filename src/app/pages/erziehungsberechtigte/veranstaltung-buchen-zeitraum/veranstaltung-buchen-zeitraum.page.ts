@@ -14,6 +14,7 @@ import { ParentDayModel } from 'src/app/models/parent-day-model';
 import { VeranstaltungBuchenModel } from 'src/app/models/veranstaltungen-buchen-model';
 import { AlertService } from 'src/app/services/alert.service';
 import { ParentProviderService } from 'src/app/services/parent-provider.service';
+import { VeranstaltungPopoverModel } from 'src/app/models/veranstaltungPopoverModel';
 
 @Component({
   selector: 'app-veranstaltung-buchen-zeitraum',
@@ -112,13 +113,15 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
   }
 
   async presentPopover(model:VeranstaltungBuchenModel) {
-    this.careId = model.id;
+    let popoverModel = new VeranstaltungPopoverModel(model.id, model.startTime, model.endTime, null, null, null, null, this.selectedChild.username);
+    console.log("popoverModel: " + new VeranstaltungPopoverModel(model.id, model.startTime, model.endTime, null, null, null, null, this.selectedChild.username));
     const popover = await this.popoverController.create({
       component: VeranstaltungsPopoverPage,
       cssClass: "veranstaltung-buchen-popover",
       translucent: true,
       componentProps: {
-        care: model
+        model: popoverModel,
+        isChange:false
       }
     });
     popover.style.cssText = "--width:'auto'";
@@ -132,11 +135,10 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
         this.router.navigateByUrl('parent/veranstaltung-buchen')
       }
     });
-    // return await modal.present();
   }
 
   bookCare(attendanceData) {
-    let latestArrivalTime:string;
+    /*let latestArrivalTime:string;
     let predefinedLeaveTime:string;
     if(attendanceData.startzeit == attendanceData.care.startTime){
       latestArrivalTime = null;
@@ -147,17 +149,17 @@ export class VeranstaltungBuchenZeitraumPage implements OnInit {
       predefinedLeaveTime = null;
     } else {
       predefinedLeaveTime = attendanceData.endzeit;
-    }
+    }*/
     const attendanceDTO = <AttendanceInputDTO> {
+      "latestArrivalTime": attendanceData.latestArrivalTime,
+      "predefinedLeaveTime": attendanceData.predefinedLeaveTime,
       "allowedToLeaveAfterFinishedHomework": attendanceData.allowedToLeave,
-      "childUsername": this.selectedChild.username,
-      "latestArrivalTime": latestArrivalTime,
       "note": attendanceData.note,
-      "predefinedLeaveTime": predefinedLeaveTime
+      "childUsername": attendanceData.username
     }
     
     const params = {
-      "afterSchoolCareId":this.careId,
+      "afterSchoolCareId":attendanceData.careId,
       "attendanceInputDTO":attendanceDTO
     }
 
