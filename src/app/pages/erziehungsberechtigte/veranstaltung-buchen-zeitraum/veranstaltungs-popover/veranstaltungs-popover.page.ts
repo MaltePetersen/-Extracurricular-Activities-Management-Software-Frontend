@@ -25,10 +25,8 @@ export class VeranstaltungsPopoverPage implements OnInit {
   constructor(private popoverController: PopoverController, private parentProvider:ParentProviderService,) { }
 
   ngOnInit() {
-    console.log("Care")
-    console.log(this.care.predefinedLeaveTime);
 
-    if(this.care.latestArrivalTime !== null){
+    /*if(this.care.latestArrivalTime !== null){
       this.startTime = moment(this.care.latestArrivalTime).toString();
     } else{
       this.startTime = moment(this.care.startTime).toString();
@@ -46,11 +44,11 @@ export class VeranstaltungsPopoverPage implements OnInit {
     }
     if(this.care.childUsername  !== null) {
       this.username = this.care.childUsername;
-    }
+    }*/
 
-    
-    // this.startTime = this.date;
-    // this.endTime = moment(this.care.endTime).toString();
+    this.date = moment(this.care.startTime).toString();
+    this.startTime = this.date;
+    this.endTime = moment(this.care.endTime).toString();
 
 
   }
