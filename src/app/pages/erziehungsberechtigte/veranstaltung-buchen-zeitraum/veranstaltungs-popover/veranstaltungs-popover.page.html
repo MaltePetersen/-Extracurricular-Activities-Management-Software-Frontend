@@ -2,11 +2,11 @@
   <ion-item>
     Betreuung von: 
   </ion-item>
-  <ion-datetime [ngModel]="startTime" displayFormat="HH:mm" pickerFormat="HH:mm" (ionChange)="startTimeChange($event.target.value)"></ion-datetime>
+  <ion-datetime [ngModel]="picker1" displayFormat="HH:mm" pickerFormat="HH:mm" (ionChange)="picker1Changed($event.detail.value)"></ion-datetime>
   <ion-item>
     Betreuung bis: 
   </ion-item>
-  <ion-datetime [ngModel]="endTime" displayFormat="HH:mm" pickerFormat="HH:mm" (ionChange)="endTimeChange($event.target.value)"></ion-datetime>
+  <ion-datetime [ngModel]="picker2" displayFormat="HH:mm" pickerFormat="HH:mm" (ionChange)="picker2Changed($event.detail.value)"></ion-datetime>
   <ion-item>
     <ion-checkbox slot="start" [(ngModel)]="allowedToLeave"></ion-checkbox>
     <ion-label>Darf nach den Hausaufgaben gehen</ion-label>

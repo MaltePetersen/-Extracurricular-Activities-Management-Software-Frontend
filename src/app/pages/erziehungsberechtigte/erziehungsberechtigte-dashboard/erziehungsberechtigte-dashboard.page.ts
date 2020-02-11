@@ -10,6 +10,7 @@ import { AlertService } from 'src/app/services/alert.service';
 import { VeranstaltungBuchenModel } from 'src/app/models/veranstaltungen-buchen-model';
 import { VeranstaltungsPopoverPage } from '../veranstaltung-buchen-zeitraum/veranstaltungs-popover/veranstaltungs-popover.page';
 import { VeranstaltungAendernModel } from 'src/app/models/veranstaltung-aendern-model';
+import { VeranstaltungPopoverModel } from 'src/app/models/veranstaltungPopoverModel';
 
 class IUserDTO implements UserDTO {
 
@@ -22,7 +23,7 @@ class IUserDTO implements UserDTO {
 })
 export class ErziehungsberechtigteDashboardPage implements OnInit {
   careId: number;
-  afterSchoolCares: any;
+  afterSchoolCares: VeranstaltungAendernModel[];
   veranstaltung: string;
   veranstaltungen: AfterSchoolCareDTO[];
   children: [];
@@ -64,9 +65,6 @@ export class ErziehungsberechtigteDashboardPage implements OnInit {
                 },
                 {text: 'Nein',
                 role: 'cancel',
-                // handler: () => {
-                //   this.router.navigateByUrl('login');
-                // },
               }]
     });
     await alert.present();
@@ -77,18 +75,11 @@ export class ErziehungsberechtigteDashboardPage implements OnInit {
     this.afterSchoolCares = [];
     const params = { };
     this.parentController.getBookedAfterSchoolCaresUsingGET(params).toPromise().then((cares) => {
-      // this.veranstaltungen = cares;
       cares.forEach((response) => {
-        console.log('RES: '+ response.attendances[0].note);
-        for (let i = 0; i < response.attendances.length; i++) {
-        this.afterSchoolCares.push({'id': response.attendances[i].id, 'startTime': response.startTime, 'name': response.name, 'endTime': response.endTime,
-         'childName': response.attendances[i].child.fullname, 'latestArrivalTime': response.attendances[i].latestArrivalTime, 'predefinedLeaveTime': response.attendances[i].predefinedLeaveTime,
-        'allowedToLeaveAfterFinishedHomework': response.attendances[i].allowedToLeaveAfterFinishedHomework, 'childUsername': response.attendances[i].child.username,
-        'note': response.attendances[i].note, });
-        console.table(this.afterSchoolCares);
-        }
+        response.attendances.forEach((attendance)=>{
+          this.afterSchoolCares.push(new VeranstaltungAendernModel(attendance.id, response.name, response.startTime, response.endTime, attendance.latestArrivalTime, attendance.predefinedLeaveTime, attendance.allowedToLeaveAfterFinishedHomework, attendance.note, attendance.child.fullname, attendance.child.username, attendance.status));
+        });
       });
-      console.table(this.veranstaltungen);
     }).catch((error) => {
       console.log(error);
     });
@@ -112,68 +103,49 @@ export class ErziehungsberechtigteDashboardPage implements OnInit {
                 },
                 {text: 'Nein',
                 role: 'cancel',
-                // handler: () => {
-                //   this.router.navigateByUrl('login');
-                // },
               }]
     });
     await alert.present();
   }
 
   async changeAttendance(model: VeranstaltungAendernModel) {
-    console.log('MODEL');
-    console.log(model);
-    this.careId = model.id;
+    let popoverModel = new VeranstaltungPopoverModel(model.id, model.startTime, model.endTime, model.latestArrivalTime, model.predefinedLeaveTime, model.allowedToLeaveAfterFinishedHomework, model.note, model.username);
     const popover = await this.popoverController.create({
       component: VeranstaltungsPopoverPage,
       cssClass: 'veranstaltung-buchen-popover',
       translucent: true,
       componentProps: {
-        care: model
+        model: popoverModel,
+        isChange:true
       }
     });
     popover.style.cssText = '--width:\'auto\'';
     await popover.present();
     popover.onDidDismiss().then((dataReturned) => {
-      console.log('DATA RETURNED');
-      console.log(dataReturned);
       if (dataReturned.data) {
         this.changeCare(dataReturned.data);
       } else {
         this.alertService.presentToastFailure('Änderung nicht erfolgreich');
       }
     });
-    // return await modal.present();
   }
 
   changeCare(changeAttendanceData) {
-    let latestArrivalTime: string;
-    let predefinedLeaveTime: string;
-    if (changeAttendanceData.startzeit == changeAttendanceData.care.startTime) {
-      latestArrivalTime = null;
-    } else {
-      latestArrivalTime = changeAttendanceData.startzeit;
-    }
-    if (changeAttendanceData.endzeit == changeAttendanceData.care.endTime) {
-      predefinedLeaveTime = null;
-    } else {
-      predefinedLeaveTime = changeAttendanceData.endzeit;
-    }
     const update = {
+      'latestArrivalTime': changeAttendanceData.latestArrivalTime,
+      'predefinedLeaveTime': changeAttendanceData.predefinedLeaveTime,
       'allowedToLeaveAfterFinishedHomework': changeAttendanceData.allowedToLeave,
-      'childUsername': changeAttendanceData.username,
-      'latestArrivalTime': latestArrivalTime,
       'note': changeAttendanceData.note,
-      'predefinedLeaveTime': predefinedLeaveTime
+      'childUsername': changeAttendanceData.username
     };
 
-     const params = {
-       "update": update,
-       "id": this.careId
-     }
-
+    const params = {
+      "update": update,
+      "id": changeAttendanceData.careId
+    }
     this.parentController.updateAttendanceUsingPATCH1(params).toPromise().then((response) => {
       this.alertService.presentToastSuccess('Änderung erfolgreich');
+      this.getVeranstaltungen();
     }).catch((error) => {
       console.log(error);
       this.alertService.presentToastFailure('Änderung fehlgeschlagen');
