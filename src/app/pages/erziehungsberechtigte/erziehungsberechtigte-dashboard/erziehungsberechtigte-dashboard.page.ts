@@ -86,25 +86,29 @@ export class ErziehungsberechtigteDashboardPage implements OnInit {
     });
   }
 
-  async deleteAttendance(id) {
-    const alert = await this.alertController.create({
-      header: 'Warnung,',
-      message: 'Wollen Sie ihr Kind wirklich abmelden?',
-      buttons: [{text: 'Ja',
-                role: 'confirm',
-                handler: () => {
-                  this.parentController.deleteAttendanceUsingDELETE(id).toPromise().then(() => {
-                    this.getVeranstaltungen();
-                    this.alertService.presentToastSuccess('Ihr Kind wurde abgemeldet');
-                  }).catch((error) => {
-                    this.alertService.presentToastFailure('Es ist ein Fehler aufgetreten');
-                    console.log(error);
-                  });
-                }
-                },
-                {text: 'Nein',
-                role: 'cancel',
-              }]
+async deleteAttendance(id) {
+  const alert = await this.alertController.create({
+    header: 'Warnung,',
+    message: 'Wollen Sie ihr Kind wirklich abmelden?',
+    buttons: [
+      {
+        text: 'Ja',
+        role: 'confirm',
+        handler: () => {
+          this.parentController.deleteAttendanceUsingDELETE(id).toPromise().then(() => {
+            this.getVeranstaltungen();
+            this.alertService.presentToastSuccess('Ihr Kind wurde abgemeldet');
+          }).catch((error) => {
+            this.alertService.presentToastFailure('Es ist ein Fehler aufgetreten');
+            console.log(error);
+          });
+        }
+      },
+      {
+        text: 'Nein',
+        role: 'cancel',
+      }
+    ]
     });
     await alert.present();
   }
@@ -125,8 +129,6 @@ export class ErziehungsberechtigteDashboardPage implements OnInit {
     popover.onDidDismiss().then((dataReturned) => {
       if (dataReturned.data) {
         this.changeCare(dataReturned.data);
-      } else {
-        this.alertService.presentToastFailure('Änderung nicht erfolgreich');
       }
     });
   }
@@ -139,7 +141,6 @@ export class ErziehungsberechtigteDashboardPage implements OnInit {
       'note': changeAttendanceData.note,
       'childUsername': changeAttendanceData.username
     };
-
     const params = {
       "update": update,
       "id": changeAttendanceData.careId
@@ -156,5 +157,4 @@ export class ErziehungsberechtigteDashboardPage implements OnInit {
   async chooseOffer(name) {
     this.veranstaltungsDaten.changeVeranstaltung(name.toString());
   }
-
 }

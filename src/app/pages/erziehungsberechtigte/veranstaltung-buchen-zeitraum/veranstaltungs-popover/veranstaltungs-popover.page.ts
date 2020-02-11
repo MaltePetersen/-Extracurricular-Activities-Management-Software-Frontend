@@ -91,6 +91,6 @@ export class VeranstaltungsPopoverPage implements OnInit {
   }
 
   async abort(){
-    await this.popoverController.dismiss(null, null);
+    await this.popoverController.dismiss();
   }
 }
