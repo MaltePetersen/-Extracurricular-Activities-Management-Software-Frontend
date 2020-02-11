@@ -15,17 +15,12 @@ export class AppComponent implements OnInit {
   ERZIEHUNGSBERECHTIGTE = false;
   BETREUER = false;
 
-  //environmentName = "";
-  //environmentUrl = "";
-
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private auth: AuthenticationService
   ) {
-    //this.environmentName = environment.environmentName;
-    //this.environmentUrl = environment.apiUrl;
     this.initializeApp();
   }
 
