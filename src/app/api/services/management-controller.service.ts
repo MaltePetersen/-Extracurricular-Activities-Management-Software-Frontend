@@ -19,6 +19,7 @@ import { UserDTO } from '../models/user-dto';
 })
 class ManagementControllerService extends __BaseService {
   static readonly getAllAfterSchoolCareServicesUsingGETPath = '/api/management/afterSchoolCare';
+  static readonly addAfterSchoolCareUsingPOSTPath = '/api/management/afterSchoolCare';
   static readonly geAfterSchoolCareByIdUsingGETPath = '/api/management/afterSchoolCare/{id}';
   static readonly deleteAfterSchoolCareUsingDELETE1Path = '/api/management/afterSchoolCare/{id}';
   static readonly patchAfterSchoolCareUsingPATCHPath = '/api/management/afterSchoolCare/{id}';
@@ -69,6 +70,42 @@ class ManagementControllerService extends __BaseService {
   getAllAfterSchoolCareServicesUsingGET(): __Observable<Array<AfterSchoolCareDTO>> {
     return this.getAllAfterSchoolCareServicesUsingGETResponse().pipe(
       __map(_r => _r.body as Array<AfterSchoolCareDTO>)
+    );
+  }
+
+  /**
+   * @param afterSchoolCareDTO afterSchoolCareDTO
+   * @return OK
+   */
+  addAfterSchoolCareUsingPOSTResponse(afterSchoolCareDTO?: AfterSchoolCareDTO): __Observable<__StrictHttpResponse<string>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = afterSchoolCareDTO;
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/api/management/afterSchoolCare`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'text'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<string>;
+      })
+    );
+  }
+  /**
+   * @param afterSchoolCareDTO afterSchoolCareDTO
+   * @return OK
+   */
+  addAfterSchoolCareUsingPOST(afterSchoolCareDTO?: AfterSchoolCareDTO): __Observable<string> {
+    return this.addAfterSchoolCareUsingPOSTResponse(afterSchoolCareDTO).pipe(
+      __map(_r => _r.body as string)
     );
   }
 

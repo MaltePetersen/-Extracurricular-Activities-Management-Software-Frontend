@@ -8,8 +8,8 @@ import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { AfterSchoolCareDTO } from '../models/after-school-care-dto';
-import { AttendanceInputDTO } from '../models/attendance-input-dto';
 import { ResponseEntity } from '../models/response-entity';
+import { AttendanceInputDTO } from '../models/attendance-input-dto';
 import { ChildDTO } from '../models/child-dto';
 import { UserDTO } from '../models/user-dto';
 import { IUserDTO } from '../models/iuser-dto';
@@ -171,7 +171,7 @@ class ParentControllerService extends __BaseService {
    *
    * @return Created
    */
-  addAttendanceUsingPOSTResponse(params: ParentControllerService.AddAttendanceUsingPOSTParams): __Observable<__StrictHttpResponse<AfterSchoolCareDTO>> {
+  addAttendanceUsingPOSTResponse(params: ParentControllerService.AddAttendanceUsingPOSTParams): __Observable<__StrictHttpResponse<ResponseEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -190,7 +190,7 @@ class ParentControllerService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<AfterSchoolCareDTO>;
+        return _r as __StrictHttpResponse<ResponseEntity>;
       })
     );
   }
@@ -203,9 +203,9 @@ class ParentControllerService extends __BaseService {
    *
    * @return Created
    */
-  addAttendanceUsingPOST(params: ParentControllerService.AddAttendanceUsingPOSTParams): __Observable<AfterSchoolCareDTO> {
+  addAttendanceUsingPOST(params: ParentControllerService.AddAttendanceUsingPOSTParams): __Observable<ResponseEntity> {
     return this.addAttendanceUsingPOSTResponse(params).pipe(
-      __map(_r => _r.body as AfterSchoolCareDTO)
+      __map(_r => _r.body as ResponseEntity)
     );
   }
 
@@ -627,7 +627,7 @@ class ParentControllerService extends __BaseService {
    *
    * @return Created
    */
-  createChildUsingPOSTResponse(params: ParentControllerService.CreateChildUsingPOSTParams): __Observable<__StrictHttpResponse<ResponseEntity>> {
+  createChildUsingPOSTResponse(params: ParentControllerService.CreateChildUsingPOSTParams): __Observable<__StrictHttpResponse<string>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -697,13 +697,13 @@ class ParentControllerService extends __BaseService {
       {
         headers: __headers,
         params: __params,
-        responseType: 'json'
+        responseType: 'text'
       });
 
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<ResponseEntity>;
+        return _r as __StrictHttpResponse<string>;
       })
     );
   }
@@ -830,9 +830,9 @@ class ParentControllerService extends __BaseService {
    *
    * @return Created
    */
-  createChildUsingPOST(params: ParentControllerService.CreateChildUsingPOSTParams): __Observable<ResponseEntity> {
+  createChildUsingPOST(params: ParentControllerService.CreateChildUsingPOSTParams): __Observable<string> {
     return this.createChildUsingPOSTResponse(params).pipe(
-      __map(_r => _r.body as ResponseEntity)
+      __map(_r => _r.body as string)
     );
   }
 
@@ -873,35 +873,17 @@ class ParentControllerService extends __BaseService {
   }
 
   /**
-   * @param params The `ParentControllerService.DeleteChildUsingDELETEParams` containing the following parameters:
-   *
-   * - `username`: username
-   *
-   * - `principal`:
-   *
-   * - `details`:
-   *
-   * - `credentials`:
-   *
-   * - `authorities[0].authority`:
-   *
-   * - `authenticated`:
-   *
+   * @param username username
    * @return OK
    */
-  deleteChildUsingDELETEResponse(params: ParentControllerService.DeleteChildUsingDELETEParams): __Observable<__StrictHttpResponse<string>> {
+  deleteChildUsingDELETEResponse(username: string): __Observable<__StrictHttpResponse<string>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
-    if (params.principal != null) __params = __params.set('principal', params.principal.toString());
-    if (params.details != null) __params = __params.set('details', params.details.toString());
-    if (params.credentials != null) __params = __params.set('credentials', params.credentials.toString());
-    if (params.authorities0Authority != null) __params = __params.set('authorities[0].authority', params.authorities0Authority.toString());
-    if (params.authenticated != null) __params = __params.set('authenticated', params.authenticated.toString());
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/api/parent/child/${params.username}`,
+      this.rootUrl + `/api/parent/child/${username}`,
       __body,
       {
         headers: __headers,
@@ -917,24 +899,11 @@ class ParentControllerService extends __BaseService {
     );
   }
   /**
-   * @param params The `ParentControllerService.DeleteChildUsingDELETEParams` containing the following parameters:
-   *
-   * - `username`: username
-   *
-   * - `principal`:
-   *
-   * - `details`:
-   *
-   * - `credentials`:
-   *
-   * - `authorities[0].authority`:
-   *
-   * - `authenticated`:
-   *
+   * @param username username
    * @return OK
    */
-  deleteChildUsingDELETE(params: ParentControllerService.DeleteChildUsingDELETEParams): __Observable<string> {
-    return this.deleteChildUsingDELETEResponse(params).pipe(
+  deleteChildUsingDELETE(username: string): __Observable<string> {
+    return this.deleteChildUsingDELETEResponse(username).pipe(
       __map(_r => _r.body as string)
     );
   }
@@ -1602,22 +1571,6 @@ module ParentControllerService {
     allErrors0Codes?: Array<string>;
     allErrors0Code?: string;
     allErrors0Arguments?: Array<{}>;
-  }
-
-  /**
-   * Parameters for deleteChildUsingDELETE
-   */
-  export interface DeleteChildUsingDELETEParams {
-
-    /**
-     * username
-     */
-    username: string;
-    principal?: {};
-    details?: {};
-    credentials?: {};
-    authorities0Authority?: string;
-    authenticated?: boolean;
   }
 
   /**

@@ -82,10 +82,7 @@ export class KindBearbeitenPage implements OnInit {
   }
 
   deleteChild():Promise<string>{
-    const params = {
-      username:this.previousUserName
-    }
-    return this.parentController.deleteChildUsingDELETE(params).toPromise();
+    return this.parentController.deleteChildUsingDELETE(this.previousUserName).toPromise();
   }
 
   async deleteAccount(){
