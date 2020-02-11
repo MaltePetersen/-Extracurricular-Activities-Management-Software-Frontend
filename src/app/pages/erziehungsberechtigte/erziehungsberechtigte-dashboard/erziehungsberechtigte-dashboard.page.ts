@@ -159,16 +159,16 @@ export class ErziehungsberechtigteDashboardPage implements OnInit {
     } else {
       predefinedLeaveTime = changeAttendanceData.endzeit;
     }
-    const attendanceDTO = {
+    const update = {
       'allowedToLeaveAfterFinishedHomework': changeAttendanceData.allowedToLeave,
       'childUsername': changeAttendanceData.username,
       'latestArrivalTime': latestArrivalTime,
       'note': changeAttendanceData.note,
       'predefinedLeaveTime': predefinedLeaveTime
-    } as AttendanceInputDTO;
+    };
 
      const params = {
-       "update": attendanceDTO as AttendanceInputDTO,
+       "update": update,
        "id": this.careId
      }
 
