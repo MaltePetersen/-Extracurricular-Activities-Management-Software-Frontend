@@ -69,6 +69,32 @@
               "serviceWorker": true,
               "ngswConfigPath": "ngsw-config.json"
             },
+            "testing": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.testing.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json"
+            },
             "ci": {
               "progress": false
             }
@@ -81,6 +107,9 @@
           },
           "configurations": {
             "production": {
+              "browserTarget": "app:build:production"
+            },
+            "testing": {
               "browserTarget": "app:build:production"
             },
             "ci": {
