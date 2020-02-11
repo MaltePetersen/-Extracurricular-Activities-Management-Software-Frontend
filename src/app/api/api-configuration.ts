@@ -1,14 +1,15 @@
 /* tslint:disable */
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
+import { environment } from "src/environments/environment";
 
 /**
  * Global configuration for Api services
  */
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root"
 })
 export class ApiConfiguration {
-  rootUrl: string = 'https://backend.softwareprojekt-kiel.de';
+  rootUrl: string = environment.apiUrl;
 }
 
 export interface ApiConfigurationInterface {
