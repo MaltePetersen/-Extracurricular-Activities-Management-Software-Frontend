@@ -167,21 +167,17 @@ export class ErziehungsberechtigteDashboardPage implements OnInit {
       'predefinedLeaveTime': predefinedLeaveTime
     } as AttendanceInputDTO;
 
-    const params = {
-      'afterSchoolCareId': this.careId,
-      'attendanceInputDTO': attendanceDTO
-    };
+     const params = {
+       "update": attendanceDTO as AttendanceInputDTO,
+       "id": this.careId
+     }
 
-    console.log(params);
-
-    // this.parentController.addAttendanceUsingPOST(params).toPromise().then((response) => {
-    //   this.alertService.presentToastSuccess('Änderung erfolgreich');
-    //   this.router.navigateByUrl('parent/veranstaltung-buchen');
-    // }).catch((error) => {
-    //   console.log(error);
-    //   this.alertService.presentToastFailure('Buchung fehlgeschlagen');
-    //   this.router.navigateByUrl('parent/veranstaltung-buchen');
-    // });
+    this.parentController.updateAttendanceUsingPATCH1(params).toPromise().then((response) => {
+      this.alertService.presentToastSuccess('Änderung erfolgreich');
+    }).catch((error) => {
+      console.log(error);
+      this.alertService.presentToastFailure('Änderung fehlgeschlagen');
+    });
   }
 
   async chooseOffer(name) {
