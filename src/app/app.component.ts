@@ -15,8 +15,8 @@ export class AppComponent implements OnInit {
   ERZIEHUNGSBERECHTIGTE = false;
   BETREUER = false;
 
-  environmentName = "";
-  environmentUrl = "";
+  //environmentName = "";
+  //environmentUrl = "";
 
   constructor(
     private platform: Platform,
@@ -24,8 +24,8 @@ export class AppComponent implements OnInit {
     private statusBar: StatusBar,
     private auth: AuthenticationService
   ) {
-    this.environmentName = environment.environmentName;
-    this.environmentUrl = environment.apiUrl;
+    //this.environmentName = environment.environmentName;
+    //this.environmentUrl = environment.apiUrl;
     this.initializeApp();
   }
 
