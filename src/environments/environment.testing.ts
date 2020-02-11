@@ -1,4 +1,5 @@
 export const environment = {
-  production: false,
+  production: true,
+  environmentName: "Testing",
   apiUrl: "https://test-backend.softwareprojekt-kiel.de"
 };
