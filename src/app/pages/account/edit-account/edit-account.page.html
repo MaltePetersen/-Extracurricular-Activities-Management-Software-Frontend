@@ -1,0 +1,25 @@
+<app-header></app-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      Nutzerverwaltung
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="stacked">Nutzername</ion-label>
+        <ion-input [(ngModel)]="username"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Vorname</ion-label>
+        <ion-input [(ngModel)]="firstname"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Nachname</ion-label>
+        <ion-input [(ngModel)]="lastname"></ion-input>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <ion-button type="submit" expand="block" (click)="saveChanges()" color="primary">Änderungen speichern</ion-button>
+  <ion-button type="submit" expand="block" (click)="abort()" color="medium">Abbrechen</ion-button>
+</ion-content>

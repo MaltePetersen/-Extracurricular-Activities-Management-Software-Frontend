@@ -14,6 +14,7 @@ export class AppComponent implements OnInit {
   isLoggedIn = false;
   ERZIEHUNGSBERECHTIGTE = false;
   BETREUER = false;
+  fullname:string;
 
   constructor(
     private platform: Platform,
@@ -26,7 +27,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.changeSiteMenu();
+    this.auth.currentUser.subscribe(a=>this.fullname = a.name);
   }
+
   logout() {
     this.auth.logout();
   }

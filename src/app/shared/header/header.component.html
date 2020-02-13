@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-menu-button menu="pageMenu"></ion-menu-button>
     </ion-buttons>
     <ion-title>
       <div class="header-logo-container">
@@ -9,9 +9,9 @@
       </div>
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button>
-        <ion-icon name="information-circle-outline"></ion-icon>
-      </ion-button>
+      <ion-menu-button menu="accountMenu">
+        <ion-icon name="person"></ion-icon>
+      </ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

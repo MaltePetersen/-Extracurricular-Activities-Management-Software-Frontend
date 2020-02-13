@@ -21,6 +21,15 @@ const routes: Routes = [
       role: 'NULL'
     }
   },
+  {
+    path: 'editAccount',
+    loadChildren: () => import('./pages/account/edit-account/edit-account.module')
+    .then(m => m.EditAccountPageModule),
+    canActivate: [AuthGuard],
+    data: {
+      role: 'ROLE_EMPLOYEE || ROLE_PARENT'
+    }
+  },
 { path: 'employee', 
   loadChildren: () => import('./pages/betreuer/employee.module').then(m => m.EmployeeModule),
   canActivate: [AuthGuard],
@@ -33,7 +42,9 @@ loadChildren: () => import('./pages/erziehungsberechtigte/parent.module').then(m
 canActivate: [AuthGuard],
 data: {
   role: 'ROLE_PARENT'
-}}
+}},
+  { path: 'edit-account', loadChildren: './pages/account/edit-account/edit-account.module#EditAccountPageModule' }
+
 ];
 
 @NgModule({
