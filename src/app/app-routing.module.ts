@@ -13,9 +13,9 @@ const routes: Routes = [
     }
   },
   {
-    path: 'registrierung',
-    loadChildren: () => import('./pages/erziehungsberechtigte/registrierung/registrierung.module')
-    .then(m => m.RegistrierungPageModule),
+    path: 'register',
+    loadChildren: () => import('./pages/parent/register/register.module')
+    .then(m => m.RegisterPageModule),
     canActivate: [AuthGuard],
     data: {
       role: 'NULL'
@@ -29,7 +29,7 @@ const routes: Routes = [
   }
 },
 { path: 'parent', 
-loadChildren: () => import('./pages/erziehungsberechtigte/parent.module').then(m => m.ParentModule),
+loadChildren: () => import('./pages/parent/parent.module').then(m => m.ParentModule),
 canActivate: [AuthGuard],
 data: {
   role: 'ROLE_PARENT'

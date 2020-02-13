@@ -1,7 +1,7 @@
-import { VeranstaltungBuchenModel } from './veranstaltungen-buchen-model';
+import { EventBookingModel } from './event-booking-model';
 
 export class ParentDayModel{
 
-    constructor(public name:string, public schichten:[VeranstaltungBuchenModel]){
+    constructor(public name:string, public schichten:[EventBookingModel]){
     }
 }

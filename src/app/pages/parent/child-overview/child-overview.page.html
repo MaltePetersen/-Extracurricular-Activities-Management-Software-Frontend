@@ -1,0 +1,40 @@
+<app-header></app-header>
+
+<ion-content>
+  <div class="flex-container">
+    <ion-label class="shift-label">
+      Meine Kinder
+    </ion-label>
+  </div>
+  <div class="shift-container">
+    <ion-item *ngFor="let child of children" lines="none" class="shift-item" (click)="changeChildData(child)">
+      <div class="shift-content-container">
+        <ion-row class="data-row">
+          <ion-label class="name-label">
+            {{child.fullname}}
+          </ion-label>
+        </ion-row>
+        <ion-row class="school-class-row">
+          <ion-label class="school-label">
+            Schule: {{child.school}}
+          </ion-label>
+        </ion-row>
+        <ion-row class="school-class-row">
+          <ion-label class="class-label">
+            Klasse: {{child.schoolClass}}
+          </ion-label> 
+        </ion-row>
+      </div>
+    </ion-item>
+  </div>
+</ion-content>
+  
+<ion-footer>
+  <ion-toolbar>
+    <ion-label>
+      <ion-button class="home-button" expand="block" (click)="addChild()">
+        Kind hinzufügen
+      </ion-button>
+    </ion-label>
+  </ion-toolbar>
+</ion-footer>

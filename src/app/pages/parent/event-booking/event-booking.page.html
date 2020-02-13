@@ -1,0 +1,28 @@
+<app-header></app-header>
+
+<ion-content>
+  <ion-item> 
+    <ion-label>
+      Kind auswählen
+    </ion-label>
+    <ion-select ok-text="OK" cancel-text="Abbrechen" (ionChange)="childChange($event.target.value)">
+      <ion-select-option *ngFor="let child of children" value={{child.username}}>{{child.fullname}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <div class="flex-container">
+    <ion-label  class="event-label">
+      Buche deine Veranstaltungen
+    </ion-label>
+  </div>
+  <div class="veranstaltung-container">
+    <ion-item *ngFor="let v of events" lines="none" class="events-item" (click)="chooseOffer(v.name, v.type, v.id)">
+      <div class="event-content-container">
+        <ion-label class="tag-label">
+          {{v.name}}
+        </ion-label>
+      </div>
+    </ion-item>
+  </div>         
+</ion-content>
+
+
