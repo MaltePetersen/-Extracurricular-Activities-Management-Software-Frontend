@@ -1,22 +1,22 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AbrechnungPage } from './abrechnung.page';
+import { AttendancePopoverComponent } from './attendance-popover.component';
 
-describe('AbrechnungPage', () => {
-  let component: AbrechnungPage;
-  let fixture: ComponentFixture<AbrechnungPage>;
+describe('AttendancePopoverComponent', () => {
+  let component: AttendancePopoverComponent;
+  let fixture: ComponentFixture<AttendancePopoverComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AbrechnungPage ],
+      declarations: [ AttendancePopoverComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AbrechnungPage);
+    fixture = TestBed.createComponent(AttendancePopoverComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

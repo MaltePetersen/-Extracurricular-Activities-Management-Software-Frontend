@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChildAddPage } from './child-add.page';
 
-describe('KindHinzufuegenPage', () => {
+describe('ChildAddPage', () => {
   let component: ChildAddPage;
   let fixture: ComponentFixture<ChildAddPage>;
 

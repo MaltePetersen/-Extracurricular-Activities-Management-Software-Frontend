@@ -4,16 +4,15 @@ import Moment from "moment";
 import { extendMoment } from "moment-range";
 import { EmployeeControllerService } from 'src/app/api/services';
 import { AfterSchoolCareDTO } from 'src/app/api/models';
-import { MyCareModel } from 'src/app/models/myCareModel';
 
 const moment = extendMoment(Moment as any);
 
 @Component({
-  selector: 'app-abrechnung',
-  templateUrl: './abrechnung.page.html',
-  styleUrls: ['./abrechnung.page.scss'],
+  selector: 'app-invoice',
+  templateUrl: './invoice.page.html',
+  styleUrls: ['./invoice.page.scss'],
 })
-export class AbrechnungPage implements OnInit {
+export class InvoicePage implements OnInit {
 
   afterSchoolCares:any;
   startDate:any;

@@ -5,16 +5,16 @@ import { AuthGuard } from 'src/app/guards/auth.guard';
 
 const routes: Routes = [
   {
-    path: 'schulauswahl',
-    loadChildren: () => import('./schulauswahl/schulauswahl.module').then(m => m.SchulauswahlPageModule),
+    path: 'school-selection',
+    loadChildren: () => import('./school-selection/school-selection.module').then(m => m.SchoolSelectionPageModule),
     canActivate: [AuthGuard],
     data: {
       role: 'ROLE_EMPLOYEE'
     }
   },
   {
-    path: 'schueler-anmelden',
-   loadChildren: () => import('./schueler-anmelden/schueler-anmelden.module').then(m => m.SchuelerAnmeldenPageModule),
+    path: 'attendance-list',
+   loadChildren: () => import('./attendance-list/attendance-list.module').then(m => m.AttendanceListPageModule),
  
    canActivate: [AuthGuard],
     data: {
@@ -22,24 +22,24 @@ const routes: Routes = [
     }
   },
   {
-    path: 'meine-schichten',
-    loadChildren: () => import('./meine-schichten/meine-schichten.module').then(m => m.MeineSchichtenPageModule),
+    path: 'my-cares',
+    loadChildren: () => import('./my-cares/my-cares.module').then(m => m.MyCaresPageModule),
     canActivate: [AuthGuard],
     data: {
       role: 'ROLE_EMPLOYEE'
     }
   },
   {
-    path: 'alle-schichten',
-    loadChildren: () => import('./alle-schichten/alle-schichten.module').then(m => m.AlleSchichtenPageModule),
+    path: 'all-cares',
+    loadChildren: () => import('./all-cares/all-cares.module').then(m => m.AllCaresPageModule),
     canActivate: [AuthGuard],
     data: {
       role: 'ROLE_EMPLOYEE'
     }
   },
   {
-    path: 'abrechnung',
-    loadChildren: () => import('./abrechnung/abrechnung.module').then(m => m.AbrechnungPageModule),
+    path: 'invoice',
+    loadChildren: () => import('./invoice/invoice.module').then(m => m.InvoicePageModule),
     canActivate: [AuthGuard],
     data: {
       role: 'ROLE_EMPLOYEE'

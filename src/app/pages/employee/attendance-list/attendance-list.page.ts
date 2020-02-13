@@ -3,7 +3,7 @@ import { DatePicker } from '@ionic-native/date-picker';
 import { NgModel } from '@angular/forms';
 import { AlertController, PopoverController } from '@ionic/angular';
 import { Router, NavigationExtras } from '@angular/router';
-import { AnwesenheitPopoverComponent } from './anwesenheit-popover/anwesenheit-popover.component';
+import { AttendancePopoverComponent } from './attendance-popover/attendance-popover.component';
 import { EmployeeControllerService } from 'src/app/api/services';
 import { AfterSchoolCare, AfterSchoolCareDTO, SchoolDTO, AttendanceDTO, SimpleUserDTO } from 'src/app/api/models';
 import moment from 'moment';
@@ -13,11 +13,11 @@ import { EmployeeProviderService } from 'src/app/services/employee-provider.serv
 import { isNgTemplate } from '@angular/compiler';
 
 @Component({
-  selector: 'app-schueler-anmelden',
-  templateUrl: './schueler-anmelden.page.html',
-  styleUrls: ['./schueler-anmelden.page.scss'],
+  selector: 'app-attendance-list',
+  templateUrl: './attendance-list.page.html',
+  styleUrls: ['./attendance-list.page.scss'],
 })
-export class SchuelerAnmeldenPage implements OnInit {
+export class AttendanceListPage implements OnInit {
 
 
   classes:string[] = [];
@@ -260,7 +260,7 @@ export class SchuelerAnmeldenPage implements OnInit {
       isPresent = true;
     }
     const popover = await this.popoverController.create({
-      component: AnwesenheitPopoverComponent,
+      component: AttendancePopoverComponent,
       event: ev,
       translucent: true,
       componentProps: {

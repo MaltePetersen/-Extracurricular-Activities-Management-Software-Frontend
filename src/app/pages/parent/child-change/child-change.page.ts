@@ -96,7 +96,7 @@ export class ChildChangePage implements OnInit {
           this.deleteChild().then((response)=>{
             console.log(response);
             this.alertService.presentToastSuccess('Der Account wurde gelöscht');
-            this.router.navigateByUrl('parent/kind-uebersicht');
+            this.router.navigateByUrl('parent/child-overview');
           }).catch((error)=>{
             console.log(error);
             this.alertService.presentToastFailure("Der Account konnte nicht gelöscht werden");

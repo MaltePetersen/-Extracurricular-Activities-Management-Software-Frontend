@@ -27,11 +27,18 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.changeSiteMenu();
+  }
+
+  loadUser(){
     this.auth.currentUser.subscribe(a=>this.fullname = a.name);
   }
 
   logout() {
     this.auth.logout();
+  }
+
+  deleteAccount(){
+    console.log("Account löschen");
   }
 
   changeSiteMenu() {

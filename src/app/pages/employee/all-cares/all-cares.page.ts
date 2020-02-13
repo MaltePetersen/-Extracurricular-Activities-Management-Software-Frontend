@@ -13,11 +13,11 @@ import { DayModel } from 'src/app/models/dayModel';
 const moment = extendMoment(Moment as any);
 
 @Component({
-  selector: 'app-alle-schichten',
-  templateUrl: './alle-schichten.page.html',
-  styleUrls: ['./alle-schichten.page.scss'],
+  selector: 'app-all-cares',
+  templateUrl: './all-cares.page.html',
+  styleUrls: ['./all-cares.page.scss'],
 })
-export class AlleSchichtenPage implements OnInit {
+export class AllCaresPage implements OnInit {
 
   schoolId:number;
   startDate:any;

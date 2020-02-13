@@ -65,7 +65,7 @@ export class ChildAddPage implements OnInit {
     this.parentController.createChildUsingPOST(params).toPromise().then((response)=>{
       console.log(response);
       this.alertService.presentToastSuccess("Kind erfolgreich angelegt");
-      this.router.navigateByUrl('parent/kind-uebersicht');
+      this.router.navigateByUrl('parent/child-overview');
     }).catch((error)=>{
       console.log(error);
       this.alertService.presentToastFailure("Fehler beim Anlegen");
@@ -73,7 +73,7 @@ export class ChildAddPage implements OnInit {
   }
 
   abort() {
-    this.router.navigateByUrl('parent/kind-uebersicht');
+    this.router.navigateByUrl('parent/child-overview');
   }
 
   validation_messages = {
@@ -117,7 +117,7 @@ export class ChildAddPage implements OnInit {
     console.log(values);
   }
 
-
-  navToKindUebersicht() { this.router.navigateByUrl('/child-overview') }
-
+  navToKindUebersicht() {
+    this.router.navigateByUrl('/child-overview')
+  }
 }

@@ -64,7 +64,7 @@ export class EventBookingPage implements OnInit {
     } else {
       this.parentProvider.setTypeId(type);
       this.parentProvider.setTypeName(name);
-      this.router.navigate(['parent/veranstaltung-buchen-zeitraum']);
+      this.router.navigate(['parent/event-booking-time']);
     }
   }
 }

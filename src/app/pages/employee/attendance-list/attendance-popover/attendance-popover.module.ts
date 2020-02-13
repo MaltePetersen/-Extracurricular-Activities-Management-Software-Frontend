@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { AnwesenheitPopoverComponent } from './anwesenheit-popover.component';
+import { AttendancePopoverComponent as AttendancePopoverComponent } from './attendance-popover.component';
 
 @NgModule({
   imports: [
@@ -12,7 +12,7 @@ import { AnwesenheitPopoverComponent } from './anwesenheit-popover.component';
     FormsModule,
     IonicModule,
   ],
-  declarations: [AnwesenheitPopoverComponent], 
-  entryComponents: [AnwesenheitPopoverComponent]
+  declarations: [AttendancePopoverComponent], 
+  entryComponents: [AttendancePopoverComponent]
 })
-export class AnwesenheitsPopoverModule {}
+export class AttendancePopoverModule {}

@@ -128,24 +128,12 @@ export class EventBookingTimePage implements OnInit {
         this.bookCare(dataReturned.data)
       } else {
         this.alertService.presentToastFailure('Die Veranstaltung wurde nicht gebucht.');
-        this.router.navigateByUrl('parent/veranstaltung-buchen')
+        this.router.navigateByUrl('parent/event-booking')
       }
     });
   }
 
   bookCare(attendanceData) {
-    /*let latestArrivalTime:string;
-    let predefinedLeaveTime:string;
-    if(attendanceData.startzeit == attendanceData.care.startTime){
-      latestArrivalTime = null;
-    } else{
-      latestArrivalTime = attendanceData.startzeit;
-    }
-    if(attendanceData.endzeit == attendanceData.care.endTime){
-      predefinedLeaveTime = null;
-    } else {
-      predefinedLeaveTime = attendanceData.endzeit;
-    }*/
     const attendanceDTO = <AttendanceInputDTO> {
       "latestArrivalTime": attendanceData.latestArrivalTime,
       "predefinedLeaveTime": attendanceData.predefinedLeaveTime,
@@ -163,11 +151,11 @@ export class EventBookingTimePage implements OnInit {
     
     this.parentController.addAttendanceUsingPOST(params).toPromise().then((response)=>{
       this.alertService.presentToastSuccess('Buchung erfolgreich');
-      this.router.navigateByUrl('parent/veranstaltung-buchen')
+      this.router.navigateByUrl('parent/event-booking')
     }).catch((error)=>{
       console.log(error);
       this.alertService.presentToastFailure("Buchung fehlgeschlagen");
-      this.router.navigateByUrl('parent/veranstaltung-buchen')
+      this.router.navigateByUrl('parent/event-booking')
     });
   }
 

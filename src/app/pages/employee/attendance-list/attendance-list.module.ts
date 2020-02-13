@@ -5,13 +5,16 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { SchulauswahlPage } from './schulauswahl.page';
+import { AttendanceListPage } from './attendance-list.page';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { AttendancePopoverModule } from './attendance-popover/attendance-popover.module';
+import { MomentModule } from 'ngx-moment';
 
 const routes: Routes = [
   {
     path: '',
-    component: SchulauswahlPage
+    component: AttendanceListPage
   }
 ];
 
@@ -21,8 +24,11 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     SharedModule,
+    AttendancePopoverModule,
     RouterModule.forChild(routes),
+    MomentModule
   ],
-  declarations: [SchulauswahlPage]
+  declarations: [AttendanceListPage],
+  entryComponents: []
 })
-export class SchulauswahlPageModule {}
+export class AttendanceListPageModule {}

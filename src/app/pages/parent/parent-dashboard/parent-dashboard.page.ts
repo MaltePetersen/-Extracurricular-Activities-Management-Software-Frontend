@@ -11,10 +11,6 @@ import { EventPopoverPage } from '../event-booking-time/event-popover/event-popo
 import { EventChangeModel } from 'src/app/models/event-change-model';
 import { EventPopoverModel } from 'src/app/models/eventPopoverModel';
 
-class IUserDTO implements UserDTO {
-
-}
-
 @Component({
   selector: 'app-parent-dashboard',
   templateUrl: './parent-dashboard.page.html',
@@ -59,7 +55,7 @@ export class ParentDashboardPage implements OnInit {
       buttons: [{text: 'Ja',
                 role: 'confirm',
                 handler: () => {
-                  this.router.navigateByUrl('parent/kind-hinzufuegen');
+                  this.router.navigateByUrl('parent/child-add');
                 }
                 },
                 {text: 'Nein',

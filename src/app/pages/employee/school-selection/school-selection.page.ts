@@ -5,11 +5,11 @@ import { EmployeeControllerService } from 'src/app/api/services';
 import { EmployeeProviderService } from 'src/app/services/employee-provider.service';
 
 @Component({
-  selector: 'app-schulauswahl',
-  templateUrl: './schulauswahl.page.html',
-  styleUrls: ['./schulauswahl.page.scss'],
+  selector: 'app-school-selection',
+  templateUrl: './school-selection.page.html',
+  styleUrls: ['./school-selection.page.scss'],
 })
-export class SchulauswahlPage implements OnInit {
+export class SchoolSelectionPage implements OnInit {
 
   schools: any;
 
@@ -22,7 +22,7 @@ export class SchulauswahlPage implements OnInit {
 
   schoolClick(schoolId:number) {
     this.employeeProvider.setSchoolId(schoolId);
-    this.router.navigate(['employee/meine-schichten']);
+    this.router.navigate(['employee/my-cares']);
   }
 
   getSchools() {

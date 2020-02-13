@@ -4,11 +4,11 @@ import { EmployeeControllerService } from 'src/app/api/services';
 import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
-  selector: 'app-anwesenheit-popover',
-  templateUrl: './anwesenheit-popover.component.html',
-  styleUrls: ['./anwesenheit-popover.component.scss'],
+  selector: 'app-attendance-popover',
+  templateUrl: './attendance-popover.component.html',
+  styleUrls: ['./attendance-popover.component.scss'],
 })
-export class AnwesenheitPopoverComponent implements OnInit {
+export class AttendancePopoverComponent implements OnInit {
 
   private id:number;
   private isPresent:boolean;

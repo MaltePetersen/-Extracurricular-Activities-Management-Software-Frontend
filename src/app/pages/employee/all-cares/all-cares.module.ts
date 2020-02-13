@@ -5,16 +5,15 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { MeineSchichtenPage } from './meine-schichten.page';
+import { AllCaresPage } from './all-cares.page';
 import { SharedModule } from 'src/app/shared/shared.module';
-
 import { MomentModule } from 'ngx-moment';
 import { Ionic4DatepickerModule } from '@logisticinfotech/ionic4-datepicker';
 
 const routes: Routes = [
   {
     path: '',
-    component: MeineSchichtenPage
+    component: AllCaresPage
   }
 ];
 
@@ -26,8 +25,8 @@ const routes: Routes = [
     SharedModule,
     MomentModule,
     Ionic4DatepickerModule,
-    RouterModule.forChild(routes),
+    RouterModule.forChild(routes)
   ],
-  declarations: [MeineSchichtenPage]
+  declarations: [AllCaresPage]
 })
-export class MeineSchichtenPageModule {}
+export class AllCaresPageModule {}

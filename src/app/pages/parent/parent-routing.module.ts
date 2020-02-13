@@ -23,7 +23,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'kind-hinzufuegen',
+    path: 'child-add',
     loadChildren: () => import(  './child-add/child-add.module')
     .then(m => m.ChildAddPageModule),
     canActivate: [AuthGuard],

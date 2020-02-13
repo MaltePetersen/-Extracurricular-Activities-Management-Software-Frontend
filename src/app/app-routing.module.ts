@@ -31,7 +31,7 @@ const routes: Routes = [
     }
   },
 { path: 'employee', 
-  loadChildren: () => import('./pages/betreuer/employee.module').then(m => m.EmployeeModule),
+  loadChildren: () => import('./pages/employee/employee.module').then(m => m.EmployeeModule),
   canActivate: [AuthGuard],
   data: {
     role: 'ROLE_EMPLOYEE'

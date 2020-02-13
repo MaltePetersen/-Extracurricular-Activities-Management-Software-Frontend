@@ -27,10 +27,10 @@ export class AuthGuard implements CanActivate {
   return true;
         }
 else if(user.role === 'ROLE_EMPLOYEE'){
-  return this.router.parseUrl('/employee/schulauswahl');
+  return this.router.parseUrl('/employee/school-selection');
 }
 else if(user.role === 'ROLE_PARENT'){
-  return this.router.parseUrl('/parent/erziehungsberechtigte-dashboard');
+  return this.router.parseUrl('/parent/parent-dashboard');
 }
       }    
     

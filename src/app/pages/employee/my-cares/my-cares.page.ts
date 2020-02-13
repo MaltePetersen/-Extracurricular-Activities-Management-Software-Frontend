@@ -8,11 +8,11 @@ import { EmployeeProviderService } from 'src/app/services/employee-provider.serv
 
 
 @Component({
-  selector: 'app-meine-schichten',
-  templateUrl: './meine-schichten.page.html',
-  styleUrls: ['./meine-schichten.page.scss'],
+  selector: 'app-my-cares',
+  templateUrl: './my-cares.page.html',
+  styleUrls: ['./my-cares.page.scss'],
 })
-export class MeineSchichtenPage implements OnInit {
+export class MyCaresPage implements OnInit {
 
   afterSchoolCares:MyCareModel[] = [];
   schoolId:number;
@@ -64,7 +64,7 @@ export class MeineSchichtenPage implements OnInit {
 
   openList(careId:number){
     this.employeeProvider.setCareId(careId);
-    this.router.navigate(['employee/schueler-anmelden']);
+    this.router.navigate(['employee/attendance-list']);
   }
 
   getDayOfWeek(date) {

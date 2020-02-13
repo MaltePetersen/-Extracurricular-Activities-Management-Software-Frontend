@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { AbrechnungPage } from './abrechnung.page';
+import { InvoicePage } from './invoice.page';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Ionic4DatepickerModule } from '@logisticinfotech/ionic4-datepicker';
 import { MomentModule } from 'ngx-moment';
@@ -13,7 +13,7 @@ import { MomentModule } from 'ngx-moment';
 const routes: Routes = [
   {
     path: '',
-    component: AbrechnungPage
+    component: InvoicePage
   }
 ];
 
@@ -27,6 +27,6 @@ const routes: Routes = [
     Ionic4DatepickerModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [AbrechnungPage]
+  declarations: [InvoicePage]
 })
-export class AbrechnungPageModule {}
+export class InvoicePageModule {}

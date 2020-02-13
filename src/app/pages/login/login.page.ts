@@ -36,10 +36,10 @@ export class LoginPage implements OnInit {
   login() {
     this.auth.login(this.user.email, this.user.pw).subscribe((role) => {
       if (role === 'ROLE_EMPLOYEE'){
-        this.router.navigateByUrl('/employee/schulauswahl');
+        this.router.navigateByUrl('/employee/school-selection');
       }
       if (role === 'ROLE_PARENT'){
-      this.router.navigateByUrl('parent/erziehungsberechtigte-dashboard');
+      this.router.navigateByUrl('parent/parent-dashboard');
     }});
   }
 
@@ -47,6 +47,6 @@ export class LoginPage implements OnInit {
 
   register() {
     console.log('Registrierung pressed');
-    this.router.navigateByUrl('/registrierung');
+    this.router.navigateByUrl('/register');
   }
 }
