@@ -20,7 +20,7 @@
           <ion-button (click)="changeAttendance(care);$event.stopPropagation();">
             Details
           </ion-button>
-          <ion-button (click)="deleteAttendance(care.id);$event.stopPropagation();" class="detail-button">
+          <ion-button *ngIf="care.status == 1 || care.status == 2" (click)="deleteAttendance(care.id);$event.stopPropagation();" class="detail-button">
             Abmelden
           </ion-button>
         </span>
