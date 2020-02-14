@@ -21,7 +21,7 @@ export class SchoolSelectionPage implements OnInit {
   }
 
   schoolClick(schoolId:number) {
-    this.employeeProvider.setSchoolId(schoolId);
+    this.employeeProvider.updateSchoolId(schoolId);
     this.router.navigate(['employee/my-cares']);
   }
 

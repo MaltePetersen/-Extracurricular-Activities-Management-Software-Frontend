@@ -1,28 +1,37 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeProviderService {
 
+  public schoolId$:BehaviorSubject<number> = new BehaviorSubject<number>(null);
+  public careId$:BehaviorSubject<number> = new BehaviorSubject<number>(null);
+
 
   constructor(private storage:Storage){
+    this.load();
   }
 
-  getSchoolId(){
-    return this.storage.get('schoolId');
+  load():void {
+    console.log('load');
+    this.storage.get('schoolId').then((schoolId)=>{
+      this.schoolId$.next(schoolId);
+    });
+    this.storage.get('careId').then((careId)=>{
+      this.careId$.next(careId);
+    });
   }
 
-  setSchoolId(id:number){
-    this.storage.set('schoolId', id);
+  updateSchoolId(schoolId:number):void {
+    this.storage.set('schoolId', schoolId);
+    this.schoolId$.next(schoolId);
   }
 
-  getCareId(){
-    return this.storage.get('careId');
-  }
-
-  setCareId(id:number){
-    this.storage.set('careId', id);
+  updateCareId(careId:number):void{
+    this.storage.set('careId', careId);
+    this.careId$.next(careId);
   }
 }

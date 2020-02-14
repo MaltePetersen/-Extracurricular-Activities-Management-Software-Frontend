@@ -34,9 +34,11 @@ export class AttendanceListPage implements OnInit {
   }
 
   ngOnInit() {
-    this.employeeProvider.getCareId().then((careId)=>{
+    this.employeeProvider.careId$.subscribe((careId)=>{
       this.listId = careId;
-      this.loadPupils();
+      if(careId){
+        this.loadPupils();
+      }
     });
   }
 

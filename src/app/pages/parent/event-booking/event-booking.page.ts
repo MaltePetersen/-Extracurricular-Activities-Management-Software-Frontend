@@ -3,7 +3,6 @@ import { AlertController } from '@ionic/angular';
 import {  HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { EventdateService } from 'src/app/services/eventdate.service';
 import { Children } from 'src/app/models/children';
 import { ParentControllerService } from 'src/app/api/services';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
@@ -23,18 +22,16 @@ export class EventBookingPage implements OnInit {
   endDate:any;
   
   children:SimpleUserDTO[];
-  event: string;
   childName = null; 
   events:AfterSchoolCareDTO[];
 
-  constructor(private alertController: AlertController, private alertService:AlertService, private parentController: ParentControllerService, public router : Router ,public http: HttpClient, private eventData: EventdateService, private parentProvider:ParentProviderService) {
+  constructor(private alertController: AlertController, private alertService:AlertService, private parentController: ParentControllerService, public router : Router ,public http: HttpClient, private parentProvider:ParentProviderService) {
     
    }
 
   ngOnInit() {
     this.getChildren();
     this.getEvents();
-    this.eventData.choosenEvent.subscribe(event => this.event = event);
   }
 
   getChildren() {
@@ -55,15 +52,15 @@ export class EventBookingPage implements OnInit {
   childChange(username:string){
     let child:SimpleUserDTO = this.children.find(child => child.username === username);
     this.childName = child.fullname;
-    this.parentProvider.setSelectedChild(child);
+    this.parentProvider.updateSelectedChild(child);
   }
 
   chooseOffer(name, type, id){
     if (this.childName === null || this.childName === 'Kindername') {
       this.alertService.presentToastFailure('Wählen Sie ein Kind!');
     } else {
-      this.parentProvider.setTypeId(type);
-      this.parentProvider.setTypeName(name);
+      this.parentProvider.updateTypeId(type);
+      this.parentProvider.updateTypeName(name);
       this.router.navigate(['parent/event-booking-time']);
     }
   }

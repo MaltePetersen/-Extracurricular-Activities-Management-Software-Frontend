@@ -1,44 +1,54 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { SimpleUserDTO, AfterSchoolCareDTO } from '../api/models';
+import { SimpleUserDTO, AfterSchoolCareDTO, AfterSchoolCare } from '../api/models';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ParentProviderService {
 
+  public typeId$:BehaviorSubject<number> = new BehaviorSubject<number>(null);
+  public typeName$:BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  public selectedChild$:BehaviorSubject<SimpleUserDTO> = new BehaviorSubject<SimpleUserDTO>(null);
+  public selectedCare$:BehaviorSubject<AfterSchoolCareDTO> = new BehaviorSubject<AfterSchoolCareDTO>(null);
+
   constructor(private storage:Storage){
+    this.load();
   }
 
-  getTypeId():Promise<number>{
-    return this.storage.get('typeId');
+  load(){
+    this.storage.get('typeId').then((typeId)=>{
+      this.typeId$.next(typeId);
+    });
+    this.storage.get('typeName').then((typeName)=>{
+      this.typeName$.next(typeName);
+    });
+    this.storage.get('selectedChild').then((selectedChild)=>{
+      this.selectedChild$.next(selectedChild);
+    });
+    this.storage.get('selectedCare').then((selectedCare)=>{
+      this.selectedCare$.next(selectedCare);
+    });
   }
 
-  setTypeId(id:number){
-    this.storage.set('typeId', id);
+  updateTypeId(typeId:number):void{
+    this.storage.set('typeId', typeId);
+    this.typeId$.next(typeId);
   }
 
-  getTypeName():Promise<string>{
-    return this.storage.get('typeName');
+  updateTypeName(typeName:string):void{
+    this.storage.set('typeName', typeName);
+    this.typeName$.next(typeName);
   }
 
-  setTypeName(name:string){
-    this.storage.set('typeName', name);
+  updateSelectedChild(selectedChild:SimpleUserDTO):void{
+    this.storage.set('selectedChild', selectedChild);
+    this.selectedChild$.next(selectedChild);
   }
 
-  getSelectedChild():Promise<SimpleUserDTO>{
-    return this.storage.get('selectedChild');
-  }
-
-  setSelectedChild(child:SimpleUserDTO){
-    this.storage.set('selectedChild', child);
-  }
-
-  getSelectedCare():Promise<AfterSchoolCareDTO>{
-    return this.storage.get('selectedCare');
-  }
-
-  setSelectedCare(care:AfterSchoolCareDTO){
-    this.storage.set('selectedCare', care);
+  updateSelectedCare(selectedCare:AfterSchoolCareDTO):void{
+    this.storage.set('selectedCare', selectedCare);
+    this.selectedCare$.next(selectedCare);
   }
 }

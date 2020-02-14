@@ -1,5 +1,4 @@
 import { Component, OnInit, NgModule } from '@angular/core';
-import { EventdateService } from 'src/app/services/eventdate.service';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { ParentControllerService } from 'src/app/api/services';
@@ -19,18 +18,16 @@ import { EventPopoverModel } from 'src/app/models/eventPopoverModel';
 export class ParentDashboardPage implements OnInit {
   careId: number;
   afterSchoolCares: EventChangeModel[];
-  event: string;
   events: AfterSchoolCareDTO[];
   children: [];
   selectedChild: SimpleUserDTO;
 
-  constructor( private popoverController: PopoverController, private alertService: AlertService, private router: Router, private alertController: AlertController, private eventDates: EventdateService, public http: HttpClient, private parentController: ParentControllerService) {
+  constructor( private popoverController: PopoverController, private alertService: AlertService, private router: Router, private alertController: AlertController, public http: HttpClient, private parentController: ParentControllerService) {
     this.getChildren();
     this.getEvents();
   }
 
   ngOnInit() {
-    this.eventDates.choosenEvent.subscribe(event => this.event = event);
   }
 
   getChildren() {
@@ -146,9 +143,5 @@ async deleteAttendance(id) {
       console.log(error);
       this.alertService.presentToastFailure('Änderung fehlgeschlagen');
     });
-  }
-
-  async chooseOffer(name) {
-    this.eventDates.changeEvent(name.toString());
   }
 }

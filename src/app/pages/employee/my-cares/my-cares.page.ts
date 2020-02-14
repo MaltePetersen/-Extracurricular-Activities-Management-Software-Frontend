@@ -35,11 +35,12 @@ export class MyCaresPage implements OnInit {
   }
 
   ngOnInit() {
-    this.employeeProvider.getSchoolId().then((schoolId)=>{
+    moment.locale('de');
+    this.employeeProvider.schoolId$.subscribe((schoolId)=>{
       this.schoolId = schoolId
-      moment.locale('de');
-      this.dateChange();
-      this.getAfterSchoolCares();
+      if(schoolId){
+        this.dateChange();
+      }
     });
   }
 
@@ -63,7 +64,7 @@ export class MyCaresPage implements OnInit {
   }
 
   openList(careId:number){
-    this.employeeProvider.setCareId(careId);
+    this.employeeProvider.updateCareId(careId);
     this.router.navigate(['employee/attendance-list']);
   }
 

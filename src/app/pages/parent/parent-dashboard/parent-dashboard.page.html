@@ -7,7 +7,7 @@
     </ion-label>
   </div>
   <div class="event-container">
-    <ion-item *ngFor="let care of afterSchoolCares" lines="none" class="event-item" [ngClass]="{'registered-item':care.status == 1, 'overdue-item':care.status == 2, 'present-item':care.status == 3, 'left-item':care.status == 4.}" (click)="chooseOffer(care.name)">
+    <ion-item *ngFor="let care of afterSchoolCares" lines="none" class="event-item" [ngClass]="{'registered-item':care.status == 1, 'overdue-item':care.status == 2, 'present-item':care.status == 3, 'left-item':care.status == 4.}">
       <div class="event-content-container" >
           <ion-row class="day-row">
             <span class="button-organization

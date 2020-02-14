@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, AlertController, PopoverController} from '@ionic/angular';
 import { Router } from '@angular/router';
-import { EventdateService } from 'src/app/services/eventdate.service';
 import { EventPopoverPage } from 'src/app/pages/parent/event-booking-time/event-popover/event-popover.page';
 import moment from 'moment';
 import { ParentControllerService } from 'src/app/api/services';
@@ -19,7 +18,7 @@ import { EventBookingModel } from 'src/app/models/event-booking-model';
 })
 export class EventBookingTimePage implements OnInit {
   careId:number;
-  careName:string;
+  typeName:string;
   startDate:any;
   endDate:any
   datum:any = moment().locale('de').format('[Kalenderwoche:] WW');
@@ -40,21 +39,20 @@ export class EventBookingTimePage implements OnInit {
   typeId:number;
 
 
-  constructor(public router : Router, private alertService: AlertService, private popoverController: PopoverController, private alertController: AlertController, private eventDates: EventdateService, private parentController:ParentControllerService, private parentProvider:ParentProviderService) {
+  constructor(public router : Router, private alertService: AlertService, private popoverController: PopoverController, private alertController: AlertController, private parentController:ParentControllerService, private parentProvider:ParentProviderService) {
   }
 
   ngOnInit(){
-    this.parentProvider.getTypeName().then((name)=>{
-      this.careName = name
-      this.parentProvider.getSelectedChild().then((child)=>{
-        this.selectedChild = child
-        this.parentProvider.getTypeId().then((typeId)=>{
-          this.typeId = typeId
-          this.dateChange();
-        });
-      });
+    this.parentProvider.typeName$.subscribe((typeName)=>{
+      this.typeName = typeName;
     });
-    
+    this.parentProvider.selectedChild$.subscribe((selectedChild)=>{
+      this.selectedChild = selectedChild;
+    });
+    this.parentProvider.typeId$.subscribe((typeId)=>{
+      this.typeId = typeId;
+    });
+    this.dateChange();
   }
 
   mapToModel(care:AfterSchoolCareDTO,): EventBookingModel{
