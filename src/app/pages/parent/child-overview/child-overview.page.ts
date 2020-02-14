@@ -46,7 +46,7 @@ export class ChildOverviewPage implements OnInit {
         schoolClass:chosenChild.schoolClass
       }
     };
-    this.router.navigateByUrl('parent/child-add', navigationExtras);
+    this.router.navigateByUrl('parent/child-change', navigationExtras);
   }
 
   ionViewWillEnter(){
