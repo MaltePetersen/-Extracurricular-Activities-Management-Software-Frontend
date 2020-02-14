@@ -18,7 +18,7 @@
         <ion-icon slot="end" name="arrow-up" *ngIf="item.open"></ion-icon>
         <ion-label class="item-name-label">{{item.name}}</ion-label>
       </ion-item>
-      <div *ngIf="item.schichten && item.open" class="veranstaltung-container">
+      <div *ngIf="item.schichten && item.open" class="event-container">
         <ion-item *ngFor="let event of item.schichten" lines="none" class="event-item" (click)="presentPopover(event)">
           <div class="event-content-container">
             <ion-label>

@@ -1,6 +1,3 @@
-ion-item{
-    --border-width: 2px 2px 2px 2px;
-}
 .flex-container{
     margin-left: 2em;
     margin-right: 2em;
@@ -33,7 +30,7 @@ ion-item{
     align-items: left;
     justify-content: flex-end;
 }
-.tag-label{
+.day-label{
     width: 100%;
     text-align: center;
    
@@ -62,7 +59,7 @@ ion-item{
 .time-label{
 
 }
-.dayrow{
+.day-row{
     width: 100%; 
     display:flex;
     justify-content:center;

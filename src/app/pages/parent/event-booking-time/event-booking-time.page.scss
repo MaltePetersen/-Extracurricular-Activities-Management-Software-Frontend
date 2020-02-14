@@ -6,11 +6,11 @@
     align-items: center;
     justify-content: flex-end;
 }
-.veranstaltung-label{
+.event-label{
     margin-top: 2em;
     font-size: large;
 }
-.veranstaltung-container{
+.event-container{
     margin-left: 2em;
     margin-right: 2em;
     display: flex;
@@ -19,12 +19,12 @@
     justify-content: flex-end;
     border: 1px, solid black;
 }
-.veranstaltung-item{
+.event-item{
     --border-width: 2px 2px 2px 2px;
     width: auto;
     margin-top: 1em;
 }
-.veranstaltung-content-container{
+.event-content-container{
     width: 100%;
     display: flex;
     flex-direction: column;

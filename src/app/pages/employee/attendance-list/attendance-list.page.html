@@ -58,16 +58,16 @@
           </ion-label>  
         </ion-row>
         <ion-row class="content-row">
-          <ion-label *ngIf="pupil.status == 1" class="status-label angemeldet-label">
+          <ion-label *ngIf="pupil.status == 1" class="status-label registered-label">
             Angemeldet
           </ion-label>
-          <ion-label *ngIf="pupil.status == 2" class="status-label ueberfaellig-label">
+          <ion-label *ngIf="pupil.status == 2" class="status-label tooLate-label">
             Überfällig
           </ion-label>
-          <ion-label *ngIf="pupil.status == 3" class="status-label anwesend-label">
+          <ion-label *ngIf="pupil.status == 3" class="status-label present-label">
             Anwesend
           </ion-label>
-          <ion-label *ngIf="pupil.status == 4" class="status-label gegangen-label">
+          <ion-label *ngIf="pupil.status == 4" class="status-label left-label">
             Gegangen
           </ion-label>
         </ion-row>

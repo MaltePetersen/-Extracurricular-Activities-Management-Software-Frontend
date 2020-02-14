@@ -110,7 +110,6 @@ export class EventBookingTimePage implements OnInit {
 
   async presentPopover(model:EventBookingModel) {
     let popoverModel = new EventPopoverModel(model.id, model.startTime, model.endTime, null, null, null, null, this.selectedChild.username);
-    console.log("popoverModel: " + new EventPopoverModel(model.id, model.startTime, model.endTime, null, null, null, null, this.selectedChild.username));
     const popover = await this.popoverController.create({
       component: EventPopoverPage,
       cssClass: "event-booking-popover",
@@ -123,8 +122,7 @@ export class EventBookingTimePage implements OnInit {
     popover.style.cssText = "--width:'auto'";
     await popover.present()
     popover.onDidDismiss().then((dataReturned) => {
-      console.log(dataReturned);
-      if (dataReturned.data !== null || dataReturned.role !== null) {
+      if (dataReturned) {
         this.bookCare(dataReturned.data)
       } else {
         this.alertService.presentToastFailure('Die Veranstaltung wurde nicht gebucht.');
