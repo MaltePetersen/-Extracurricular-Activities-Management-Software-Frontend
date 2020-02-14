@@ -31,9 +31,8 @@
     justify-content: flex-end;
 }
 .day-label{
-    width: 100%;
     text-align: center;
-   
+    font-weight: bold;
 }
 .data-row{
     width: 100%;
@@ -44,7 +43,7 @@
 .event-label{
     align-self: flex-end;
 }
-.day-label{
+.child-name-label{
     font-weight: bold;
 }
 .name-row{
