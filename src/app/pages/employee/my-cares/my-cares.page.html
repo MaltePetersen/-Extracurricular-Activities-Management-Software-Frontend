@@ -2,28 +2,28 @@
 
 <ion-content>
   <div class="flex-container">
-    <ion-label class="schichten-label">
+    <ion-label class="my-cares-label">
       Meine Schichten
     </ion-label>
   </div>
-  <div class="schichten-container">
-    <ion-item *ngFor="let care of afterSchoolCares" lines="none" class="schichten-item" (click)="openList(care.id);">
-      <div class="schichten-content-container">
-        <ion-label class="tag-label">
+  <div class="my-cares-container">
+    <ion-item *ngFor="let care of afterSchoolCares" lines="none" class="my-cares-item" (click)="openList(care.id);">
+      <div class="my-cares-content-container">
+        <ion-label class="day-label">
           {{care.day}}
         </ion-label>
         <ion-row class="data-row">
-          <ion-label class="data-label">
+          <ion-label>
             Titel: {{care.name}}
           </ion-label>
         </ion-row>
         <ion-row class="data-row">
-          <ion-label class="data-label">
+          <ion-label>
             Datum: {{care.startTime | amDateFormat:'DD.MM.YYYY'}}
           </ion-label>
         </ion-row>
         <ion-row class="data-row">
-          <ion-label class="data-label">
+          <ion-label>
             Uhrzeit: {{care.startTime | amDateFormat:'HH:mm'}}
           </ion-label>
         </ion-row>

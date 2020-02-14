@@ -2,27 +2,27 @@
 
 <ion-content>
   <div class="flex-container">
-    <ion-label class="anwesenheitsliste-label">
+    <ion-label class="attendance-list-label">
       Anwesenheitsliste
     </ion-label>
-    <ion-label class="betreuungsende-label">
+    <ion-label class="endOfCare-label">
       Betreuungsende: {{endOfCare | amDateFormat:'HH:mm'}}
     </ion-label>
-    <ion-input placeholder="Suchen" class="schueler-suchen" [(ngModel)]="search" (ionChange)="searchChanged()"></ion-input>
-    <ion-row nowrap class="klasse-row">
+    <ion-input placeholder="Suchen" class="pupil-input" [(ngModel)]="search" (ionChange)="searchChanged()"></ion-input>
+    <ion-row nowrap class="class-row">
       <ion-label class="ion-padding-vertical">
         Klasse:
       </ion-label>
-      <ion-select class="klasse-suchen" okText="Okay" cancelText="Abbrechen" [(ngModel)]="selectedClass" (ionChange)="selectedClassChanged()">
+      <ion-select class="class-select" okText="Okay" cancelText="Abbrechen" [(ngModel)]="selectedClass" (ionChange)="selectedClassChanged()">
           <ion-select-option *ngFor="let class of classes" value={{class}}>{{class}}</ion-select-option>
       </ion-select>
     </ion-row>
   </div>
-  <div class="schueler-container">
-    <ion-item *ngFor="let pupil of filteredPupils" lines="none" class="schueler-item" [ngClass]="{'angemeldet-item':pupil.status == 1, 'ueberfaellig-item':pupil.status == 2, 'anwesend-item':pupil.status == 3, 'gegangen-item':pupil.status == 4.}" (click)="presentAlertStatus(pupil)">
-      <div class="schueler-content-container">
-        <ion-row class="header-zeile">
-          <ion-label class="schueler-name-label">
+  <div class="pupil-container">
+    <ion-item *ngFor="let pupil of filteredPupils" lines="none" class="pupil-item" [ngClass]="{'registered-item':pupil.status == 1, 'tooLate-item':pupil.status == 2, 'present-item':pupil.status == 3, 'left-item':pupil.status == 4.}" (click)="presentAlertStatus(pupil)">
+      <div class="pupil-content-container">
+        <ion-row class="header-row">
+          <ion-label class="pupil-name-label">
             {{pupil.name}}
           </ion-label>
           <ion-button (click)="presentAlertDetails(pupil);$event.stopPropagation();" class="detail-button">
@@ -32,32 +32,32 @@
             <ion-icon slot="icon-only" name="md-more"></ion-icon>
           </ion-button>
         </ion-row>
-        <ion-row class="zeile1">
-          <ion-label class="klasse-label">
+        <ion-row class="content-row">
+          <ion-label class="class-label">
             Klasse: {{pupil.schoolClass}}
           </ion-label>
         </ion-row>
-        <ion-row class="zeile1" *ngIf="pupil.latestArrivalTime">
+        <ion-row class="content-row" *ngIf="pupil.latestArrivalTime">
           <ion-label no-wrap>
             Ankunftszeit: {{pupil.latestArrivalTime | amDateFormat:'HH:mm'}}
           </ion-label>  
         </ion-row>
-        <ion-row class="zeile1" *ngIf="pupil.predefinedLeaveTime">
+        <ion-row class="content-row" *ngIf="pupil.predefinedLeaveTime">
           <ion-label no-wrap>
             Schüler darf gehen ab: {{pupil.predefinedLeaveTime | amDateFormat:'HH:mm'}}
           </ion-label>  
         </ion-row>
-        <ion-row class="zeile1" *ngIf="pupil.allowedToLeaveAfterFinishedHomework">
+        <ion-row class="content-row" *ngIf="pupil.allowedToLeaveAfterFinishedHomework">
           <ion-label>
             Darf nach Hausaufgaben gehen
           </ion-label>  
         </ion-row>
-        <ion-row class="zeile1" *ngIf="pupil.note">
+        <ion-row class="content-row" *ngIf="pupil.note">
           <ion-label no-wrap>
             Info: {{pupil.note}}
           </ion-label>  
         </ion-row>
-        <ion-row class="zeile1">
+        <ion-row class="content-row">
           <ion-label *ngIf="pupil.status == 1" class="status-label angemeldet-label">
             Angemeldet
           </ion-label>
@@ -77,7 +77,7 @@
 </ion-content>
 
 <ion-footer>
-  <ion-button class="sperren-button" (click)="presentAlertLock()" [disabled]="!isLockable">
+  <ion-button class="lock-button" (click)="presentAlertLock()" [disabled]="!isLockable">
     Anwesenheitsliste sperren
   </ion-button>
 </ion-footer>

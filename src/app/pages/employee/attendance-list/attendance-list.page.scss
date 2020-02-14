@@ -6,10 +6,15 @@
     align-items: center;
     justify-content: flex-end;
 }
-.anwesenheitsliste-label{
+.attendance-list-label{
     margin-top: 2em;
 }
-.schueler-suchen{
+.endOfCare-label{
+    width: 100%;
+    text-align: center;
+    margin-top: 1em;
+}
+.pupil-input{
     margin-top: 1em;
     align-self: flex-start;
     height: 2em;
@@ -17,18 +22,18 @@
     border: 1px solid black;
     text-align: center;
 }
-.klasse-row{
+.class-row{
     align-self: flex-start;
     width: 100%;
     margin-top: 1em;
 }
-.klasse-suchen{
+.class-select{
     border: 1px solid black;
     width: 100%;
     margin-left: 2em;
     align-self: flex-end;
 }
-.schueler-container{
+.pupil-container{
     width: auto;
     margin-top: 2em;
     margin-left: 2em;
@@ -38,67 +43,62 @@
     align-items: center;
     justify-content: flex-end;
 }
-.schueler-item{
+.pupil-item{
     margin-top: 1em;
     width: 100%;
     --border-width: 2px 2px 2px 2px;
 }
-.anwesend-item{
+.present-item{
     --border-color: green;
 }
-.angemeldet-item{
+.registered-item{
     --border-color: grey;
 }
-.gegangen-item{
+.left-item{
     --border-color: black;
 }
-.ueberfaellig-item{
+.tooLate-item{
     --border-color: red;
 }
-.schueler-content-container{
+.pupil-content-container{
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
 }
-.zeile1{
+.content-row{
     width: 100%;
 }
-.header-zeile{
+.header-row{
     align-items: center;
     width: 100%;
 }
 .detail-button{
     margin-left: auto;
 }
-.zuruecksetzen-button{
+.reset-button{
     margin-left: auto;
 }
-.schueler-name-label{
+.pupil-name-label{
     font-size: large;
     font-weight: 100;
 }
-.betreuungsende-label{
-    width: 100%;
-    text-align: center;
-    margin-top: 1em;
-}
-.sperren-button{
+.lock-button{
     width: -webkit-fill-available;
 }
 .status-label{
     margin-left: auto;
 }
-.angemeldet-label{
+.registered-label{
     color: grey;
 }
-.ueberfaellig-label{
+.tooLate-label{
     color: red;
 }
-.anwesend-label{
+.present-label{
     color: green;
 }
-.gegangen-label{
+.left-label{
     color: black;
 }

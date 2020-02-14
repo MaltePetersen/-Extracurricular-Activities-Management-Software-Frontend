@@ -2,21 +2,21 @@
 
 <ion-content>
   <div class="flex-container">
-    <ion-label class="schichten-label">
+    <ion-label class="all-cares-label">
       Alle Schichten
     </ion-label>
   </div>
   
-  <div class="schichten-container">
-    <ion-list *ngFor="let item of days; let i = index;" class="accordion-list" lines="none" detail="false" class="ion-no-padding">
+  <div class="all-cares-container">
+    <ion-list *ngFor="let item of days; let i = index;" lines="none" detail="false" class="ion-no-padding day-list">
       <ion-item class="day-item" tappable (click)="toggleSelection(i)" [ngClass]="{'selection-active': item.open, 'selection': !item.open}">
         <ion-icon slot="end" name="arrow-down" *ngIf="!item.open"></ion-icon>
         <ion-icon slot="end" name="arrow-up" *ngIf="item.open"></ion-icon>
         <ion-label class="item-name-label">{{item.name}}</ion-label>
       </ion-item>
       <div *ngIf="item.afterSchoolCares && item.open" class="schicht-container">
-        <ion-item *ngFor="let care of item.afterSchoolCares" lines="none" class="schichten-item" (click)="presentAlert(care)">
-          <div class="schichten-content-container">
+        <ion-item *ngFor="let care of item.afterSchoolCares" lines="none" class="all-cares-item" (click)="presentAlert(care)">
+          <div class="all-cares-content-container">
             <ion-label>
               {{care.school}}
             </ion-label>

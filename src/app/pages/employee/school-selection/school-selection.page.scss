@@ -4,23 +4,15 @@
     align-items: center;
     justify-content: flex-end;
 }
-.image{
-    width: 50%;
-    height: auto;
-}
-.auswahl-label{
+.school-selection-label{
     margin-top: 2em;
     font-size: large;
 }
-.schul-list{
+.school-selection-list{
     width: 100%;
     margin-top: 2em;
 }
-.schul-item{
-    align-items: center;
-    width: 100%;
-}
-.schul-button{
+.school-selection-button{
     margin-left: 2em;
     margin-right: 2em;
     margin-bottom: 0.5em;

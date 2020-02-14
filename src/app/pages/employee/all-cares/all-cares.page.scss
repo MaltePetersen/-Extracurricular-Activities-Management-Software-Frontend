@@ -6,11 +6,11 @@
     align-items: center;
     justify-content: flex-end;
 }
-.schichten-label{
+.all-cares-label{
     margin-top: 2em;
     font-size: large;
 }
-.schicht-container{
+.all-cares-container{
     margin-left: 4em;
     margin-right: 4em;
     display: flex;
@@ -19,20 +19,20 @@
     justify-content: flex-end;
     border: 1px, solid black;
 }
-.schichten-item{
+.all-cares-item{
     --border-width: 2px 2px 2px 2px;
     width: 100%;
     margin-top: 1em;
 }
-.schichten-content-container{
+.all-cares-content-container{
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
 }
-.accordion-list{
-    width: 100%;
+.day-list{
+    width: -webkit-fill-available;
 }
 .hide-date-button{
     width: 100%;
