@@ -1,5 +1,4 @@
 import { Component, OnInit} from '@angular/core';
-import { ChilddataService } from 'src/app/services/childdata.service';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/services/alert.service';
