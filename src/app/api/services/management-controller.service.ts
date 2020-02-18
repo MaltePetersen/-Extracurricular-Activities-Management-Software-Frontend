@@ -27,6 +27,7 @@ class ManagementControllerService extends __BaseService {
   static readonly deleteAttendanceListByIdUsingDELETEPath = '/api/management/attendanceList/{id}';
   static readonly patchAttendanceListByIdUsingPATCHPath = '/api/management/attendanceList/{id}';
   static readonly getAllAttendanceListsUsingGETPath = '/api/management/attendanceLists';
+  static readonly getAverageParticipantsListUsingGETPath = '/api/management/averageList';
   static readonly getAttendanceListUsingGETPath = '/api/management/list';
   static readonly allNotEnabledUserUsingGETPath = '/api/management/not_enabled_users';
   static readonly getNumberOfParticipantsUsingGETPath = '/api/management/number_of_participants';
@@ -399,6 +400,39 @@ class ManagementControllerService extends __BaseService {
   getAllAttendanceListsUsingGET(): __Observable<Array<AttendanceDTO>> {
     return this.getAllAttendanceListsUsingGETResponse().pipe(
       __map(_r => _r.body as Array<AttendanceDTO>)
+    );
+  }
+
+  /**
+   * @return OK
+   */
+  getAverageParticipantsListUsingGETResponse(): __Observable<__StrictHttpResponse<string>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/management/averageList`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'text'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<string>;
+      })
+    );
+  }
+  /**
+   * @return OK
+   */
+  getAverageParticipantsListUsingGET(): __Observable<string> {
+    return this.getAverageParticipantsListUsingGETResponse().pipe(
+      __map(_r => _r.body as string)
     );
   }
 

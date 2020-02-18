@@ -52,7 +52,7 @@ export class EventBookingPage implements OnInit {
   childChange(username:string){
     let child:SimpleUserDTO = this.children.find(child => child.username === username);
     this.childName = child.fullname;
-    this.parentProvider.updateSelectedChild(child);
+    this.parentProvider.updateBookedChild(child);
   }
 
   chooseOffer(name, type, id){

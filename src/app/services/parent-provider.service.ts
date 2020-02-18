@@ -10,6 +10,7 @@ export class ParentProviderService {
 
   public typeId$:BehaviorSubject<number> = new BehaviorSubject<number>(null);
   public typeName$:BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  public bookedChild$:BehaviorSubject<SimpleUserDTO> = new BehaviorSubject<SimpleUserDTO>(null);
   public selectedChild$:BehaviorSubject<SimpleUserDTO> = new BehaviorSubject<SimpleUserDTO>(null);
   public selectedCare$:BehaviorSubject<AfterSchoolCareDTO> = new BehaviorSubject<AfterSchoolCareDTO>(null);
 
@@ -23,6 +24,9 @@ export class ParentProviderService {
     });
     this.storage.get('typeName').then((typeName)=>{
       this.typeName$.next(typeName);
+    });
+    this.storage.get('bookedChild').then((selectedChild)=>{
+      this.bookedChild$.next(selectedChild);
     });
     this.storage.get('selectedChild').then((selectedChild)=>{
       this.selectedChild$.next(selectedChild);
@@ -40,6 +44,11 @@ export class ParentProviderService {
   updateTypeName(typeName:string):void{
     this.storage.set('typeName', typeName);
     this.typeName$.next(typeName);
+  }
+
+  updateBookedChild(bookedChild:SimpleUserDTO):void{
+    this.storage.set('bookedChild', bookedChild);
+    this.bookedChild$.next(bookedChild);
   }
 
   updateSelectedChild(selectedChild:SimpleUserDTO):void{

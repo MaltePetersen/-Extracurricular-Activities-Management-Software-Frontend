@@ -5,6 +5,8 @@ import { AlertService } from 'src/app/services/alert.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ParentControllerService } from 'src/app/api/services';
+import { SimpleUserDTO } from 'src/app/api/models';
+import { ParentProviderService } from 'src/app/services/parent-provider.service';
 
 @Component({
   selector: 'app-child-change',
@@ -13,19 +15,29 @@ import { ParentControllerService } from 'src/app/api/services';
 })
 export class ChildChangePage implements OnInit {
 
+  child:SimpleUserDTO;
   username:string;
   fullname:string;
   schoolClass:string;
   previousUserName:string;
 
 
-  constructor(private alertController: AlertController,  private router: Router,private alertService: AlertService ,private parentController:ParentControllerService) { }
+  constructor(private alertController: AlertController,  private router: Router,private alertService: AlertService ,private parentController:ParentControllerService, private parentProvider:ParentProviderService) { }
 
   ngOnInit() {
-    this.username = this.router.getCurrentNavigation().extras.state.username;
-    this.fullname = this.router.getCurrentNavigation().extras.state.fullname;
-    this.schoolClass = this.router.getCurrentNavigation().extras.state.schoolClass;
-    this.previousUserName = this.router.getCurrentNavigation().extras.state.username;
+    this.parentProvider.selectedChild$.subscribe((child)=>{
+      this.child = child;
+      if(this.child){
+        this.mapChildToAttributes();
+      }
+    });
+  }
+
+  mapChildToAttributes(){
+    this.username = this.child.username;
+    this.previousUserName = this.child.username;
+    this.fullname = this.child.fullname;
+    this.schoolClass = this.child.schoolClass;
   }
 
   saveChanges(){

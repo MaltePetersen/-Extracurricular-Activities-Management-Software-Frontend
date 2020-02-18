@@ -3,6 +3,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import { ParentControllerService } from 'src/app/api/services';
 import { UserDTO, SimpleUserDTO } from 'src/app/api/models';
 import { ChildModel } from 'src/app/models/childModel';
+import { ParentProviderService } from 'src/app/services/parent-provider.service';
 
 @Component({
   selector: 'app-child-overview',
@@ -13,7 +14,7 @@ export class ChildOverviewPage implements OnInit {
 
   children:SimpleUserDTO[];
 
-  constructor(private router: Router, private parentController:ParentControllerService) {
+  constructor(private router: Router, private parentController:ParentControllerService, private parentProvider:ParentProviderService) {
   }
 
   getChildren() {
@@ -39,14 +40,8 @@ export class ChildOverviewPage implements OnInit {
   }
 
   changeChildData(chosenChild:UserDTO){
-    let navigationExtras: NavigationExtras = {
-      state: {
-        username:chosenChild.username,
-        fullname:chosenChild.fullname,
-        schoolClass:chosenChild.schoolClass
-      }
-    };
-    this.router.navigateByUrl('parent/child-change', navigationExtras);
+    this.parentProvider.updateSelectedChild(chosenChild);
+    this.router.navigateByUrl('parent/child-change');
   }
 
   ionViewWillEnter(){

@@ -46,7 +46,7 @@ export class EventBookingTimePage implements OnInit {
     this.parentProvider.typeName$.subscribe((typeName)=>{
       this.typeName = typeName;
     });
-    this.parentProvider.selectedChild$.subscribe((selectedChild)=>{
+    this.parentProvider.bookedChild$.subscribe((selectedChild)=>{
       this.selectedChild = selectedChild;
     });
     this.parentProvider.typeId$.subscribe((typeId)=>{
