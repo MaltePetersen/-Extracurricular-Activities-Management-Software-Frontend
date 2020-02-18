@@ -36,8 +36,8 @@ class ParentControllerService extends __BaseService {
   static readonly updateChildUsingPATCHPath = '/api/parent/child/{username}';
   static readonly getChildsUsingGETPath = '/api/parent/children';
   static readonly getParentUsingGETPath = '/api/parent/data';
-  static readonly getSchoolUsingGET1Path = '/api/parent/school/{id}';
-  static readonly getSchoolsUsingGET1Path = '/api/parent/schools';
+  static readonly getSchoolUsingGET2Path = '/api/parent/school/{id}';
+  static readonly getSchoolsUsingGET2Path = '/api/parent/schools';
   static readonly updateParentUsingPATCHPath = '/api/parent/update';
 
   constructor(
@@ -1083,7 +1083,7 @@ class ParentControllerService extends __BaseService {
    * @param id id
    * @return OK
    */
-  getSchoolUsingGET1Response(id: number): __Observable<__StrictHttpResponse<SchoolDTO>> {
+  getSchoolUsingGET2Response(id: number): __Observable<__StrictHttpResponse<SchoolDTO>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -1109,8 +1109,8 @@ class ParentControllerService extends __BaseService {
    * @param id id
    * @return OK
    */
-  getSchoolUsingGET1(id: number): __Observable<SchoolDTO> {
-    return this.getSchoolUsingGET1Response(id).pipe(
+  getSchoolUsingGET2(id: number): __Observable<SchoolDTO> {
+    return this.getSchoolUsingGET2Response(id).pipe(
       __map(_r => _r.body as SchoolDTO)
     );
   }
@@ -1118,7 +1118,7 @@ class ParentControllerService extends __BaseService {
   /**
    * @return OK
    */
-  getSchoolsUsingGET1Response(): __Observable<__StrictHttpResponse<Array<SchoolDTO>>> {
+  getSchoolsUsingGET2Response(): __Observable<__StrictHttpResponse<Array<SchoolDTO>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -1142,8 +1142,8 @@ class ParentControllerService extends __BaseService {
   /**
    * @return OK
    */
-  getSchoolsUsingGET1(): __Observable<Array<SchoolDTO>> {
-    return this.getSchoolsUsingGET1Response().pipe(
+  getSchoolsUsingGET2(): __Observable<Array<SchoolDTO>> {
+    return this.getSchoolsUsingGET2Response().pipe(
       __map(_r => _r.body as Array<SchoolDTO>)
     );
   }

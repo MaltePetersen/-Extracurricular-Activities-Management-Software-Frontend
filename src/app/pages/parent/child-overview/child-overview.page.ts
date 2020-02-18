@@ -25,7 +25,7 @@ export class ChildOverviewPage implements OnInit {
 
     this.parentController.getChildsUsingGET(params).toPromise().then((children)=>{
       children.forEach((child)=>{
-        this.parentController.getSchoolUsingGET1(child.school).toPromise().then((school)=>{
+        this.parentController.getSchoolUsingGET2(child.school).toPromise().then((school)=>{
           this.mapToChildModel(child, school.name);
         }).catch((error)=>{
           console.log(error);

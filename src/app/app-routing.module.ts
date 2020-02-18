@@ -14,7 +14,7 @@ const routes: Routes = [
   },
   {
     path: 'register',
-    loadChildren: () => import('./pages/parent/register/register.module')
+    loadChildren: () => import('./pages/register/register.module')
     .then(m => m.RegisterPageModule),
     canActivate: [AuthGuard],
     data: {

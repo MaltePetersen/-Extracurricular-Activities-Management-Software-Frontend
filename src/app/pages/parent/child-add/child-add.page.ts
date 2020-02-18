@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/services/alert.service';
 import {  Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
-import { PasswordValidator } from '../register/password.validator';
+import { PasswordValidator } from '../../register/password.validator';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { CountryPhone } from 'src/app/models/country-phone.model';
-import { PhoneValidator } from 'src/app/pages/parent/register/phone.validator';
+import { PhoneValidator } from 'src/app/pages/register/phone.validator';
 import { ChildOverviewPage } from '../child-overview/child-overview.page';
 import { ParentControllerService } from 'src/app/api/services';
 import { SchoolDTO, ChildDTO } from 'src/app/api/models';
@@ -37,7 +37,7 @@ export class ChildAddPage implements OnInit {
   }
 
   getSchools() {
-    this.parentController.getSchoolsUsingGET1().toPromise().then((schools)=>{
+    this.parentController.getSchoolsUsingGET2().toPromise().then((schools)=>{
       this.schools = schools;
     }).catch((error)=>{
       console.log(error);

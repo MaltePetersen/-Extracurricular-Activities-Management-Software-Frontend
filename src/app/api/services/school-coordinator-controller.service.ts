@@ -25,11 +25,11 @@ class SchoolCoordinatorControllerService extends __BaseService {
   static readonly updateAgUsingPATCHPath = '/api/sc/ag';
   static readonly updateChildUsingPOSTPath = '/api/sc/ag/child';
   static readonly getMyWorkingGroupUsingGETPath = '/api/sc/ags';
-  static readonly createSchoolUsingPOST1Path = '/api/sc/school';
-  static readonly getSchoolUsingGET2Path = '/api/sc/school/{id}';
-  static readonly deleteSchoolUsingDELETE1Path = '/api/sc/school/{id}';
-  static readonly changeSchoolUsingPATCH1Path = '/api/sc/school/{id}';
-  static readonly getSchoolsUsingGET2Path = '/api/sc/schools';
+  static readonly createSchoolUsingPOST2Path = '/api/sc/school';
+  static readonly getSchoolUsingGET3Path = '/api/sc/school/{id}';
+  static readonly deleteSchoolUsingDELETE2Path = '/api/sc/school/{id}';
+  static readonly changeSchoolUsingPATCH2Path = '/api/sc/school/{id}';
+  static readonly getSchoolsUsingGET3Path = '/api/sc/schools';
 
   constructor(
     config: __Configuration,
@@ -418,7 +418,7 @@ class SchoolCoordinatorControllerService extends __BaseService {
    * @param newSchool newSchool
    * @return Created
    */
-  createSchoolUsingPOST1Response(newSchool: School): __Observable<__StrictHttpResponse<SchoolDTO>> {
+  createSchoolUsingPOST2Response(newSchool: School): __Observable<__StrictHttpResponse<SchoolDTO>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -444,8 +444,8 @@ class SchoolCoordinatorControllerService extends __BaseService {
    * @param newSchool newSchool
    * @return Created
    */
-  createSchoolUsingPOST1(newSchool: School): __Observable<SchoolDTO> {
-    return this.createSchoolUsingPOST1Response(newSchool).pipe(
+  createSchoolUsingPOST2(newSchool: School): __Observable<SchoolDTO> {
+    return this.createSchoolUsingPOST2Response(newSchool).pipe(
       __map(_r => _r.body as SchoolDTO)
     );
   }
@@ -454,7 +454,7 @@ class SchoolCoordinatorControllerService extends __BaseService {
    * @param id id
    * @return OK
    */
-  getSchoolUsingGET2Response(id: number): __Observable<__StrictHttpResponse<SchoolDTO>> {
+  getSchoolUsingGET3Response(id: number): __Observable<__StrictHttpResponse<SchoolDTO>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -480,8 +480,8 @@ class SchoolCoordinatorControllerService extends __BaseService {
    * @param id id
    * @return OK
    */
-  getSchoolUsingGET2(id: number): __Observable<SchoolDTO> {
-    return this.getSchoolUsingGET2Response(id).pipe(
+  getSchoolUsingGET3(id: number): __Observable<SchoolDTO> {
+    return this.getSchoolUsingGET3Response(id).pipe(
       __map(_r => _r.body as SchoolDTO)
     );
   }
@@ -489,7 +489,7 @@ class SchoolCoordinatorControllerService extends __BaseService {
   /**
    * @param id id
    */
-  deleteSchoolUsingDELETE1Response(id: number): __Observable<__StrictHttpResponse<null>> {
+  deleteSchoolUsingDELETE2Response(id: number): __Observable<__StrictHttpResponse<null>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -514,14 +514,14 @@ class SchoolCoordinatorControllerService extends __BaseService {
   /**
    * @param id id
    */
-  deleteSchoolUsingDELETE1(id: number): __Observable<null> {
-    return this.deleteSchoolUsingDELETE1Response(id).pipe(
+  deleteSchoolUsingDELETE2(id: number): __Observable<null> {
+    return this.deleteSchoolUsingDELETE2Response(id).pipe(
       __map(_r => _r.body as null)
     );
   }
 
   /**
-   * @param params The `SchoolCoordinatorControllerService.ChangeSchoolUsingPATCH1Params` containing the following parameters:
+   * @param params The `SchoolCoordinatorControllerService.ChangeSchoolUsingPATCH2Params` containing the following parameters:
    *
    * - `newSchool`: newSchool
    *
@@ -529,7 +529,7 @@ class SchoolCoordinatorControllerService extends __BaseService {
    *
    * @return OK
    */
-  changeSchoolUsingPATCH1Response(params: SchoolCoordinatorControllerService.ChangeSchoolUsingPATCH1Params): __Observable<__StrictHttpResponse<SchoolDTO>> {
+  changeSchoolUsingPATCH2Response(params: SchoolCoordinatorControllerService.ChangeSchoolUsingPATCH2Params): __Observable<__StrictHttpResponse<SchoolDTO>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -553,7 +553,7 @@ class SchoolCoordinatorControllerService extends __BaseService {
     );
   }
   /**
-   * @param params The `SchoolCoordinatorControllerService.ChangeSchoolUsingPATCH1Params` containing the following parameters:
+   * @param params The `SchoolCoordinatorControllerService.ChangeSchoolUsingPATCH2Params` containing the following parameters:
    *
    * - `newSchool`: newSchool
    *
@@ -561,8 +561,8 @@ class SchoolCoordinatorControllerService extends __BaseService {
    *
    * @return OK
    */
-  changeSchoolUsingPATCH1(params: SchoolCoordinatorControllerService.ChangeSchoolUsingPATCH1Params): __Observable<SchoolDTO> {
-    return this.changeSchoolUsingPATCH1Response(params).pipe(
+  changeSchoolUsingPATCH2(params: SchoolCoordinatorControllerService.ChangeSchoolUsingPATCH2Params): __Observable<SchoolDTO> {
+    return this.changeSchoolUsingPATCH2Response(params).pipe(
       __map(_r => _r.body as SchoolDTO)
     );
   }
@@ -570,7 +570,7 @@ class SchoolCoordinatorControllerService extends __BaseService {
   /**
    * @return OK
    */
-  getSchoolsUsingGET2Response(): __Observable<__StrictHttpResponse<Array<SchoolDTO>>> {
+  getSchoolsUsingGET3Response(): __Observable<__StrictHttpResponse<Array<SchoolDTO>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -594,8 +594,8 @@ class SchoolCoordinatorControllerService extends __BaseService {
   /**
    * @return OK
    */
-  getSchoolsUsingGET2(): __Observable<Array<SchoolDTO>> {
-    return this.getSchoolsUsingGET2Response().pipe(
+  getSchoolsUsingGET3(): __Observable<Array<SchoolDTO>> {
+    return this.getSchoolsUsingGET3Response().pipe(
       __map(_r => _r.body as Array<SchoolDTO>)
     );
   }
@@ -689,9 +689,9 @@ module SchoolCoordinatorControllerService {
   }
 
   /**
-   * Parameters for changeSchoolUsingPATCH1
+   * Parameters for changeSchoolUsingPATCH2
    */
-  export interface ChangeSchoolUsingPATCH1Params {
+  export interface ChangeSchoolUsingPATCH2Params {
 
     /**
      * newSchool

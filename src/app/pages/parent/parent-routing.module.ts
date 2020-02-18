@@ -30,14 +30,6 @@ const routes: Routes = [
     data: {
       role: 'ROLE_PARENT'
     }
-  },
-  {
-    path: 'account',
-    loadChildren: () => import('./account/account.module').then(m => m.AccountPageModule),
-    canActivate: [AuthGuard],
-    data: {
-      role: 'ROLE_PARENT'
-    }
   }, 
   {
     path: 'child-overview', loadChildren: () => import('./child-overview/child-overview.module').then(m => m.ChildOverviewPageModule), 

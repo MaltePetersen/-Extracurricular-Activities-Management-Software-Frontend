@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserControllerService } from 'src/app/api/services';
 import { NavController } from '@ionic/angular';
 import { AlertService } from 'src/app/services/alert.service';
+import { UserDTO } from 'src/app/api/models';
 
 @Component({
   selector: 'app-edit-account',
@@ -11,6 +12,7 @@ import { AlertService } from 'src/app/services/alert.service';
 export class EditAccountPage implements OnInit {
 
   username:string;
+  email:string;
   firstname:string;
   lastname:string;
 
@@ -24,7 +26,9 @@ export class EditAccountPage implements OnInit {
   getAccount(){
     const params = {};
     this.userController.getUserByAuthUsingGET(params).toPromise().then((user)=>{
+      console.table(user);
       this.username = user.username;
+      this.email = user.email;
       let splitName = user.fullname.split(' ');
       this.firstname = splitName[0];
       this.lastname = splitName[1];
@@ -34,16 +38,22 @@ export class EditAccountPage implements OnInit {
   }
 
   saveChanges(){
-    const update = {
+    const userDTO = {
       "username":this.username,
-      "fullname":this.firstname + "" + this.lastname
-    }
+      "email":this.email,
+      "fullname":this.firstname + " " + this.lastname
+    } as UserDTO
     const params = {
-      "update":update,
-      "username":this.username
+      "userDTO":userDTO,
     }
-
-    this.alertService.presentToastSuccess("Änderungen erfolgreich gespeichert");
+    this.userController.patchUserByAuthUsingPATCH(params).toPromise().then((response)=>{
+      console.log(response);
+      this.alertService.presentToastSuccess("Änderungen erfolgreich gespeichert");
+    }).catch((error)=>{
+      console.log(error);
+      this.alertService.presentToastFailure("Speichern fehlgeschlagen");
+    });
+    
   }
 
   abort(){

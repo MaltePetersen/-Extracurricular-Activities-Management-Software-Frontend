@@ -7,16 +7,16 @@
     </ion-card-header>
     <ion-card-content>
       <ion-item>
-        <ion-label position="stacked">Nutzername</ion-label>
-        <ion-input [(ngModel)]="username"></ion-input>
+        <ion-label position="stacked">E-mail</ion-label>
+        <ion-input type="email" [(ngModel)]="email"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Vorname</ion-label>
-        <ion-input [(ngModel)]="firstname"></ion-input>
+        <ion-input type="text" [(ngModel)]="firstname"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Nachname</ion-label>
-        <ion-input [(ngModel)]="lastname"></ion-input>
+        <ion-input type="text" [(ngModel)]="lastname"></ion-input>
       </ion-item>
     </ion-card-content>
   </ion-card>

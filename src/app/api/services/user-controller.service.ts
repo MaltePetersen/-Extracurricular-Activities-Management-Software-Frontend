@@ -18,6 +18,7 @@ import { UserDTO } from '../models/user-dto';
 class UserControllerService extends __BaseService {
   static readonly loginUsingGETPath = '/user/login';
   static readonly getUserByAuthUsingGETPath = '/user/profile';
+  static readonly patchUserByAuthUsingPATCHPath = '/user/profile';
   static readonly registrationUsingPOSTPath = '/user/register';
   static readonly confirmRegistrationUsingGETPath = '/user/registrationConfirm';
   static readonly resendTokenUsingGETPath = '/user/resendToken';
@@ -150,6 +151,73 @@ class UserControllerService extends __BaseService {
    */
   getUserByAuthUsingGET(params: UserControllerService.GetUserByAuthUsingGETParams): __Observable<UserDTO> {
     return this.getUserByAuthUsingGETResponse(params).pipe(
+      __map(_r => _r.body as UserDTO)
+    );
+  }
+
+  /**
+   * @param params The `UserControllerService.PatchUserByAuthUsingPATCHParams` containing the following parameters:
+   *
+   * - `userDTO`: userDTO
+   *
+   * - `principal`:
+   *
+   * - `details`:
+   *
+   * - `credentials`:
+   *
+   * - `authorities[0].authority`:
+   *
+   * - `authenticated`:
+   *
+   * @return OK
+   */
+  patchUserByAuthUsingPATCHResponse(params: UserControllerService.PatchUserByAuthUsingPATCHParams): __Observable<__StrictHttpResponse<UserDTO>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    if (params.userDTO != null) __params = __params.set('userDTO', params.userDTO.toString());
+    if (params.principal != null) __params = __params.set('principal', params.principal.toString());
+    if (params.details != null) __params = __params.set('details', params.details.toString());
+    if (params.credentials != null) __params = __params.set('credentials', params.credentials.toString());
+    if (params.authorities0Authority != null) __params = __params.set('authorities[0].authority', params.authorities0Authority.toString());
+    if (params.authenticated != null) __params = __params.set('authenticated', params.authenticated.toString());
+    let req = new HttpRequest<any>(
+      'PATCH',
+      this.rootUrl + `/user/profile`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<UserDTO>;
+      })
+    );
+  }
+  /**
+   * @param params The `UserControllerService.PatchUserByAuthUsingPATCHParams` containing the following parameters:
+   *
+   * - `userDTO`: userDTO
+   *
+   * - `principal`:
+   *
+   * - `details`:
+   *
+   * - `credentials`:
+   *
+   * - `authorities[0].authority`:
+   *
+   * - `authenticated`:
+   *
+   * @return OK
+   */
+  patchUserByAuthUsingPATCH(params: UserControllerService.PatchUserByAuthUsingPATCHParams): __Observable<UserDTO> {
+    return this.patchUserByAuthUsingPATCHResponse(params).pipe(
       __map(_r => _r.body as UserDTO)
     );
   }
@@ -930,6 +998,22 @@ module UserControllerService {
    * Parameters for getUserByAuthUsingGET
    */
   export interface GetUserByAuthUsingGETParams {
+    principal?: {};
+    details?: {};
+    credentials?: {};
+    authorities0Authority?: string;
+    authenticated?: boolean;
+  }
+
+  /**
+   * Parameters for patchUserByAuthUsingPATCH
+   */
+  export interface PatchUserByAuthUsingPATCHParams {
+
+    /**
+     * userDTO
+     */
+    userDTO: UserDTO;
     principal?: {};
     details?: {};
     credentials?: {};
