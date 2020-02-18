@@ -26,15 +26,30 @@ export class EditAccountPage implements OnInit {
   getAccount(){
     const params = {};
     this.userController.getUserByAuthUsingGET(params).toPromise().then((user)=>{
-      console.table(user);
-      this.username = user.username;
-      this.email = user.email;
-      let splitName = user.fullname.split(' ');
-      this.firstname = splitName[0];
-      this.lastname = splitName[1];
+      this.mapUserToAttributes(user);
     }).catch((error)=>{
       console.log(error);
     });
+  }
+
+  mapUserToAttributes(user:UserDTO){
+    this.username = user.username;
+    this.email = user.email;
+    let splitName = user.fullname.split(' ');
+    if(splitName.length > 2){
+      this.firstname = "";
+      for(let i = 0; i < splitName.length - 1; i++){
+        if(i != splitName.length - 2){
+          this.firstname = this.firstname + splitName[i] + " ";
+        } else {
+          this.firstname = this.firstname + splitName[i];
+        }
+      }
+      this.lastname = splitName[splitName.length - 1];
+    } else {
+      this.firstname = splitName[0];
+      this.lastname = splitName[1];
+    }
   }
 
   saveChanges(){
@@ -42,12 +57,13 @@ export class EditAccountPage implements OnInit {
       "username":this.username,
       "email":this.email,
       "fullname":this.firstname + " " + this.lastname
-    } as UserDTO
+    }
     const params = {
       "userDTO":userDTO,
     }
+    console.log(params);
     this.userController.patchUserByAuthUsingPATCH(params).toPromise().then((response)=>{
-      console.log(response);
+      this.mapUserToAttributes(response);
       this.alertService.presentToastSuccess("Änderungen erfolgreich gespeichert");
     }).catch((error)=>{
       console.log(error);

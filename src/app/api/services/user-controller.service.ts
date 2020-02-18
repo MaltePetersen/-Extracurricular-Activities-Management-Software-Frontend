@@ -176,7 +176,7 @@ class UserControllerService extends __BaseService {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (params.userDTO != null) __params = __params.set('userDTO', params.userDTO.toString());
+    __body = params.userDTO;
     if (params.principal != null) __params = __params.set('principal', params.principal.toString());
     if (params.details != null) __params = __params.set('details', params.details.toString());
     if (params.credentials != null) __params = __params.set('credentials', params.credentials.toString());
