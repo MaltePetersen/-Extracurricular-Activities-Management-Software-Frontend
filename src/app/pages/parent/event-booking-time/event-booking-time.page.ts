@@ -74,7 +74,6 @@ export class EventBookingTimePage implements OnInit {
       type:this.typeId,
     }
     this.parentController.getAfterSchoolCaresUsingGET1(params).toPromise().then(response => {
-      console.table(response)
       response.forEach((care)=>{
           this.checkEintrag(care);
         });
@@ -120,11 +119,10 @@ export class EventBookingTimePage implements OnInit {
     popover.style.cssText = "--width:'auto'";
     await popover.present()
     popover.onDidDismiss().then((dataReturned) => {
-      if (dataReturned) {
+      if (dataReturned.data) {
         this.bookCare(dataReturned.data)
       } else {
-        this.alertService.presentToastFailure('Die Veranstaltung wurde nicht gebucht.');
-        this.router.navigateByUrl('parent/event-booking')
+        this.alertService.presentToastFailure('Die Veranstaltung wurde nicht gebucht');
       }
     });
   }

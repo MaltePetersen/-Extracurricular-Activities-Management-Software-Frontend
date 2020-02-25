@@ -120,6 +120,8 @@ async deleteAttendance(id) {
     popover.onDidDismiss().then((dataReturned) => {
       if (dataReturned.data) {
         this.changeCare(dataReturned.data);
+      } else {
+        this.alertService.presentToastFailure("Es wurden keine Änderungen gespeichert");
       }
     });
   }

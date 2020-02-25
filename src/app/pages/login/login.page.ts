@@ -26,11 +26,7 @@ export class LoginPage implements OnInit {
   debugAPI() {
     headers = headers.append("Authorization", "Basic " + 'UGFyZW50X1Rlc3Q6cGFzc3dvcmQ=');
     headers = headers.append('Content-Type', 'application/json');
-
-    
-  
     this.http.get('https://backend.softwareprojekt-kiel.de/api/parent/children', {headers}).subscribe((test)=> console.table(test));
-  
   }
 
   login() {
