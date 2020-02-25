@@ -26,7 +26,6 @@ export class PhoneValidator {
             return null;
           }
         }catch(e){
-          //console.log(e);
           return {
             validCountryPhone: true
           };

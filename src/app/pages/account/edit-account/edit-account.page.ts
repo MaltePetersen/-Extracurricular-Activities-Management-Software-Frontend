@@ -61,7 +61,6 @@ export class EditAccountPage implements OnInit {
     const params = {
       "userDTO":userDTO,
     }
-    console.log(params);
     this.userController.patchUserByAuthUsingPATCH(params).toPromise().then((response)=>{
       this.mapUserToAttributes(response);
       this.alertService.presentToastSuccess("Änderungen erfolgreich gespeichert");

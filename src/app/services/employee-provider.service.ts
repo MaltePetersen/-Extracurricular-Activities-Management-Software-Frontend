@@ -16,7 +16,6 @@ export class EmployeeProviderService {
   }
 
   load():void {
-    console.log('load');
     this.storage.get('schoolId').then((schoolId)=>{
       this.schoolId$.next(schoolId);
     });

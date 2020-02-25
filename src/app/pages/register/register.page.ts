@@ -166,7 +166,6 @@ export class RegisterPage implements OnInit {
       "userDTO": userDTO
     }
     this.userController.registrationUsingPOST(params).toPromise().then((response)=>{
-      console.log(response);
       this.registerFeedback();
     }).catch((error)=>{
       console.log(error);

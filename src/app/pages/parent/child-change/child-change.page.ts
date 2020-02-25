@@ -49,9 +49,7 @@ export class ChildChangePage implements OnInit {
       "update":update,
       "username":this.previousUserName
     };
-    console.log(patch);
     this.parentController.updateChildUsingPATCH(patch).toPromise().then((response)=>{
-      console.log(response);
       this.presentSaveSuccess();
     }).catch((error)=>{
       console.log(error);
@@ -105,7 +103,6 @@ export class ChildChangePage implements OnInit {
         text: 'OK',
         handler: ()=> {
           this.deleteChild().then((response)=>{
-            console.log(response);
             this.alertService.presentToastSuccess('Der Account wurde gelöscht');
             this.router.navigateByUrl('parent/child-overview');
           }).catch((error)=>{

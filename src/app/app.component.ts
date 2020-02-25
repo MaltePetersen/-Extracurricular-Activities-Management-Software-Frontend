@@ -37,10 +37,6 @@ export class AppComponent implements OnInit {
     this.auth.logout();
   }
 
-  deleteAccount(){
-    console.log("Account löschen");
-  }
-
   changeSiteMenu() {
     this.auth.currentUser.subscribe(currentUser => {
       if (currentUser === null) {

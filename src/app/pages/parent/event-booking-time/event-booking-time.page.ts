@@ -142,8 +142,6 @@ export class EventBookingTimePage implements OnInit {
       "afterSchoolCareId":attendanceData.careId,
       "attendanceInputDTO":attendanceDTO
     }
-
-    console.log(params);
     
     this.parentController.addAttendanceUsingPOST(params).toPromise().then((response)=>{
       this.alertService.presentToastSuccess('Buchung erfolgreich');

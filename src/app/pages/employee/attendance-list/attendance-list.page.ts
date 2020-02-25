@@ -172,7 +172,6 @@ export class AttendanceListPage implements OnInit {
 
   lockAfterSchoolCare(){
     this.employeeController.closeAfterSchoolCareUsingPATCH(this.listId).toPromise().then((response)=>{
-      console.log(response);
       this.alertService.presentToastSuccess("Veranstaltung erfolgreich gesperrt");
     }).catch((error)=>{
       console.log(error);

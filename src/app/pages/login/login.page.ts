@@ -46,7 +46,6 @@ export class LoginPage implements OnInit {
 
 
   register() {
-    console.log('Registrierung pressed');
     this.router.navigateByUrl('/register');
   }
 }

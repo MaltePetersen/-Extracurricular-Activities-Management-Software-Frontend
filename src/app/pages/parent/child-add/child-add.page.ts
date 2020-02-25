@@ -63,7 +63,6 @@ export class ChildAddPage implements OnInit {
     }
 
     this.parentController.createChildUsingPOST(params).toPromise().then((response)=>{
-      console.log(response);
       this.alertService.presentToastSuccess("Kind erfolgreich angelegt");
       this.router.navigateByUrl('parent/child-overview');
     }).catch((error)=>{
