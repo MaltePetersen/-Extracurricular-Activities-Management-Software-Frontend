@@ -76,8 +76,12 @@ export class EventPopoverPage implements OnInit {
   async saveAttendance(){
     if(this.latestArrivalTime > this.endTime){
       this.alertService.presentToastFailure("Die Ankunftzeit muss vor dem Ende der Veranstaltung liegen!")
+    } else if(this.latestArrivalTime < this.startTime){
+      this.alertService.presentToastFailure("Die Ankunftszeit muss nach dem Start der Veranstaltung liegen!");
     } else if(this.predefinedLeaveTime < this.startTime){
       this.alertService.presentToastFailure("Die Gehzeit muss nach dem Anfang der Veranstaltung liegen!")
+    } else if(this.predefinedLeaveTime > this.endTime){
+      this.alertService.presentToastFailure("Die Gehzeit muss vor dem Ende der Veranstaltung liegen!");
     } else if(this.latestArrivalTime > this.predefinedLeaveTime){
       this.alertService.presentToastFailure("Die Ankunftszeit muss vor der Gehzeit liegen!")
     } else {
