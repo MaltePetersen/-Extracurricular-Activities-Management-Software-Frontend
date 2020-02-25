@@ -3,6 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import moment from 'moment';
 import { ParentProviderService } from 'src/app/services/parent-provider.service';
 import { EventPopoverModel } from 'src/app/models/eventPopoverModel';
+import { AlertService } from 'src/app/services/alert.service';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class EventPopoverPage implements OnInit {
   date:moment.Moment;
   model:EventPopoverModel;
 
-  constructor(private popoverController: PopoverController, private parentProvider:ParentProviderService,) { }
+  constructor(private popoverController: PopoverController, private parentProvider:ParentProviderService, private alertService:AlertService) { }
 
   ngOnInit() {
     this.mapModelToPopover();
@@ -73,21 +74,29 @@ export class EventPopoverPage implements OnInit {
   }
 
   async saveAttendance(){
-    if(this.latestArrivalTime == this.startTime){
-      this.latestArrivalTime = null;
+    if(this.latestArrivalTime > this.endTime){
+      this.alertService.presentToastFailure("Die Ankunftzeit muss vor dem Ende der Veranstaltung liegen!")
+    } else if(this.predefinedLeaveTime < this.startTime){
+      this.alertService.presentToastFailure("Die Gehzeit muss nach dem Anfang der Veranstaltung liegen!")
+    } else if(this.latestArrivalTime > this.predefinedLeaveTime){
+      this.alertService.presentToastFailure("Die Ankunftszeit muss vor der Gehzeit liegen!")
+    } else {
+      if(this.latestArrivalTime == this.startTime){
+        this.latestArrivalTime = null;
+      }
+      if(this.predefinedLeaveTime == this.endTime){
+        this.predefinedLeaveTime = null;
+      }
+      let attendanceData = {
+        "careId":this.careId,
+        "latestArrivalTime":this.latestArrivalTime,
+        "predefinedLeaveTime":this.predefinedLeaveTime,
+        "allowedToLeave":this.allowedToLeave,
+        "note":this.note,
+        "username":this.username
+      };
+      await this.popoverController.dismiss(attendanceData);
     }
-    if(this.predefinedLeaveTime == this.endTime){
-      this.predefinedLeaveTime = null;
-    }
-    let attendanceData = {
-      "careId":this.careId,
-      "latestArrivalTime":this.latestArrivalTime,
-      "predefinedLeaveTime":this.predefinedLeaveTime,
-      "allowedToLeave":this.allowedToLeave,
-      "note":this.note,
-      "username":this.username
-    };
-    await this.popoverController.dismiss(attendanceData);
   }
 
   async abort(){
