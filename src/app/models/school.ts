@@ -1,8 +1,8 @@
 class school{
     id: number;
-    name: String;
-    address: String;
-    email: String;
+    name: string;
+    address: string;
+    email: string;
     phoneNumber: Number;
     employees: any;
     schoolCoordinators: any;

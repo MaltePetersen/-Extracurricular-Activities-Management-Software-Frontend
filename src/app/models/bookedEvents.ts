@@ -2,7 +2,7 @@ import { BookedTimeframe } from './bookedTimeframe';
 
 export class BookedEvents{
     
-    constructor(public weekday: String, public timeframe: BookedTimeframe[]){
+    constructor(public weekday: string, public timeframe: BookedTimeframe[]){
 
     }
 }

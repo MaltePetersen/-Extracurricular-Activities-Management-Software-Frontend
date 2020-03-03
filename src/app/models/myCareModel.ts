@@ -1,5 +1,5 @@
 export class MyCareModel{
     
-    constructor(public id, public name:String, public startTime:string, public day:String){
+    constructor(public id, public name:string, public startTime:string, public day:string){
     }
 }
