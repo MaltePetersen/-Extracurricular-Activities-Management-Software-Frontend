@@ -21,7 +21,7 @@ export class LoginPage implements OnInit {
   constructor(private auth: AuthenticationService, private router: Router, public http: HttpClient) { }
 
   ngOnInit() {
-  this.debugAPI();
+    //this.debugAPI();
   }
   debugAPI() {
     headers = headers.append("Authorization", "Basic " + 'UGFyZW50X1Rlc3Q6cGFzc3dvcmQ=');
