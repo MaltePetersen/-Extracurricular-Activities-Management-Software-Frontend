@@ -1,16 +1,16 @@
 <ion-content class="ion-padding">
   <div class="flex-container">
     <img class="image"  src="assets/logo.jpg">
-    <div class="flex-container">
-      <ion-item>
-        <ion-label position="stacked">
+    <div class="item-container">
+      <ion-item class="login-item">
+        <ion-label position="stacked" class="login-label">
           Nutzername
         </ion-label>
         <ion-input type="email" (keyup.enter)="login()" placeholder="Nutzername" [(ngModel)]="user.email">
         </ion-input>
       </ion-item>
-      <ion-item>
-        <ion-label position="stacked">
+      <ion-item class="login-item">
+        <ion-label position="stacked" class="login-label">
           Password
         </ion-label>
         <ion-input type="password" (keyup.enter)="login()" placeholder="Password" [(ngModel)]="user.pw">

@@ -34,10 +34,10 @@ class ManagementControllerService extends __BaseService {
   static readonly allNotEnabledUserUsingGETPath = '/api/management/not_enabled_users';
   static readonly getNumberOfParticipantsUsingGETPath = '/api/management/number_of_participants';
   static readonly registerUsingPOSTPath = '/api/management/register';
-  static readonly createSchoolUsingPOST1Path = '/api/management/school';
+  static readonly createSchoolUsingPOSTPath = '/api/management/school';
   static readonly getSchoolUsingGET1Path = '/api/management/school/{id}';
-  static readonly deleteSchoolUsingDELETE1Path = '/api/management/school/{id}';
-  static readonly changeSchoolUsingPATCH1Path = '/api/management/school/{id}';
+  static readonly deleteSchoolUsingDELETEPath = '/api/management/school/{id}';
+  static readonly changeSchoolUsingPATCHPath = '/api/management/school/{id}';
   static readonly getSchoolsUsingGET1Path = '/api/management/schools';
   static readonly getAllUsersUsingGETPath = '/api/management/users';
 
@@ -154,23 +154,17 @@ class ManagementControllerService extends __BaseService {
   }
 
   /**
-   * @param params The `ManagementControllerService.DeleteAfterSchoolCareUsingDELETE1Params` containing the following parameters:
-   *
-   * - `id`: id
-   *
-   * - `afterSchoolCareDTO`: afterSchoolCareDTO
-   *
+   * @param id id
    * @return OK
    */
-  deleteAfterSchoolCareUsingDELETE1Response(params: ManagementControllerService.DeleteAfterSchoolCareUsingDELETE1Params): __Observable<__StrictHttpResponse<string>> {
+  deleteAfterSchoolCareUsingDELETE1Response(id: number): __Observable<__StrictHttpResponse<string>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
-    __body = params.afterSchoolCareDTO;
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/api/management/afterSchoolCare/${params.id}`,
+      this.rootUrl + `/api/management/afterSchoolCare/${id}`,
       __body,
       {
         headers: __headers,
@@ -186,16 +180,11 @@ class ManagementControllerService extends __BaseService {
     );
   }
   /**
-   * @param params The `ManagementControllerService.DeleteAfterSchoolCareUsingDELETE1Params` containing the following parameters:
-   *
-   * - `id`: id
-   *
-   * - `afterSchoolCareDTO`: afterSchoolCareDTO
-   *
+   * @param id id
    * @return OK
    */
-  deleteAfterSchoolCareUsingDELETE1(params: ManagementControllerService.DeleteAfterSchoolCareUsingDELETE1Params): __Observable<string> {
-    return this.deleteAfterSchoolCareUsingDELETE1Response(params).pipe(
+  deleteAfterSchoolCareUsingDELETE1(id: number): __Observable<string> {
+    return this.deleteAfterSchoolCareUsingDELETE1Response(id).pipe(
       __map(_r => _r.body as string)
     );
   }
@@ -793,7 +782,7 @@ class ManagementControllerService extends __BaseService {
    * @param newSchool newSchool
    * @return Created
    */
-  createSchoolUsingPOST1Response(newSchool: School): __Observable<__StrictHttpResponse<SchoolDTO>> {
+  createSchoolUsingPOSTResponse(newSchool: School): __Observable<__StrictHttpResponse<SchoolDTO>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -819,8 +808,8 @@ class ManagementControllerService extends __BaseService {
    * @param newSchool newSchool
    * @return Created
    */
-  createSchoolUsingPOST1(newSchool: School): __Observable<SchoolDTO> {
-    return this.createSchoolUsingPOST1Response(newSchool).pipe(
+  createSchoolUsingPOST(newSchool: School): __Observable<SchoolDTO> {
+    return this.createSchoolUsingPOSTResponse(newSchool).pipe(
       __map(_r => _r.body as SchoolDTO)
     );
   }
@@ -864,7 +853,7 @@ class ManagementControllerService extends __BaseService {
   /**
    * @param id id
    */
-  deleteSchoolUsingDELETE1Response(id: number): __Observable<__StrictHttpResponse<null>> {
+  deleteSchoolUsingDELETEResponse(id: number): __Observable<__StrictHttpResponse<null>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -889,14 +878,14 @@ class ManagementControllerService extends __BaseService {
   /**
    * @param id id
    */
-  deleteSchoolUsingDELETE1(id: number): __Observable<null> {
-    return this.deleteSchoolUsingDELETE1Response(id).pipe(
+  deleteSchoolUsingDELETE(id: number): __Observable<null> {
+    return this.deleteSchoolUsingDELETEResponse(id).pipe(
       __map(_r => _r.body as null)
     );
   }
 
   /**
-   * @param params The `ManagementControllerService.ChangeSchoolUsingPATCH1Params` containing the following parameters:
+   * @param params The `ManagementControllerService.ChangeSchoolUsingPATCHParams` containing the following parameters:
    *
    * - `newSchool`: newSchool
    *
@@ -904,7 +893,7 @@ class ManagementControllerService extends __BaseService {
    *
    * @return OK
    */
-  changeSchoolUsingPATCH1Response(params: ManagementControllerService.ChangeSchoolUsingPATCH1Params): __Observable<__StrictHttpResponse<SchoolDTO>> {
+  changeSchoolUsingPATCHResponse(params: ManagementControllerService.ChangeSchoolUsingPATCHParams): __Observable<__StrictHttpResponse<SchoolDTO>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -928,7 +917,7 @@ class ManagementControllerService extends __BaseService {
     );
   }
   /**
-   * @param params The `ManagementControllerService.ChangeSchoolUsingPATCH1Params` containing the following parameters:
+   * @param params The `ManagementControllerService.ChangeSchoolUsingPATCHParams` containing the following parameters:
    *
    * - `newSchool`: newSchool
    *
@@ -936,8 +925,8 @@ class ManagementControllerService extends __BaseService {
    *
    * @return OK
    */
-  changeSchoolUsingPATCH1(params: ManagementControllerService.ChangeSchoolUsingPATCH1Params): __Observable<SchoolDTO> {
-    return this.changeSchoolUsingPATCH1Response(params).pipe(
+  changeSchoolUsingPATCH(params: ManagementControllerService.ChangeSchoolUsingPATCHParams): __Observable<SchoolDTO> {
+    return this.changeSchoolUsingPATCHResponse(params).pipe(
       __map(_r => _r.body as SchoolDTO)
     );
   }
@@ -1013,22 +1002,6 @@ class ManagementControllerService extends __BaseService {
 }
 
 module ManagementControllerService {
-
-  /**
-   * Parameters for deleteAfterSchoolCareUsingDELETE1
-   */
-  export interface DeleteAfterSchoolCareUsingDELETE1Params {
-
-    /**
-     * id
-     */
-    id: number;
-
-    /**
-     * afterSchoolCareDTO
-     */
-    afterSchoolCareDTO?: AfterSchoolCareDTO;
-  }
 
   /**
    * Parameters for patchAfterSchoolCareUsingPATCH
@@ -1131,9 +1104,9 @@ module ManagementControllerService {
   }
 
   /**
-   * Parameters for changeSchoolUsingPATCH1
+   * Parameters for changeSchoolUsingPATCH
    */
-  export interface ChangeSchoolUsingPATCH1Params {
+  export interface ChangeSchoolUsingPATCHParams {
 
     /**
      * newSchool

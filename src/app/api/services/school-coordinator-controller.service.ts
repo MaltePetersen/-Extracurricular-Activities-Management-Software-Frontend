@@ -8,9 +8,9 @@ import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { AfterSchoolCareDTO } from '../models/after-school-care-dto';
+import { WorkingGroupDTO } from '../models/working-group-dto';
 import { ChildDTO } from '../models/child-dto';
 import { SchoolDTO } from '../models/school-dto';
-import { School } from '../models/school';
 
 /**
  * School Coordinator Controller
@@ -25,10 +25,7 @@ class SchoolCoordinatorControllerService extends __BaseService {
   static readonly updateAgUsingPATCHPath = '/api/sc/ag';
   static readonly updateChildUsingPOSTPath = '/api/sc/ag/child';
   static readonly getMyWorkingGroupUsingGETPath = '/api/sc/ags';
-  static readonly createSchoolUsingPOST2Path = '/api/sc/school';
   static readonly getSchoolUsingGET3Path = '/api/sc/school/{id}';
-  static readonly deleteSchoolUsingDELETE2Path = '/api/sc/school/{id}';
-  static readonly changeSchoolUsingPATCH2Path = '/api/sc/school/{id}';
   static readonly getSchoolsUsingGET3Path = '/api/sc/schools';
 
   constructor(
@@ -106,14 +103,14 @@ class SchoolCoordinatorControllerService extends __BaseService {
   }
 
   /**
-   * @param afterSchoolCareDTO afterSchoolCareDTO
+   * @param workingGroupDTO workingGroupDTO
    * @return OK
    */
-  addAWorkingGroupUsingPOSTResponse(afterSchoolCareDTO: AfterSchoolCareDTO): __Observable<__StrictHttpResponse<AfterSchoolCareDTO>> {
+  addAWorkingGroupUsingPOSTResponse(workingGroupDTO: WorkingGroupDTO): __Observable<__StrictHttpResponse<AfterSchoolCareDTO>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    __body = afterSchoolCareDTO;
+    __body = workingGroupDTO;
     let req = new HttpRequest<any>(
       'POST',
       this.rootUrl + `/api/sc/ag`,
@@ -132,11 +129,11 @@ class SchoolCoordinatorControllerService extends __BaseService {
     );
   }
   /**
-   * @param afterSchoolCareDTO afterSchoolCareDTO
+   * @param workingGroupDTO workingGroupDTO
    * @return OK
    */
-  addAWorkingGroupUsingPOST(afterSchoolCareDTO: AfterSchoolCareDTO): __Observable<AfterSchoolCareDTO> {
-    return this.addAWorkingGroupUsingPOSTResponse(afterSchoolCareDTO).pipe(
+  addAWorkingGroupUsingPOST(workingGroupDTO: WorkingGroupDTO): __Observable<AfterSchoolCareDTO> {
+    return this.addAWorkingGroupUsingPOSTResponse(workingGroupDTO).pipe(
       __map(_r => _r.body as AfterSchoolCareDTO)
     );
   }
@@ -415,42 +412,6 @@ class SchoolCoordinatorControllerService extends __BaseService {
   }
 
   /**
-   * @param newSchool newSchool
-   * @return Created
-   */
-  createSchoolUsingPOST2Response(newSchool: School): __Observable<__StrictHttpResponse<SchoolDTO>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-    __body = newSchool;
-    let req = new HttpRequest<any>(
-      'POST',
-      this.rootUrl + `/api/sc/school`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<SchoolDTO>;
-      })
-    );
-  }
-  /**
-   * @param newSchool newSchool
-   * @return Created
-   */
-  createSchoolUsingPOST2(newSchool: School): __Observable<SchoolDTO> {
-    return this.createSchoolUsingPOST2Response(newSchool).pipe(
-      __map(_r => _r.body as SchoolDTO)
-    );
-  }
-
-  /**
    * @param id id
    * @return OK
    */
@@ -482,87 +443,6 @@ class SchoolCoordinatorControllerService extends __BaseService {
    */
   getSchoolUsingGET3(id: number): __Observable<SchoolDTO> {
     return this.getSchoolUsingGET3Response(id).pipe(
-      __map(_r => _r.body as SchoolDTO)
-    );
-  }
-
-  /**
-   * @param id id
-   */
-  deleteSchoolUsingDELETE2Response(id: number): __Observable<__StrictHttpResponse<null>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-    let req = new HttpRequest<any>(
-      'DELETE',
-      this.rootUrl + `/api/sc/school/${id}`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<null>;
-      })
-    );
-  }
-  /**
-   * @param id id
-   */
-  deleteSchoolUsingDELETE2(id: number): __Observable<null> {
-    return this.deleteSchoolUsingDELETE2Response(id).pipe(
-      __map(_r => _r.body as null)
-    );
-  }
-
-  /**
-   * @param params The `SchoolCoordinatorControllerService.ChangeSchoolUsingPATCH2Params` containing the following parameters:
-   *
-   * - `newSchool`: newSchool
-   *
-   * - `id`: id
-   *
-   * @return OK
-   */
-  changeSchoolUsingPATCH2Response(params: SchoolCoordinatorControllerService.ChangeSchoolUsingPATCH2Params): __Observable<__StrictHttpResponse<SchoolDTO>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-    __body = params.newSchool;
-
-    let req = new HttpRequest<any>(
-      'PATCH',
-      this.rootUrl + `/api/sc/school/${params.id}`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<SchoolDTO>;
-      })
-    );
-  }
-  /**
-   * @param params The `SchoolCoordinatorControllerService.ChangeSchoolUsingPATCH2Params` containing the following parameters:
-   *
-   * - `newSchool`: newSchool
-   *
-   * - `id`: id
-   *
-   * @return OK
-   */
-  changeSchoolUsingPATCH2(params: SchoolCoordinatorControllerService.ChangeSchoolUsingPATCH2Params): __Observable<SchoolDTO> {
-    return this.changeSchoolUsingPATCH2Response(params).pipe(
       __map(_r => _r.body as SchoolDTO)
     );
   }
@@ -686,22 +566,6 @@ module SchoolCoordinatorControllerService {
     credentials?: {};
     authorities0Authority?: string;
     authenticated?: boolean;
-  }
-
-  /**
-   * Parameters for changeSchoolUsingPATCH2
-   */
-  export interface ChangeSchoolUsingPATCH2Params {
-
-    /**
-     * newSchool
-     */
-    newSchool: SchoolDTO;
-
-    /**
-     * id
-     */
-    id: number;
   }
 }
 

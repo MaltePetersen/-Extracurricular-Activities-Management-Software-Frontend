@@ -11,8 +11,6 @@ import { AfterSchoolCareDTO } from '../models/after-school-care-dto';
 import { AfterSchoolCare } from '../models/after-school-care';
 import { ResponseEntity } from '../models/response-entity';
 import { InvoiceDTO } from '../models/invoice-dto';
-import { ISchool } from '../models/ischool';
-import { School } from '../models/school';
 import { SchoolDTO } from '../models/school-dto';
 
 /**
@@ -33,10 +31,7 @@ class EmployeeControllerService extends __BaseService {
   static readonly deleteInvoiceUsingDELETEPath = '/api/employee/invoice/{id}';
   static readonly changeInvoiceUsingPATCHPath = '/api/employee/invoice/{id}';
   static readonly getInvoicesUsingGET1Path = '/api/employee/invoices';
-  static readonly createSchoolUsingPOSTPath = '/api/employee/school';
   static readonly getSchoolUsingGETPath = '/api/employee/school/{id}';
-  static readonly deleteSchoolUsingDELETEPath = '/api/employee/school/{id}';
-  static readonly changeSchoolUsingPATCHPath = '/api/employee/school/{id}';
   static readonly getSchoolsUsingGETPath = '/api/employee/schools';
 
   constructor(
@@ -503,42 +498,6 @@ class EmployeeControllerService extends __BaseService {
   }
 
   /**
-   * @param newSchool newSchool
-   * @return Created
-   */
-  createSchoolUsingPOSTResponse(newSchool: School): __Observable<__StrictHttpResponse<ISchool>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-    __body = newSchool;
-    let req = new HttpRequest<any>(
-      'POST',
-      this.rootUrl + `/api/employee/school`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<ISchool>;
-      })
-    );
-  }
-  /**
-   * @param newSchool newSchool
-   * @return Created
-   */
-  createSchoolUsingPOST(newSchool: School): __Observable<ISchool> {
-    return this.createSchoolUsingPOSTResponse(newSchool).pipe(
-      __map(_r => _r.body as ISchool)
-    );
-  }
-
-  /**
    * @param id id
    * @return OK
    */
@@ -570,87 +529,6 @@ class EmployeeControllerService extends __BaseService {
    */
   getSchoolUsingGET(id: number): __Observable<SchoolDTO> {
     return this.getSchoolUsingGETResponse(id).pipe(
-      __map(_r => _r.body as SchoolDTO)
-    );
-  }
-
-  /**
-   * @param id id
-   */
-  deleteSchoolUsingDELETEResponse(id: number): __Observable<__StrictHttpResponse<null>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-    let req = new HttpRequest<any>(
-      'DELETE',
-      this.rootUrl + `/api/employee/school/${id}`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<null>;
-      })
-    );
-  }
-  /**
-   * @param id id
-   */
-  deleteSchoolUsingDELETE(id: number): __Observable<null> {
-    return this.deleteSchoolUsingDELETEResponse(id).pipe(
-      __map(_r => _r.body as null)
-    );
-  }
-
-  /**
-   * @param params The `EmployeeControllerService.ChangeSchoolUsingPATCHParams` containing the following parameters:
-   *
-   * - `newSchool`: newSchool
-   *
-   * - `id`: id
-   *
-   * @return OK
-   */
-  changeSchoolUsingPATCHResponse(params: EmployeeControllerService.ChangeSchoolUsingPATCHParams): __Observable<__StrictHttpResponse<SchoolDTO>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-    __body = params.newSchool;
-
-    let req = new HttpRequest<any>(
-      'PATCH',
-      this.rootUrl + `/api/employee/school/${params.id}`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<SchoolDTO>;
-      })
-    );
-  }
-  /**
-   * @param params The `EmployeeControllerService.ChangeSchoolUsingPATCHParams` containing the following parameters:
-   *
-   * - `newSchool`: newSchool
-   *
-   * - `id`: id
-   *
-   * @return OK
-   */
-  changeSchoolUsingPATCH(params: EmployeeControllerService.ChangeSchoolUsingPATCHParams): __Observable<SchoolDTO> {
-    return this.changeSchoolUsingPATCHResponse(params).pipe(
       __map(_r => _r.body as SchoolDTO)
     );
   }
@@ -752,22 +630,6 @@ module EmployeeControllerService {
      * invoiceDTO
      */
     invoiceDTO: InvoiceDTO;
-
-    /**
-     * id
-     */
-    id: number;
-  }
-
-  /**
-   * Parameters for changeSchoolUsingPATCH
-   */
-  export interface ChangeSchoolUsingPATCHParams {
-
-    /**
-     * newSchool
-     */
-    newSchool: School;
 
     /**
      * id
